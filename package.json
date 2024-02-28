@@ -17,7 +17,9 @@
   },
   "main": "dist-electron/main.js",
   "dependencies": {
+    "@types/node-wifi": "^2.0.2",
     "boxicons": "^2.1.4",
-    "face-api.js": "^0.22.2"
+    "face-api.js": "^0.22.2",
+    "node-wifi": "^2.0.16"
   }
 }

@@ -1,92 +1,100 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import EventService from './service/EventService';
+import type { WiFiNetwork } from 'node-wifi';
 
 export default class ElectronApp {
-  public win: BrowserWindow | null;
-  public splashScreen: BrowserWindow | null;
-  public visualizerWin: BrowserWindow | null;
-  public viteDevServerUrl: string | undefined;
-  public currentContext :  'splashScreen' |'mainWindow' = 'splashScreen';
-  private dataPreload: any = {}
+  private win: BrowserWindow | null;
+  private viteDevServerUrl: string | undefined;
+  private currentContext: 'splashScreen' | 'mainWindow' = 'splashScreen';
+  private dataPreload: any = {};
+  private _eventService: EventService;
 
-  constructor() {
+  constructor(eventService: EventService) {
+    this._eventService = eventService;
     this.win = null;
-    this.visualizerWin = null;
-    this.splashScreen = null;
     this.viteDevServerUrl = process.env.VITE_DEV_SERVER_URL;
 
+    this.setupEnvironment();
+  }
+
+  private setupEnvironment() {
     process.env.DIST = path.join(__dirname, '../dist');
     process.env.VITE_PUBLIC = app.isPackaged
       ? path.join(process.env.DIST, 'public')
       : path.join(process.env.DIST, '../public');
   }
-  
 
   private createWindow() {
-
     this.win = new BrowserWindow({
-      width: 800,
-      height: 600,
+      width: 900,
+      height: 700,
       frame: false,
       fullscreen: true,
       webPreferences: {
-          preload: path.join(__dirname, 'preload.js'),
-          nodeIntegration: true
+        preload: path.join(__dirname, 'preload.js'),
+        nodeIntegration: true,
       },
     });
 
-
-
-
-    // Test active push message to Renderer-process. front
-    this.win.webContents.on('did-finish-load', () => {
-      this.win?.webContents.send(
-        'main-process-message',
-        'communication avec le front ici'
-      );
-    });
-
+   
     
-    if(this.viteDevServerUrl){
-      this.win.loadURL(this.viteDevServerUrl);
-    }else{ 
-      this.win.loadFile(path.join(process.env.DIST, 'index.html'));
+
+    this.win.webContents.on('did-finish-load', async () => {
+      // Envoyez un message au processus de rendu (front-end)
+      this.win?.webContents.send('main-process-message', 'communication avec le front ici');
+  
+      // Démarrez le premier scan réseau
+      const connectionDetail = await this._eventService.scanNetWork();
+      this.win?.webContents.send('scan-network', connectionDetail);
+  
+      // Définissez l'intervalle pour les scans réseau périodiques
+      setInterval(async () => {
+          const connectionDetail = await this._eventService.scanNetWork();
+          this.win?.webContents.send('scan-network', connectionDetail);
+      }, 15000);
+  });
+  
+    this.loadWindowContent();
+  }
+
+  private loadWindowContent() {
+    if (this.viteDevServerUrl) {
+      this.win?.loadURL(this.viteDevServerUrl);
+    } else {
+      this.win?.loadFile(path.join(process.env.DIST, 'index.html'));
     }
   }
-  
+
+  private loadMainWindowContent() {
+    if (this.viteDevServerUrl) {
+      this.win?.loadURL(this.viteDevServerUrl).then(() => {
+        this.win?.show();
+        // this.win?.webContents.openDevTools();
+        this.win?.webContents.send('inject-page', {
+          data: this.dataPreload,
+          context: this.currentContext,
+        });
+      });
+    }
+  }
+
   public start() {
-
-    ipcMain.on('processingFinished',(_event,message)=> {
-      this.dataPreload = message
-      this.splashScreen?.hide();
-      this.splashScreen?.webContents.send('close-splash',{
-        closeSplash: true,
-        context: this.currentContext,
-      })
-      
-    })
     
-    ipcMain.on('window-normalize', () => {
-      this.splashScreen?.close()
-      this.splashScreen?.destroy()
-      this.splashScreen = null;
-      this.currentContext = 'mainWindow';
-
-      if(this.viteDevServerUrl){
-        console.log(this.viteDevServerUrl)
-        this.win?.loadURL(this.viteDevServerUrl).then(()=> {
-          this.win?.show();
-          // this.win?.webContents.openDevTools();
-          this.win?.webContents.send('inject-page',{
-            data: this.dataPreload,
-            context: this.currentContext,
-          })
-        })
-
-      }
+    ipcMain.on('processingFinished', (_event, message) => {
+      this.dataPreload = message;
     });
 
-    // Uncomment the following block to properly handle the 'window-all-closed' event
+    ipcMain.on('window-normalize', () => {
+      this.currentContext = 'mainWindow';
+      this.loadMainWindowContent();
+    });
+
+    ipcMain.on('power-machine', () => {
+      this._eventService.restartApp(app)
+      console.log('power-marchine invoked')
+    });
+
     app.on('window-all-closed', () => {
       if (process.platform !== 'darwin') {
         app.quit();
@@ -99,6 +107,9 @@ export default class ElectronApp {
       }
     });
 
-    app.whenReady().then(() => this.createWindow());
+    app.whenReady().then(async() => {
+      this.createWindow();
+    });
   }
 }
+

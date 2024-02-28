@@ -1,71 +1,77 @@
-import WindowService from "../services/WindowService";
-import { modeSelection } from "../windows/screens/modeSelection";
-import { saverScreen } from "../windows/screens/saverScreen";
-import { splashScreen } from "../windows/screens/splashScreen";
-import { modalFaceID } from "../windows/component/modalFaceID";
+import SplashView from '../services/SplashView';
+import WindowService from '../services/WindowService';
+import WindowsControllerAbstract from './WindowsControllerAbstract';
 
-
-export default class WindowsController {
-  private _app: HTMLElement | null;
+export default class WindowsController extends WindowsControllerAbstract{
   private _windowService: WindowService;
 
-  constructor(windowService: WindowService){
-    this._app = null;
+  constructor(windowService: WindowService) {
+    super();
     this._windowService = windowService;
   }
 
-  /**
-   * Checks the application context and performs actions accordingly.
-   * @method
-   * @returns {void}
-   */
-  public async renderScreen(): Promise<void> {
-    await this._domReady().then(()=>{
-      const structure = this._windowService.initializationUi(modalFaceID(),'<div id="app"></div>');
-      document.getElementById('root')!.appendChild(structure)
-      this._app = document.getElementById('app')
-      this._app ? this._renderSplashScreen() : ''
-    })
+  public override async setupEngine(): Promise<void> {
+    await this.renderSplashScreen();
   }
 
-  /**
-   * Renders the splash screen.
-   * @method
-   * @returns {void}
-   */
-  private _renderSplashScreen(): void {
-    this._app!.innerHTML = splashScreen();
-    setTimeout(()=> {
-      this._app!.innerHTML = '';
-      this._renderSaverScreen()
-    },1000)
+  protected async renderSplashScreen(): Promise<void> {
+    await this.waitForDOMReady(['complete', 'interactive']);
+    const splash: SplashView = this._windowService.getSplashScreenHTML();
+
+    this.injectElement(document.getElementById('root'), splash.splashUi);
+    splash.updateProgressBar(0.5);
+
+    const appElement: HTMLDivElement = this._windowService.createAppElement();
+    const modal = this._windowService.createModal();
+
+    this.injectElement(document.getElementById('root'), modal);
+    this.injectElement(document.getElementById('root'), appElement);
+    splash.updateProgressBar(50);
+
+    this.renderHomeScreen(appElement,splash)
+   
   }
 
-  private _renderSaverScreen(): void {
-    const statusBar = this._windowService.setStatusBar()
-    document.getElementById('root')!.appendChild(statusBar)
-    const screen = this._windowService.buildSaverScreen(saverScreen())
-    this._app!.appendChild(screen)
+  protected override renderHomeScreen (appElement: HTMLElement,splash : SplashView): void {
+    const statusBarView = this._windowService.setStatusBar();
+    const homeScren = this._windowService.getHomeScreen()
+    splash.updateProgressBar(88);
 
+    this.injectElement(appElement, homeScren);
+    this.injectElement(document.getElementById('root'), statusBarView.statusBar);
+    splash.updateProgressBar(100);
+    
+    setTimeout(() => {
+      splash.updateProgressBar(100);
+      splash.remove();
+    }, 2500);
+    
   }
 
-  /**
-   * Waits for the DOM to be ready.
-   * @method
-   * @param {DocumentReadyState[]} [condition] - List of document ready states to wait for.
-   * @returns {Promise<boolean>} - Resolved once the DOM is ready.
-   */
-  private async _domReady(condition: DocumentReadyState[] = ['complete', 'interactive']) {
+  protected override injectElement(parentElement: HTMLElement | null, childElement: DocumentFragment | HTMLElement): void {
+    if (parentElement && childElement) {
+      parentElement.appendChild(childElement);
+    }
+  }
+
+  protected override async waitForDOMReady(condition: DocumentReadyState[]): Promise<boolean> {
     return new Promise(resolve => {
+      const handleReadyStateChange = () => {
+        if (condition.includes(document.readyState)) {
+          resolve(true);
+          document.removeEventListener('readystatechange', handleReadyStateChange);
+        }
+      };
+  
       if (condition.includes(document.readyState)) {
-        resolve(true)
+        resolve(true);
       } else {
-        document.addEventListener('readystatechange', () => {
-          if (condition.includes(document.readyState)) {
-            resolve(true)
-          }
-        })
+        document.addEventListener('readystatechange', handleReadyStateChange);
       }
-    })
+    });
   }
+  
 }
+
+
+

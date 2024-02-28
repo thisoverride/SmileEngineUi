@@ -1,3 +1,5 @@
 import ElectronApp from "./framework/ElectronApp";
-const electronApp =  new ElectronApp()
+import EventService from "./framework/service/EventService";
+
+const electronApp =  new ElectronApp(new EventService())
 electronApp.start();
