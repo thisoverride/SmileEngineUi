@@ -25,6 +25,7 @@ export default class EventService {
   }
 
   public async takePhoto(): Promise<void> {
+    console.log('ee')
     this._isLiveView = false;
     await this._instance.post('/shooting/control/shutterbutton',{"af": true})
   }

@@ -1,4 +1,3 @@
-import SplashView from '../services/SplashView';
 import WindowService from '../services/WindowService';
 import WindowsControllerAbstract from './WindowsControllerAbstract';
 
@@ -11,78 +10,60 @@ export default class WindowsController extends WindowsControllerAbstract{
   }
 
   public override async setupEngine(): Promise<void> {
-    await this.renderSplashScreen();
-  }
-
-  protected async renderSplashScreen(): Promise<void> {
-    try {
-      await this.waitForDOMReady(['complete', 'interactive']);
-      const splash: SplashView = this._windowService.getSplashScreenHTML();
-      this.injectElement(document.getElementById('root'), splash.splashUi);
-      splash.updateProgressBar(0.5);
-      // window.ipcRenderer.send('camera-mode-live')
+    try{
       const appElement: HTMLDivElement = this._windowService.createAppElement();
-      const modal = this._windowService.createModal();
-  
-      this.injectElement(document.getElementById('root'), modal);
-      this.injectElement(document.getElementById('root'), appElement);
-      splash.updateProgressBar(50);
-  
-      this.renderHomeScreen(appElement,splash)
-
-
-    } catch (error) {
+      const modal: DocumentFragment = this._windowService.createModal();
+      const appToolsControl = [appElement,modal];
+      
+      appToolsControl.forEach((appTools)=> {
+        console.log(appTools)
+        this.injectElement(document.getElementById('root'), appTools);
+      })
+      const statusBarView = this._windowService.setStatusBar();
+      this.injectElement(document.getElementById('root'), statusBarView.statusBar);
+      postMessage({ progressUpdate: 0.5 }, '*')
+      this.renderHomeScreen(appElement)
+    }catch(error){
       this.handleError(error)
     }
-   
-  }
-
-  private async renderFeatureScreen() {
-    const featureScreen = this._windowService.getFeatureScreen()
-
-    const r = featureScreen.ob()
-
-    r.handeGesture()
-
-    this.injectElement(document.getElementById('root'),featureScreen.feature)
-  }
-  private async renderModeSelectionScreen() {
-    const modeSelectionScreen = this._windowService.getmodeSelectionScreen()
-
-
-    this.injectElement(document.getElementById('root'),modeSelectionScreen)
   }
 
   public override renderCameraScreen(appElement: HTMLElement): void {
     const cameraScreen = this._windowService.getCameraScreen()
-    appElement.innerHTML = ""
+    this.clearAppElement(appElement)
     this.injectElement(appElement, cameraScreen.cameraUi);
   }
   
   public override renderSelectionScreen(appElement: HTMLElement): void {
+  try{
     const slectionScreen = this._windowService.getSelectScreen(this)
-    appElement.innerHTML = ""
+    this.clearAppElement(appElement)
     this.injectElement(appElement, slectionScreen.selectionUi);
 
+  }catch(error){
+    this.handleError(error)
+  }
+  }
+  public renderformatSlectionScreen(appElement: HTMLElement): void {
+  try{
+    const formatSelectionScreen = this._windowService.getFormatSelectionScreen(this);
+    this.clearAppElement(appElement)
+    this.injectElement(appElement, formatSelectionScreen.formatSelectionUi);
+
+  }catch(error){
+    this.handleError(error)
+  }
   }
 
-  protected override renderHomeScreen (appElement: HTMLElement,splash : SplashView): void {
-    const statusBarView = this._windowService.setStatusBar();
+  protected override renderHomeScreen (appElement: HTMLElement): void {
     const homeScreen = this._windowService.getHomeScreen(this)
-    splash.updateProgressBar(88);
-
+    postMessage({ progressUpdate: 88 }, '*')
     this.injectElement(appElement, homeScreen.homeUi);
-    this.injectElement(document.getElementById('root'), statusBarView.statusBar);
-    splash.updateProgressBar(100);
-     
-    setTimeout(() => {
-      splash.updateProgressBar(100);
-      splash.remove();
-    }, 2500); // 2500
+
+    postMessage({ progressUpdate: 100 }, '*')
+    postMessage({ payload: 'removeLoading' }, '*')
     
   }
-
-
 
   protected override injectElement(parentElement: HTMLElement | null, childElement: DocumentFragment | HTMLElement): void {
     if (parentElement && childElement) {
@@ -90,22 +71,12 @@ export default class WindowsController extends WindowsControllerAbstract{
     }
   }
 
-  protected override async waitForDOMReady(condition: DocumentReadyState[]): Promise<boolean> {
-    return new Promise(resolve => {
-      const handleReadyStateChange = () => {
-        if (condition.includes(document.readyState)) {
-          resolve(true);
-          document.removeEventListener('readystatechange', handleReadyStateChange);
-        }
-      };
-  
-      if (condition.includes(document.readyState)) {
-        resolve(true);
-      } else {
-        document.addEventListener('readystatechange', handleReadyStateChange);
-      }
-    });
-  }
+  public clearAppElement(appElement: HTMLElement): void {
+    while (appElement.firstChild) {
+        appElement.removeChild(appElement.firstChild);
+    }
+}
+
 
   protected handleError(error: any): void {
     const errorStringify: string = String(error);

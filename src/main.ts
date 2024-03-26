@@ -9,8 +9,8 @@ import 'boxicons'
 void (async() => {
     const windowsController: WindowsController = new WindowsController(new WindowService(new DOMService()))
     await windowsController.setupEngine();
-
+    
 })();
+// postMessage({ payload: 'removeLoading' }, '*')
 
-// Remove Preload scripts loading
-postMessage({ payload: 'removeLoading' }, '*')
+

@@ -5,7 +5,6 @@ export const splashScreen = `
         <div id="progress" class="progress-bar"></div>
     </div>
 </div>
-
 `
 // <div class="_fatal-error-wrp">
 // <div class="_fatal-error">
