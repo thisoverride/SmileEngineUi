@@ -18,7 +18,6 @@ export default class SplashView {
 
   public updateProgressBar(progress: number) {
     const progressBar: HTMLElement | null = document.getElementById('progress');
-    
     if (progressBar) {
       setTimeout(() => progressBar.style.width = `${progress}%`, 1000);
     }

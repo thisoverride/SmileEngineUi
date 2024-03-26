@@ -7,13 +7,10 @@ import './windows/styles/style.css';
 import 'boxicons'
 
 void (async() => {
-  try{
     const windowsController: WindowsController = new WindowsController(new WindowService(new DOMService()))
     await windowsController.setupEngine();
-  }catch(e){
-    console.log(e)
-  }
+    
 })();
+// postMessage({ payload: 'removeLoading' }, '*')
 
-// Remove Preload scripts loading
-postMessage({ payload: 'removeLoading' }, '*')
+

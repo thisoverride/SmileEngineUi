@@ -1,7 +1,6 @@
 import path from 'path';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import EventService from './service/EventService';
-import type { WiFiNetwork } from 'node-wifi';
 
 export default class ElectronApp {
   private win: BrowserWindow | null;
@@ -49,12 +48,12 @@ export default class ElectronApp {
       this.win?.webContents.send('scan-network', connectionDetail);
   
       // Définissez l'intervalle pour les scans réseau périodiques
-      setInterval(async () => {
-          const connectionDetail = await this._eventService.scanNetWork();
-          this.win?.webContents.send('scan-network', connectionDetail);
-      }, 15000);
+      // setInterval(async () => {
+      //     const connectionDetail = await this._eventService.scanNetWork();
+      //     this.win?.webContents.send('scan-network', connectionDetail);
+      // }, 100000);
   });
-  
+ 
     this.loadWindowContent();
   }
 
@@ -84,6 +83,20 @@ export default class ElectronApp {
     ipcMain.on('processingFinished', (_event, message) => {
       this.dataPreload = message;
     });
+    ipcMain.on('triggerCamera', async (_event, message) => {
+      await this._eventService.takePhoto()
+    });
+
+    ipcMain.on('liveView', async (_event, message) => {
+      if(this.win){
+        await this._eventService.openLiveView(this.win,message.active)
+      }
+    })
+    ipcMain.on('camera-mode-live', async (_event, message) => {
+      if(this.win){
+        await this._eventService.initCamera()
+      }
+    })
 
     ipcMain.on('window-normalize', () => {
       this.currentContext = 'mainWindow';
