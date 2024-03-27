@@ -120,8 +120,9 @@ html, body{
 }
 canvas {
   background-color: #6d6b6b;
-  height: 600px;
   border-radius: 15px;
+  height: 600px;
+  
 }
 
 
@@ -152,6 +153,12 @@ canvas {
 
 .btn-camera:active, .data-selected:active, .btn-primary:active, .btn-secondary:active{
 background-color: #ffffffd5;  
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed; 
 }
 .timer-wrp{
   position: relative;

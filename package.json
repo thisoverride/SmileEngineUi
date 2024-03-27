@@ -17,7 +17,6 @@
   },
   "main": "dist-electron/main.js",
   "dependencies": {
-    "-": "^0.0.1",
     "@tensorflow-models/handpose": "^0.1.0",
     "@tensorflow/tfjs": "^4.17.0",
     "@tensorflow/tfjs-backend-webgl": "^4.10.0",
@@ -25,14 +24,9 @@
     "@tensorflow/tfjs-core": "^4.10.0",
     "@types/fluent-ffmpeg": "^2.1.24",
     "@types/node-wifi": "^2.0.2",
-    "@types/ws": "^8.5.10",
-    "D": "^1.0.0",
     "axios": "^1.6.8",
     "boxicons": "^2.1.4",
     "face-api.js": "^0.22.2",
-    "fluent-ffmpeg": "^2.1.2",
-    "node-rtsp-stream": "^0.0.9",
-    "node-wifi": "^2.0.16",
-    "ws": "^8.16.0"
+    "node-wifi": "^2.0.16"
   }
 }

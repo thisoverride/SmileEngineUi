@@ -8,7 +8,7 @@ export const cameraScreen =  `
 <div id="counter">10</div>
 </div>
   <div class="row camera-control">
-  ${buttonCameraComponent({id:"btn-camera",className: "btn-camera",textContent:"",iconName: "loop.png"})}
+  ${buttonCameraComponent({id:"btn-camera",className: "btn-camera",textContent:"",iconName: "camera.png"})}
 
 
     

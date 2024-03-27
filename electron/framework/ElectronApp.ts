@@ -26,10 +26,10 @@ export default class ElectronApp {
 
   private createWindow() {
     this.win = new BrowserWindow({
-      width: 900,
+      width: 900, 
       height: 700,
-      frame: false,
-      fullscreen: true,
+      // frame: false,
+      // fullscreen: true,
       webPreferences: {
         preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true,
@@ -83,20 +83,6 @@ export default class ElectronApp {
     ipcMain.on('processingFinished', (_event, message) => {
       this.dataPreload = message;
     });
-    ipcMain.on('triggerCamera', async (_event, message) => {
-      await this._eventService.takePhoto()
-    });
-
-    ipcMain.on('liveView', async (_event, message) => {
-      if(this.win){
-        await this._eventService.openLiveView(this.win,message.active)
-      }
-    })
-    ipcMain.on('camera-mode-live', async (_event, message) => {
-      if(this.win){
-        await this._eventService.initCamera()
-      }
-    })
 
     ipcMain.on('window-normalize', () => {
       this.currentContext = 'mainWindow';
