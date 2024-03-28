@@ -1,11 +1,9 @@
-import WindowsController from "../controller/WindowsController";
+
 
 export default class formatSelectionView {
   public formatSelectionUi: DocumentFragment;
-  public windowsController: WindowsController;
 
-  constructor(formatSelectionScreen: DocumentFragment,windowsController: WindowsController) {
-    this.windowsController = windowsController;
+  constructor(formatSelectionScreen: DocumentFragment) {
     this.formatSelectionUi = formatSelectionScreen;
     this.setup()
   }
@@ -16,8 +14,5 @@ export default class formatSelectionView {
     const buttonPrevious = navigationButton[0];
     const buttonNext = navigationButton[1];
     const app = document.getElementById('app') as HTMLElement;
-
-    buttonNext.addEventListener('click',() => this.windowsController.renderCameraScreen(app))
-    buttonPrevious.addEventListener('click',() => this.windowsController.renderSelectionScreen(app))
   }
 }
