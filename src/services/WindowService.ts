@@ -53,10 +53,10 @@ export default class WindowService {
     return new selectionView(modeSelectionScreen,controller)
   }
 
-  public getCameraScreen(): cameraView {
+  public getCameraScreen(socket: WebSocket): cameraView {
     const cameraScreenView : DocumentFragment = this._domService.createDocumentFragmentFromHTML(cameraScreen);
 
-    return new cameraView(cameraScreenView)
+    return new cameraView(cameraScreenView,socket)
   }
 
   public getFeatureScreen(): featureView  {

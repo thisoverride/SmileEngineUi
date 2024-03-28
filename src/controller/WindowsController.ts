@@ -3,10 +3,14 @@ import WindowsControllerAbstract from './WindowsControllerAbstract';
 
 export default class WindowsController extends WindowsControllerAbstract{
   private _windowService: WindowService;
+  private _socket = new WebSocket('ws://localhost:3000');
 
   constructor(windowService: WindowService) {
     super();
     this._windowService = windowService;
+    this._socket.addEventListener('open', function (_event) {
+      console.log('Connexion WebSocket établie.');
+    });
   }
 
   public override async setupEngine(): Promise<void> {
@@ -29,7 +33,7 @@ export default class WindowsController extends WindowsControllerAbstract{
   }
 
   public override renderCameraScreen(appElement: HTMLElement): void {
-    const cameraScreen = this._windowService.getCameraScreen()
+    const cameraScreen = this._windowService.getCameraScreen(this._socket)
     this.clearAppElement(appElement)
     this.injectElement(appElement, cameraScreen.cameraUi);
   }

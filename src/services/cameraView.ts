@@ -2,9 +2,11 @@
 export default class cameraView {
   public cameraUi: DocumentFragment;
   private timerSelected: number = 3;
+  private _socket: WebSocket;
   
-  constructor(feature: DocumentFragment) {
+  constructor(feature: DocumentFragment,socket: WebSocket) {
     this.cameraUi = feature;
+    this._socket = socket;
     this.setup()
   }
 
@@ -37,62 +39,67 @@ export default class cameraView {
     });
     
     
-    cameraTriggerBtn!.addEventListener('click', () => {
+   cameraTriggerBtn!.addEventListener('click', () => {
       const counterElement = document.getElementById('counter') as HTMLElement;
-      counterElement.style.visibility = "visible"
-    
+      const timer = document.querySelector(".data-selected") as HTMLElement;
+      counterElement.style.visibility = "visible";
+      const btn = cameraTriggerBtn as HTMLButtonElement;
+      btn.classList.add('disabled');
+      timer.classList.add('disabled');
       let count = this.timerSelected;
-    
-      const updateCounter = () => {
-        if (count === 0) {
-          console.log('photo');
-          counterElement.style.visibility = "hidden";
-          clearInterval(intervalId);
-          return;
-        }
-    
-        counterElement.style.opacity = '0';
-    
-        setTimeout(() => {
-          if (count === 1) {
-            counterElement.innerHTML = '<img class="ico-camera-picture" src="/icon/camera.png">'; 
-          } else {
-            counterElement.textContent = count.toString();
-          }
-          counterElement.style.opacity = '1';
-        }, 500);
-    
-        count--;
-      };
-    
-      updateCounter();
-    
-      const intervalId = setInterval(updateCounter, 1000);
-    });
-    
-    
-    
-    // window.ipcRenderer.send('triggerCamera')
-    // test2!.addEventListener(('click'), () => {
-    //   window.ipcRenderer.send('liveView', { active: true})
-    // })
-    
+      counterElement.style.background ="#ffffff79"
+      counterElement.textContent = count.toString();
 
-    // window.ipcRenderer.send('liveView', { active: true})
 
+  const updateCounter = () => {
+ 
+    counterElement.style.opacity = '0';
+
+    setTimeout(() => {
+    
+      
+      if (count === 0) {
+        this._socket.send('shooting')
+        counterElement.style.opacity = '1';
+        clearInterval(intervalId);
+        counterElement.textContent = ""
+        counterElement.style.background ="#fff"
+        
+        return;
+      }else{
+        counterElement.textContent = count.toString();
+        counterElement.style.opacity = '1';
+
+      }
   
+    }, 500);
+
+    count--;
+  };
+
+  updateCounter();
+
+  const intervalId = setInterval(updateCounter, 1000);
+});
+
+    
+    
     
     const canvas = this.cameraUi.querySelector('canvas') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d');
-    window.ipcRenderer.on('liveViewImage', (_event, param) => {
+    this._socket.send('Stream')
+
+    this._socket.addEventListener('message', function (event) {
       const img = new Image();
       img.onload = () => {
           canvas.width = img.width;
           canvas.height = img.height;
           ctx?.drawImage(img, 0, 0);
       };
-      img.src = param;
+      img.src = event.data;
   });
+   
+    
 
   }
 
