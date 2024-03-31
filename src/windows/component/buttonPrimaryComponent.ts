@@ -1,3 +1,9 @@
 export const buttonPrimaryComponent = (props: any) => {
-  return `<button type="button"class="${props.className}">${props.textContent}</button>`;
+  return `
+  <button 
+  data-screen="${props.dateScreen}"
+  type="button"
+  class="${props.className}">
+  ${props.textContent}
+  </button>`;
 };

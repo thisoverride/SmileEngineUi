@@ -13,4 +13,16 @@ export default class DOMService {
     const fragment = range.createContextualFragment(htmlString.trim());
     return fragment;
   }
+
+  public render(childElement: DocumentFragment | HTMLElement, cleanParent?: Boolean){
+    const app = document.getElementById('app');
+    if(app){
+      if(cleanParent){
+        app.innerHTML = ""; 
+        app.appendChild(childElement);
+      }else{
+        app.appendChild(childElement);
+      }
+    }
+  }
 }

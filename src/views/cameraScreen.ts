@@ -1,4 +1,4 @@
-import { buttonCameraComponent } from "../component/buttonCameraComponent";
+import { buttonCameraComponent } from "../windows/component/buttonCameraComponent";
 
 export const cameraScreen =  `
 <div class="_home-wrp">

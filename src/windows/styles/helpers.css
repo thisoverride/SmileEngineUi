@@ -168,9 +168,14 @@ gap: 30px;
   color: #ff5555;
 }
 #_err_ico_loader {
-  height: 200px;
+  height: 190px;
   position: relative;
   top: 30px;
   left: 0;
   bottom: 0;
+}
+
+.error-indicator {
+  margin-bottom: 20px;
+  border-radius: 30px;
 }

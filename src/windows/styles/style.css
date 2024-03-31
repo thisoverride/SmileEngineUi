@@ -227,6 +227,8 @@ cursor: pointer;
   position: absolute;
   z-index: 1;
 }
+
+/* error */
 ._fatal-error-wrp{
   display: flex;
   flex-direction: column;
@@ -251,6 +253,9 @@ cursor: pointer;
 ._fatal-error > div {
   padding-top: 10px;
 }
+
+
+/* error */
 img {
   height: 300px;
 }
@@ -293,8 +298,8 @@ img {
 }
 .indicator{
   padding: 8px;
-  border: 1px solid #fff;
   border-radius: 30px;
+  border: 1px solid #fff;
   width: 250px;
 }
 ._home-wrp > .hello-speak >h1 {

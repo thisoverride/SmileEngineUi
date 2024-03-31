@@ -28,8 +28,9 @@ export default class ElectronApp {
     this.win = new BrowserWindow({
       width: 900, 
       height: 700,
+      // focusable:true,
+      // kiosk: true,
       // frame: false,
-      // fullscreen: true,
       webPreferences: {
         preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true,
