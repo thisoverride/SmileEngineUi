@@ -6,6 +6,7 @@ export default class NavigationController {
 
   constructor(windowsService: WindowService){
     document.addEventListener('changeScreen', this.navigationStack.bind(this));
+   
     this.windowsService = windowsService;
   }
 
@@ -15,41 +16,39 @@ export default class NavigationController {
 
     switch (targetScreen) {
       case 'selectionView':
-        this.renderModeSelectionView()
+        this.renderModeSelectionView();
         break;
       case 'photoView':
-        this.renderPhotoView()
+        this.renderPhotoView();
         break;
       case 'optionPhotoView':
-        this.renderOptionPhotoView()
+        this.renderOptionPhotoView();
         break;
       default:
         throw new Error(`Failed to access ${targetScreen} is not found`);
     }
   }
 
-
-  private dispatchEvent(trigger: HTMLElement){
-    console.log('trigger =>',trigger)
-    const changeScreen = new CustomEvent('changeScreen',{
-      detail: {
-        set: trigger.dataset.screen
-      },
-      bubbles: true,
-      cancelable: true
-    });
-    trigger.addEventListener('click', () => trigger.dispatchEvent(changeScreen));
-  }
-
   @InjectEvent()
   public renderDefautlView(){
-    this.windowsService.renderHomeScreen()
+    const HomeView = this.windowsService.renderHomeView();
+    this.render(HomeView)
   }
 
   @InjectEvent()
   private renderModeSelectionView(){
-    this.windowsService.renderModeSelectionView()
+    try{
+      const screen = this.windowsService.renderModeSelectionView()
+
+
+      document.getElementById('app')!.innerHTML =""
+      document.getElementById('app')!.appendChild(screen)
+
+    }catch(e){
+      console.log('ici')
+    }
   }
+
   @InjectEvent()
   private renderPhotoView(){
     this.windowsService.renderPhotoView()
@@ -59,9 +58,22 @@ export default class NavigationController {
   private renderOptionPhotoView(){
     this.windowsService.renderOptionPhotoView()
   }
+
   @InjectEvent()
   private renderBoomrangView(){
     throw new Error("Method not implemented.");
+  }
+
+  private render(childElement: DocumentFragment | HTMLElement, cleanParent?: Boolean){
+    const app = document.getElementById('app');
+    if(app){
+      if(cleanParent){
+        app.innerHTML = ""; 
+        app.appendChild(childElement);
+      }else{
+        app.appendChild(childElement);
+      }
+    }
   }
 
 }

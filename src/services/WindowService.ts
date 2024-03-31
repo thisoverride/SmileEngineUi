@@ -4,7 +4,6 @@ import { modalComponent } from "../windows/component/modalComponent";
 import StatusBarView  from './StatusBarView'
 import DOMService from "./DOMService";
 import Modal from "../windows/component/Modal";
-import { feature } from "../windows/screens/feature";
 import featureView from "./featureView";
 import { modeSelection } from "../views/modeSelection";
 import { cameraScreen } from "../views/cameraScreen";
@@ -34,13 +33,13 @@ export default class WindowService {
 
   public createModal() {
     const modal: DocumentFragment = this._domService.createDocumentFragmentFromHTML(modalComponent);
-
+f
     return modal;
   }
 
-  public renderHomeScreen(): void {
-    const screen : DocumentFragment = this._domService.createDocumentFragmentFromHTML(homeScreen);
-    this._domService.render(screen)
+  public renderHomeView(): DocumentFragment {
+    const screen : DocumentFragment = this._domService.createDocumentFragmentFromHTML(homeScreen);  
+    return screen;
   }
 
   public renderModeSelectionView() {
@@ -89,115 +88,117 @@ export default class WindowService {
               });
    
               element.classList.add('fadeOut');
-              const app = document.getElementById('app');
-              if(app){
-                if(element.id === "app-02"){
-                  alert('Not root implemented')
-                }
-                if(element.id === "app-01"){
-                  document.dispatchEvent(changeScreen)
-                }
-        }
-      }, 800);
+              if(element.id === "app-02"){
+                throw new Error('Not root implemented')
+              }
+              if(element.id === "app-01"){
+                document.dispatchEvent(changeScreen)
+              }
+      }, 600);
     }
         });
       });
     }
-    this._domService.render(modeSelectionScreen,true)
+    return modeSelectionScreen
+  
   }
 
   public renderPhotoView() {
-    const screen : DocumentFragment = this._domService.createDocumentFragmentFromHTML(cameraScreen);
-    const cameraTriggerBtn = screen.querySelector('#btn-camera');
-    const timer = screen.querySelector(".data-selected") as HTMLElement;
-    const timerList = screen.querySelector('.data-list') as HTMLElement;
-    const selectedValue = timer.querySelector('#selected') as HTMLElement;
-    const counterElement = screen.querySelector('#counter') as HTMLElement;
-    let defaultCounterValue = 3;
-    counterElement.textContent = defaultCounterValue.toString()
-
-    selectedValue.textContent = `${defaultCounterValue} s`;
-    
-    timer.addEventListener('click', () => {
-      timerList.style.visibility = timerList.style.visibility === 'visible' ? 'hidden' : 'visible';
-    });
-    
-    timerList.addEventListener('click', (e: Event) => {
-      const timerValue = e.target as HTMLElement;
-      const timerId = timerValue.id;
-    
-      if (['3', '5', '10'].includes(timerId)) {
-        selectedValue.textContent = parseInt(timerValue.textContent ?? '');
-        defaultCounterValue = timerValue.textContent ?? ''
-        const counterElement = document.getElementById('counter') as HTMLElement;
-        counterElement.textContent = defaultCounterValue
-        timerList.style.visibility = 'hidden';
-      }
-    });
-    
-    
-   cameraTriggerBtn!.addEventListener('click', () => {
-      const counterElement = document.getElementById('counter') as HTMLElement;
-      const timer = document.querySelector(".data-selected") as HTMLElement;
-      counterElement.style.visibility = "visible";
-      const btn = cameraTriggerBtn as HTMLButtonElement;
-      btn.classList.add('disabled');
-      timer.classList.add('disabled');
-      let count = defaultCounterValue
-      counterElement.style.background ="#ffffff79"
-      counterElement.textContent = count.toString();
-
-
-  const updateCounter = () => {
- 
-    counterElement.style.opacity = '0';
-
-    setTimeout(() => {
-    
-      
-      if (count === 0) {
-        // this._socket.send('shooting')
-        counterElement.style.opacity = '1';
-        clearInterval(intervalId);
-        counterElement.textContent = ""
-        counterElement.style.background ="#fff"
-        
-        return;
-      }else{
-        counterElement.textContent = count.toString();
-        counterElement.style.opacity = '1';
-
-      }
+    try{
+      const screen : DocumentFragment = this._domService.createDocumentFragmentFromHTML(cameraScreen);
+      const cameraTriggerBtn = screen.querySelector('#btn-camera');
+      const timer = screen.querySelector(".data-selected") as HTMLElement;
+      const timerList = screen.querySelector('.data-list') as HTMLElement;
+      const selectedValue = timer.querySelector('#selected') as HTMLElement;
+      const counterElement = screen.querySelector('#counter') as HTMLElement;
+      let defaultCounterValue = 3;
+      counterElement.textContent = defaultCounterValue.toString()
   
-    }, 500);
-
-    count--;
-  };
-
-  updateCounter();
-
-  const intervalId = setInterval(updateCounter, 1000);
-
- 
-});
-
+      selectedValue.textContent = `${defaultCounterValue} s`;
+      
+      timer.addEventListener('click', () => {
+        timerList.style.visibility = timerList.style.visibility === 'visible' ? 'hidden' : 'visible';
+      });
+      
+      timerList.addEventListener('click', (e: Event) => {
+        const timerValue = e.target as HTMLElement;
+        const timerId = timerValue.id;
+      
+        if (['3', '5', '10'].includes(timerId)) {
+          selectedValue.textContent = parseInt(timerValue.textContent ?? '');
+          defaultCounterValue = timerValue.textContent ?? ''
+          const counterElement = document.getElementById('counter') as HTMLElement;
+          counterElement.textContent = defaultCounterValue
+          timerList.style.visibility = 'hidden';
+        }
+      });
+      
+      
+     cameraTriggerBtn!.addEventListener('click', () => {
+        const counterElement = document.getElementById('counter') as HTMLElement;
+        const timer = document.querySelector(".data-selected") as HTMLElement;
+        counterElement.style.visibility = "visible";
+        const btn = cameraTriggerBtn as HTMLButtonElement;
+        btn.classList.add('disabled');
+        timer.classList.add('disabled');
+        let count = defaultCounterValue
+        counterElement.style.background ="#ffffff79"
+        counterElement.textContent = count.toString();
+  
+  
+    const updateCounter = () => {
+   
+      counterElement.style.opacity = '0';
+  
+      setTimeout(() => {
+      
+        
+        if (count === 0) {
+          // this._socket.send('shooting')
+          counterElement.style.opacity = '1';
+          clearInterval(intervalId);
+          counterElement.textContent = ""
+          counterElement.style.background ="#fff"
+          
+          return;
+        }else{
+          counterElement.textContent = count.toString();
+          counterElement.style.opacity = '1';
+  
+        }
     
-    
-    
-    const canvas = screen.querySelector('canvas') as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d');
-  //   this._socket.send('Stream')
-
-  //   this._socket.addEventListener('message', function (event) {
-  //     const img = new Image();
-  //     img.onload = () => {
-  //         canvas.width = img.width;
-  //         canvas.height = img.height;
-  //         ctx?.drawImage(img, 0, 0);
-  //     };
-  //     img.src = event.data;
-  // });
-  this._domService.render(screen,true)
+      }, 500);
+  
+      count--;
+    };
+  
+    updateCounter();
+  
+    const intervalId = setInterval(updateCounter, 1000);
+  
+   
+  });
+  
+      
+      
+      
+      const canvas = screen.querySelector('canvas') as HTMLCanvasElement;
+      const ctx = canvas.getContext('2d');
+    //   this._socket.send('Stream')
+  
+    //   this._socket.addEventListener('message', function (event) {
+    //     const img = new Image();
+    //     img.onload = () => {
+    //         canvas.width = img.width;
+    //         canvas.height = img.height;
+    //         ctx?.drawImage(img, 0, 0);
+    //     };
+    //     img.src = event.data;
+    // });
+    this._domService.render(screen,true)
+    }catch(e){
+      throw new Error('eee')
+    }
   }
 
   public getFeatureScreen(): featureView  {

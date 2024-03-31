@@ -104,8 +104,7 @@ export default class WindowsController extends WindowsControllerAbstract{
         <span>${detailError[0] ?? error.stack}</span>
         <span>${detailError[1] ?? ''}</span>`}
         </div>
-    </div> 
-` 
+    </div> ` 
   }
   
 }
