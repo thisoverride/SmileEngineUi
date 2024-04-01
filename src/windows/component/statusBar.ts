@@ -12,5 +12,20 @@ export const statusBar = `
     </div>
 </div>
 <div id="pt_control" class="control-center crl_pos-0"></div>
+
+<div class="mle-system-wrp hidden">
+  <div class="mle-header">
+    <div class="mle-title">Access control</div>
+    <button class="btn-mle">Annuler</button>
+  </div>
+  <div class="mle-body">
+    <div class="digit-wrp ">
+      <div id="digit" class="digit">
+        ${Array.from({ length: 10 }, (_, index) => `<span>${index}</span>`).join('')}
+      </div>
+   </div>
+  </div>
+</div>
+<div class="md-overlay hidden"></div>
 `
 

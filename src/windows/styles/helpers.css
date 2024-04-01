@@ -29,6 +29,10 @@
   justify-content: center;
 }
 
+.align-items-center{
+  align-items: center;
+}
+
 .gap-30{
 gap: 30px;
 }
@@ -136,7 +140,12 @@ gap: 30px;
 .hidden {
   display: none;
 }
-
+.v-hidden{
+visibility: hidden;
+}
+.v-visible{
+  visibility: visible;
+}
 .visible {
   display: block;
 }

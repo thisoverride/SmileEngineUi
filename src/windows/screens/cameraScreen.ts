@@ -1,17 +1,16 @@
-import { buttonCameraComponent } from "../windows/component/buttonCameraComponent";
+import { buttonCameraComponent } from "../component/buttonCameraComponent";
 
 export const cameraScreen =  `
 <div class="_home-wrp">
 <div class="camera-wrp">
 <div class="live-camera">
 <canvas class="canvas-test"></canvas>
-<div id="counter">10</div>
+<div class="v-hidden" id="counter"></div>
 </div>
   <div class="row camera-control">
+  ${buttonCameraComponent({id: "poulet",className: "previous",textContent:"",iconName: "previous.png", dataScreen:"selectionView"})}
   ${buttonCameraComponent({id:"btn-camera",className: "btn-camera",textContent:"",iconName: "camera.png"})}
 
-
-    
     <div class="timer-wrp">
     <div class="data-select">
       <div class="data-list">

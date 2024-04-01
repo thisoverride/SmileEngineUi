@@ -1,15 +1,40 @@
-export const modalComponent = `
-<div class="md-modal md-effect-1" id="modal-1">
-   <div class="md-content">
-      <div class="md-title">
-         <div class="md-header">
-         <h2 class="_md-title"></h2>
-            <button class="md-close" id="md-close">Annuler</button>
-         </div>
-         <div class="separator"></div>
-      </div>
-      <div id="md-body" class="md-body"></div>
-   </div>
+import { buttonPrimaryComponent } from "./buttonPrimaryComponent";
+export const modalComponent = (props: any) => `
+
+<div class="mle-reception ">
+  <div class="mle-header">
+    <div class="mle-title">${props.title}</div>
+    <button class="btn-mle">Annuler</button>
+  </div>
+  <div class="mle-body">
+
+
+    <div id="home-wrp" class="_home-wrp">
+      <div class="hello-speak">
+      <div class="applogo" style="background-image: url('/smile-engine.png');"></div>
+<h3>Choisissez le nombre de copie et<br /> lancez vos impressions :</h3>
+<div class="test-photo"></div>
+<div class="num-copy row">
+<div>-</div>
+<div class="num-of-copy">
+<span>3</span>
 </div>
-<div class="md-overlay"></div>
+<div>+</div>
+</div>
+<div class="btn-next">
+${buttonPrimaryComponent({ textContent: "Imprimer" })}
+</div>
+   
+        
+      </div>
+    </div>  
+
+    
+  </div>
+</div>
 `;
+
+// impression
+
+// <h3>Choisissez le nombre de copie et<br /> Impression en cours...:</h3>
+// <div>logo d'impression</div>

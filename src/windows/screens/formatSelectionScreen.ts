@@ -1,4 +1,4 @@
-import { buttonPrimaryComponent } from "../windows/component/buttonPrimaryComponent";
+import { buttonPrimaryComponent } from "../component/buttonPrimaryComponent";
 export const formatSelectionScreen =  `
 <div class="_home-wrp">
   <div class="_mode_selection_wrp">
@@ -12,12 +12,12 @@ export const formatSelectionScreen =  `
       ${buttonPrimaryComponent({
         className: "btn-secondary",
         textContent: "Précédent",
-        dateScreen: "selectionView"
+        dataScreen: "selectionView"
       })}
       ${buttonPrimaryComponent({
         className: "btn-primary",
         textContent: "Suivant",
-        dateScreen: "photoView"
+        dataScreen: "photoView"
       })}
       </div>
     </div>

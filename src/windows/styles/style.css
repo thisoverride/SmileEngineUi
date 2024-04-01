@@ -47,11 +47,14 @@
 html, body{
   height: 100%;
   user-select: none;
-  /* overflow-y: hidden; */
 }
 #root,#app {
   height: 100%;
-
+}
+#system-control{
+  font-family: 'bankgothic-regular';
+  background-color: red;
+  width: 100%;
 }
 /* ============COMPONENTS=============== */
 /* Primary BUTTON */
@@ -76,9 +79,20 @@ html, body{
 /* =======end======= */
 /* ============================== */
 
-/* .cameraScreen {
+/* .cameraScreen { */
 
-} */
+.previous{
+  margin-top: 10px;
+  height: 60px;
+  width: 110px;
+  background-color: #040B15;
+  background-repeat: no-repeat;
+  background-size: 45px;
+  background-position: center;
+  border-radius: 50px;
+  border: 2px solid #fff;
+}
+
 #counter {
   height: 100%;
   width: 100%;
@@ -87,7 +101,7 @@ html, body{
   align-items: center;
   background-color: #ffffff79;
   border-radius: 15px;
-  visibility: hidden;
+  /* visibility: hidden; */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -131,10 +145,9 @@ canvas {
   width: 100%;
 } 
 .camera-control {
-  /* background-color: red; */
   margin-top: 30px;
   gap: 30px;
-  font-size: 1.2em;
+  /* font-size: 1.2em; */
 }
 
 .btn-camera{
@@ -213,6 +226,17 @@ cursor: pointer;
 }
 /* end screenCamera */
 
+/* Screen confirmPhoto */
+.preview{
+  height: 500px;
+  width: 800px;
+  background-color: #eceded;
+}
+
+.btn-next{
+  width: 300px;
+}
+/* end confirmPhoto */
 .slash{
   height: 100%;
   width: 100%;
@@ -228,6 +252,16 @@ cursor: pointer;
   z-index: 1;
 }
 
+/* receptionSetpsScreen */
+
+.choice-recuperation-photo{
+  height: 400px;
+  width: 400px;
+  border-radius: 20px;
+  border: 2px solid #fff;
+  /* background-color: red; */
+}
+/* end */
 /* error */
 ._fatal-error-wrp{
   display: flex;
@@ -365,8 +399,8 @@ gap: 20px;
 
 .control-center{
   position: fixed;
-  height: 4%;
-  width: 3%;
+  height: 50px;
+  width: 50px;
 }
 
 .crl_pos-0 {
@@ -466,12 +500,11 @@ gap: 20px;
 	position: fixed;
 	width: 100%;
 	height: 100%;
-	visibility: hidden;
 	top: 0;
 	left: 0;
-	z-index: 1000;
-	opacity: 0;
-	background: rgba(40, 43, 49, 0.866);
+	z-index: 100;
+	opacity: 1;
+	background: rgba(40, 43, 49, 0.61);
 	-webkit-transition: all 0.3s;
 	transition: all 0.3s;
 }
@@ -808,5 +841,104 @@ visibility: hidden;
   /* transition: all 0.5s ease; */
 }
 
+/* step */
+
+.num-copy{
+height: 30px;
+width: 100px;
+gap: 10px;
+justify-content: center;
+align-items: center;
+border: 2px solid #fff;
+border-radius: 15px;
+}
+.num-of-copy{
+  display: flex;
+  height: 30px;
+  width: 30px;
+  border-radius: 50px;
+justify-content: center;
+align-items: center;
+color: #040B15;
+  background-color: #fff;
+}
+.test-photo{
+  height: 400px;
+  width: 600px;
+  background-color: rgb(192, 192, 192);
+}
+
+.mle-reception {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  transform: translate(-50%, -50%);
+  /* max-width: 500px; */
+  /* width: 500px; */
+  /* gap: 230px; */
+  padding-bottom: 10px;
+  background-color: #040B15;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  color: #fff;
+  /* z-index: 10; */
+}
 
 
+
+/* syscontreol  */
+
+.mle-system-wrp{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* max-width: 500px; */
+  width: 500px;
+  /* gap: 230px; */
+  padding-bottom: 10px;
+  background-color: #040B15;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  color: #fff;
+  z-index: 1000;
+}
+
+.mle-header{
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 15px;
+margin-bottom: 10px;
+border-bottom: 1px solid #6f6f6f;
+}
+
+.btn-mle{
+  border: none;
+  background-color: transparent;
+  color: #fff;
+}
+
+.statusBarMachine{
+  /* background-color: rebeccapurple; */
+  display: flex;
+  justify-content: flex-end;
+  /* z-index: 1000; */
+}
+
+.check_point{
+  height: 40px;
+  width: 40px;
+  background-color: red;
+  position: absolute;
+  top:0;
+  left: 0;
+  bottom: 0;
+}
+
+.network {
+  height: 40px;
+  width: 40px;
+  background-color: rgb(0, 64, 255);
+}

@@ -1,21 +1,25 @@
-import WindowService from "./services/WindowService";
-import DOMService from "./services/DOMService";
+import UserService from "./services/UserService";
+import DOMService from "./utils/DOMService";
 import "./windows/styles/normalize.css";
 import "./windows/styles/helpers.css";
 import "./windows/styles/style.css";
 import "boxicons";
-import NavigationController from "./controllers/NavigationController";
+import UserController from "./controllers/UserController";
 import ApplicationInitializer from "./core/ApplicationInitializer";
+import PanelService from "./services/PanelService";
+import PanelController from "./controllers/PanelController";
 
 class Main {
 
   public  Main(): void {
-    window.addEventListener('error', this.handleError)
     try {
       const domService = new DOMService();
-      const windowService = new WindowService(domService);
-      const navigationController = new NavigationController(windowService);
-      const applicationInitializer = new ApplicationInitializer(navigationController);
+      const windowService = new UserService(domService);
+      const userController = new UserController(windowService);
+      window.addEventListener('error', this.handleError);
+      const panelService = new PanelService(domService);
+      const panelController = new PanelController(panelService);
+      const applicationInitializer = new ApplicationInitializer(userController,panelController);
       applicationInitializer.initialize();
 
     } catch (e: any) {

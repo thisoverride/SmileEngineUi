@@ -1,24 +1,27 @@
-import NavigationController from "../controllers/NavigationController";
+import UserController from "../controllers/UserController";
+import PanelController from "../controllers/PanelController";
 
 export default class ApplicationInitializer {
-  private _navigationController: NavigationController
-  private _socket: WebSocket;
+  private _userController: UserController;
+  private _panelController: PanelController;
+  // private _socket: WebSocket;
   private connectionAttempts: number = 0;
   private maxAttempts: number = 3;
-  private connectionTimeout: number = 5000
+  private connectionTimeout: number = 5000;
 
 
-  constructor(navigationController: NavigationController){
-    this._navigationController = navigationController;
-    this._socket = new WebSocket('ws://192.168.1.52:3000');
-    this._socket.addEventListener('error', this.handleWebSocketError.bind(this));
-    this._socket.addEventListener('close', this.handleWebSocketClose.bind(this));
-    this._socket.addEventListener('open', this.handleWebSocketOpen.bind(this));
-    this._socket.addEventListener('message', this.handleWebSocketMessage.bind(this));
+  constructor(userController: UserController, panelController: PanelController){
+    this._userController = userController;
+    this._panelController = panelController;
+    // this._socket = new WebSocket('ws://192.168.1.52:3000');
+    // this._socket.addEventListener('error', this.handleWebSocketError.bind(this));
+    // this._socket.addEventListener('close', this.handleWebSocketClose.bind(this));
+    // this._socket.addEventListener('open', this.handleWebSocketOpen.bind(this));
+    // this._socket.addEventListener('message', this.handleWebSocketMessage.bind(this));
   }
 
   public initialize() {
-    console.log(this._socket)
+    // console.log(this._socket)
       const root: HTMLElement | null = document.getElementById('root');
       const applicationContainer: HTMLDivElement = document.createElement('div');
       applicationContainer.id= 'app';
@@ -28,10 +31,19 @@ export default class ApplicationInitializer {
       if(root){
         root.appendChild(systemControl);
         root.appendChild(applicationContainer);
-        this._navigationController.renderDefautlView()
+        this.controllerInitalization()
+        this._panelController.renderPanelAcessControl();
+        this._userController.renderDefautlView();
       } else {
         throw new Error('Cannot be access to root element')
       }
+    }
+
+    private controllerInitalization(): void{ 
+      document.addEventListener('changeScreen', (e: Event) => {
+        this._userController.navigationStack(e);
+        this._panelController.navigationStack(e);
+      });
     }
 
     private handleWebSocketOpen(event: Event) {
@@ -51,7 +63,7 @@ export default class ApplicationInitializer {
         this.connectionAttempts++;
         setTimeout(this.connectWebSocket.bind(this), 3000);
       } else {
-        throw new Error('Maximum number of connection attempts reached. Unable to connect.');
+        // throw new Error('Maximum number of connection attempts reached. Unable to connect.');
       }
     }
   
@@ -67,19 +79,19 @@ export default class ApplicationInitializer {
     }
   
     private connectWebSocket() {
-      console.log(`Attempting to connect to WebSocket (${this.connectionAttempts + 1}/${this.maxAttempts})...`);
-      this._socket = new WebSocket('ws://192.168.1.52:3000');
-      setTimeout(() => {
-        if (this._socket.readyState !== WebSocket.OPEN) {
-          // Fermer la connexion WebSocket si elle n'est pas encore ouverte après le timeout
-          this._socket.close();
-          // Lancer une exception si la connexion WebSocket n'a pas réussi dans le délai imparti
-          throw new Error('WebSocket connection timeout. Unable to connect.');
-        }
-      }, this.connectionTimeout);
-      this._socket.addEventListener('error', this.handleWebSocketError.bind(this));
-      this._socket.addEventListener('close', this.handleWebSocketClose.bind(this));
-      this._socket.addEventListener('open', this.handleWebSocketOpen.bind(this));
-      this._socket.addEventListener('message', this.handleWebSocketMessage.bind(this));
+      // console.log(`Attempting to connect to WebSocket (${this.connectionAttempts + 1}/${this.maxAttempts})...`);
+      // this._socket = new WebSocket('ws://192.168.1.52:3000');
+      // setTimeout(() => {
+      //   if (this._socket.readyState !== WebSocket.OPEN) {
+      //     // Fermer la connexion WebSocket si elle n'est pas encore ouverte après le timeout
+      //     this._socket.close();
+      //     // Lancer une exception si la connexion WebSocket n'a pas réussi dans le délai imparti
+      //     // throw new Error('WebSocket connection timeout. Unable to connect.');
+      //   }
+      // }, this.connectionTimeout);
+      // this._socket.addEventListener('error', this.handleWebSocketError.bind(this));
+      // this._socket.addEventListener('close', this.handleWebSocketClose.bind(this));
+      // this._socket.addEventListener('open', this.handleWebSocketOpen.bind(this));
+      // this._socket.addEventListener('message', this.handleWebSocketMessage.bind(this));
     }
 }
