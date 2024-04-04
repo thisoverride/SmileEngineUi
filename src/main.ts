@@ -1,25 +1,17 @@
-import UserService from "./services/UserService";
-import DOMService from "./utils/DOMService";
 import "./windows/styles/normalize.css";
 import "./windows/styles/helpers.css";
 import "./windows/styles/style.css";
+import 'animate.css';
 import "boxicons";
-import UserController from "./controllers/UserController";
 import ApplicationInitializer from "./core/ApplicationInitializer";
-import PanelService from "./services/PanelService";
-import PanelController from "./controllers/PanelController";
 
 class Main {
 
   public  Main(): void {
     try {
-      const domService = new DOMService();
-      const windowService = new UserService(domService);
-      const userController = new UserController(windowService);
       window.addEventListener('error', this.handleError);
-      const panelService = new PanelService(domService);
-      const panelController = new PanelController(panelService);
-      const applicationInitializer = new ApplicationInitializer(userController,panelController);
+    
+      const applicationInitializer = new ApplicationInitializer();
       applicationInitializer.initialize();
 
     } catch (e: any) {
@@ -60,3 +52,21 @@ class Main {
   }
 }
 new Main().Main()
+
+// window.ipcRenderer.on('main-process-message',(_e,message) => {
+
+//   // Créez un nouvel élément img
+// const qrCodeImg = document.createElement('img');
+
+// // Stockez l'URL du QR code dans l'attribut src de l'élément img
+// qrCodeImg.src = message; // Assurez-vous que "url" contient l'URL du QR code
+
+// // Ajoutez des attributs supplémentaires si nécessaire
+// qrCodeImg.alt = 'QR Code';
+
+
+// const qrCodeContainer = document.getElementById('root') as HTMLElement
+// qrCodeContainer.appendChild(qrCodeImg);
+
+//   console.log(message)
+// })

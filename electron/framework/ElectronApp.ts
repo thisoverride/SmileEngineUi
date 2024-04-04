@@ -1,6 +1,7 @@
 import path from 'path';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import EventService from './service/EventService';
+import QRCode from 'qrcode';
 
 export default class ElectronApp {
   private win: BrowserWindow | null;
@@ -43,6 +44,18 @@ export default class ElectronApp {
     this.win.webContents.on('did-finish-load', async () => {
       // Envoyez un message au processus de rendu (front-end)
       this.win?.webContents.send('main-process-message', 'communication avec le front ici');
+      this.win?.webContents.openDevTools();
+
+
+      // const imagePath = 'public/a.jpg';
+      // const imageUrl = 'http://192.168.1.39:8001/smile-storage/store/d085731d-9d5d-4b95-9546-953a2223bcc9';
+
+      // QRCode.toDataURL(imageUrl, { errorCorrectionLevel: 'H' }, (err, url) =>{
+      //   if (err) throw err;
+      //   this.win?.webContents.send('main-process-message',url)
+      // })
+  
+    
   
       // Démarrez le premier scan réseau
       const connectionDetail = await this._eventService.scanNetWork();
@@ -70,7 +83,6 @@ export default class ElectronApp {
     if (this.viteDevServerUrl) {
       this.win?.loadURL(this.viteDevServerUrl).then(() => {
         this.win?.show();
-        // this.win?.webContents.openDevTools();
         this.win?.webContents.send('inject-page', {
           data: this.dataPreload,
           context: this.currentContext,
@@ -80,8 +92,9 @@ export default class ElectronApp {
   }
 
   public start() {
-    
-    ipcMain.on('processingFinished', (_event, message) => {
+
+  
+  ipcMain.on('processingFinished', (_event, message) => {
       this.dataPreload = message;
     });
 

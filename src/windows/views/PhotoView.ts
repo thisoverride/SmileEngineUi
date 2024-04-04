@@ -1,10 +1,14 @@
+import { CameraCommand } from "../../@types/Service";
+
 export default class PhotoView {
   public cameraScreen: HTMLElement;
   private timerSelected: number = 3;
   private counterElement: HTMLElement;
+  private socket: WebSocket;
   
-  constructor(cameraScreen: HTMLElement) {
+  constructor(cameraScreen: HTMLElement,socket: WebSocket) {
     this.cameraScreen = cameraScreen;
+    this.socket = socket;
     this.counterElement = this.cameraScreen.querySelector('#counter') as HTMLElement;
     this.setup();
   }
@@ -44,11 +48,21 @@ export default class PhotoView {
         this.counterElement.style.opacity = '0';
         setTimeout(() => {
           if (count === 0) {
-            // this._socket.send('shooting');
+            const cameraCommand: CameraCommand = {
+              context: "shooting"
+            }
+            const commandData: string = JSON.stringify(cameraCommand);
+            this.socket.send(commandData);
+             this.socket.addEventListener('message',(e) => {
+              console.log(e)
+             })
             clearInterval(intervalId);
             this.counterElement.textContent = "";
             this.counterElement.style.opacity = '1';
             this.counterElement.style.background = "#ffff";
+            setTimeout(() => {
+              this.handleNextScreen()
+            }, 3000);
             return;
           } else {
             this.counterElement.textContent = count.toString();
@@ -62,21 +76,20 @@ export default class PhotoView {
     });
   }
 
-  // private setupSocket() {
-  //   const canvas = this.cameraScreen.querySelector('canvas') as HTMLCanvasElement;
-  //   const ctx = canvas.getContext('2d');
-  //   this._socket.send('Stream');
+  private setupSocket() {
+    const canvas = this.cameraScreen.querySelector('canvas') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d');
 
-  //   this._socket.addEventListener('message', (event) => {
-  //     const img = new Image();
-  //     img.onload = () => {
-  //       canvas.width = img.width;
-  //       canvas.height = img.height;
-  //       ctx?.drawImage(img, 0, 0);
-  //     };
-  //     img.src = event.data;
-  //   });
-  // }
+    this.socket.addEventListener('message', (event) => {
+      const img = new Image();
+      img.onload = () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx?.drawImage(img, 0, 0);
+      };
+      img.src = event.data;
+    });
+  }
 
   public setup() {
     const timer = this.cameraScreen.querySelector(".data-selected") as HTMLElement;
@@ -90,7 +103,16 @@ export default class PhotoView {
 
     this.setupTimer();
     this.setupCameraTrigger();
-    // this.setupSocket();
+    this.setupSocket();
+  }
+
+  private handleNextScreen(): void {
+    const changeScreen = new CustomEvent('changeScreen',{
+      detail: { set: 'previewPhoto'},
+      bubbles: true,
+      cancelable: true
+    });
+    document.dispatchEvent(changeScreen)
   }
 
   public getView() {

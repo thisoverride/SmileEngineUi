@@ -3,27 +3,31 @@ import DOMService from "../utils/DOMService";
 import { modeSelection } from "../windows/screens/modeSelectionScreen";
 import { cameraScreen } from "../windows/screens/cameraScreen";
 import { formatSelectionScreen } from "../windows/screens/formatSelectionScreen";
-import { confirmPhoto } from "../windows/screens/confirmPhotoScreen";
+import { previewPhotoScreen } from "../windows/screens/previewPhotoScreen";
 import { receptionStepsScreen } from "../windows/screens/receptionStepsScreen";
 import FormatSelectionView from "../windows/views/FormatSelectionView";
 import PhotoView from "../windows/views/PhotoView";
 import ModeSelectionView from "../windows/views/ModeSelectionView";
+import PreviewPhotoView from "../windows/views/previewPhotoView";
 
 
 export default class UserService {
   private _domService: DOMService;
-  private _formatSelectionView: FormatSelectionView | null= null;
   private _photoView: PhotoView | null = null;
-  private _modeSelectionScreen: ModeSelectionView | null = null;
+  private _formatSelectionView: FormatSelectionView | null= null;
+  private _modeSelectionView: ModeSelectionView | null = null;
+  private _previewPhotoView: PreviewPhotoView | null = null;
+  private socket: WebSocket;
 
-  constructor(domService: DOMService) {
+  constructor(domService: DOMService, socket: WebSocket) {
     this._domService = domService;
+    this.socket = socket;
   }
 
   public renderOptionPhotoView(): HTMLElement {
     if (!this._formatSelectionView) {
       const screen: HTMLElement = this._domService.stringToHTMLElement(formatSelectionScreen);
-      this._formatSelectionView = new FormatSelectionView(screen);
+      this._formatSelectionView = new FormatSelectionView(screen,this.socket);
     }
     return this._formatSelectionView.getScreen();
   }
@@ -31,21 +35,21 @@ export default class UserService {
   public renderPhotoView(): HTMLElement {
     if (!this._photoView) {
       const screen: HTMLElement = this._domService.stringToHTMLElement(cameraScreen);
-      this._photoView = new PhotoView(screen);
+      this._photoView = new PhotoView(screen,this.socket);
     }
     return this._photoView.getScreen();
   }
 
 
   public renderModeSelectionView(): HTMLElement {
-    if(!this._modeSelectionScreen){
+    if(!this._modeSelectionView){
       const modeSelectionScreen : HTMLElement = this._domService.stringToHTMLElement(modeSelection);
-      this._modeSelectionScreen = new ModeSelectionView(modeSelectionScreen);
+      this._modeSelectionView = new ModeSelectionView(modeSelectionScreen);
     }
-    this._modeSelectionScreen = null;
+    this._modeSelectionView = null;
     const modeSelectionScreen : HTMLElement = this._domService.stringToHTMLElement(modeSelection);
-      this._modeSelectionScreen = new ModeSelectionView(modeSelectionScreen);
-    return this._modeSelectionScreen.getScreen();
+      this._modeSelectionView = new ModeSelectionView(modeSelectionScreen);
+    return this._modeSelectionView.getScreen();
   }
 
   public renderHomeView(): HTMLElement {
@@ -56,11 +60,19 @@ export default class UserService {
   public renderBoomrangView(): HTMLElement {
     const screen : HTMLElement = this._domService.stringToHTMLElement(cameraScreen);
     return screen;
-  }
+  } 
 
-  public renderConfirmPhotoView(): HTMLElement {
-    const screen : HTMLElement = this._domService.stringToHTMLElement(confirmPhoto);
-    return screen;
+  public previewPhotoView(): HTMLElement {
+
+    if(!this._previewPhotoView){
+      const screen : HTMLElement = this._domService.stringToHTMLElement(previewPhotoScreen);
+      this._previewPhotoView = new PreviewPhotoView(screen,this.socket)
+    }
+    this._previewPhotoView = null;
+    const screen : HTMLElement = this._domService.stringToHTMLElement(previewPhotoScreen);
+      this._previewPhotoView = new PreviewPhotoView(screen,this.socket)
+    return this._previewPhotoView.getScreen();
+
   }
 
   public renderReceptionStepsScreen(): HTMLElement {

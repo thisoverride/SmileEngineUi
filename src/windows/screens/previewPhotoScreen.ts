@@ -1,5 +1,5 @@
 import { buttonPrimaryComponent } from "../component/buttonPrimaryComponent";
-export const confirmPhoto =  `
+export const previewPhotoScreen =  `
 <div class="_home-wrp">
   <div class="_mode_selection_wrp">
     <div class="logo">
@@ -8,7 +8,7 @@ export const confirmPhoto =  `
     <div class="col align-items-center gap-30">
       <div id="indicator-selection" class="poop"> Validez pour passer à la photo suivante :</div>
       <div class="row w-100 justify-center">
-        <div class="preview"></div>
+        <img src ="" class="preview"></div>
         </div>
         <div class="btn-next"> 
         ${buttonPrimaryComponent({
