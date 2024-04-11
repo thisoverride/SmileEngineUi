@@ -2,7 +2,7 @@ import type { App } from 'electron';
 import wifi, { type WiFiNetwork } from 'node-wifi';
 
 export default class EventService {
-
+ 
   public restartApp(electronApp: App): void {
     electronApp.relaunch()
     electronApp.exit();

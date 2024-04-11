@@ -1,7 +1,6 @@
 import path from 'path';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import EventService from './service/EventService';
-import type { WiFiNetwork } from 'node-wifi';
 
 export default class ElectronApp {
   private win: BrowserWindow | null;
@@ -27,10 +26,11 @@ export default class ElectronApp {
 
   private createWindow() {
     this.win = new BrowserWindow({
-      width: 900,
+      width: 900, 
       height: 700,
-      frame: false,
-      fullscreen: true,
+      // focusable:true,
+      // kiosk: true,
+      // frame: false,
       webPreferences: {
         preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true,
@@ -49,12 +49,12 @@ export default class ElectronApp {
       this.win?.webContents.send('scan-network', connectionDetail);
   
       // Définissez l'intervalle pour les scans réseau périodiques
-      setInterval(async () => {
-          const connectionDetail = await this._eventService.scanNetWork();
-          this.win?.webContents.send('scan-network', connectionDetail);
-      }, 15000);
+      // setInterval(async () => {
+      //     const connectionDetail = await this._eventService.scanNetWork();
+      //     this.win?.webContents.send('scan-network', connectionDetail);
+      // }, 100000);
   });
-  
+ 
     this.loadWindowContent();
   }
 
