@@ -20,7 +20,7 @@ export default class UserController {
         this.renderModeSelectionView();
         break;
       case 'photoView':
-        this.renderPhotoView()
+        this.renderPhotoView(event)
         break;
       case 'optionPhotoView':
         this.renderOptionPhotoView();
@@ -32,7 +32,7 @@ export default class UserController {
         this.renderReceptionStepsScreen();
         break;
       case 'previewPhoto':
-        this.renderPreviewPhoto()
+        this.renderPreviewPhoto(event)
         break;
       default:
         throw new Error(`Failed to access ${targetScreen} is not found`);
@@ -70,14 +70,14 @@ export default class UserController {
   
   }
   @InjectEvent()
-  private renderPreviewPhoto(){
-    const screen: HTMLElement = this.windowsService.previewPhotoView();
+  private renderPreviewPhoto(event : any){
+    const screen: HTMLElement = this.windowsService.previewPhotoView(event);
     this.render(screen, true)
   
   }
   @InjectEvent()
-  private renderPhotoView(){
-    const screen = this.windowsService.renderPhotoView()
+  private renderPhotoView(event: any){
+    const screen = this.windowsService.renderPhotoView(event)
     this.render(screen, true)
   
   }

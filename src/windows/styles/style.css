@@ -236,6 +236,17 @@ cursor: pointer;
 .btn-next{
   width: 300px;
 }
+.btn-trash{
+  background-image: url('../../../public/icon/trash.png');
+  background-repeat: no-repeat;
+  background-size: 45px;
+  border: 2px solid #fff;
+  background-color: #040B15;
+  background-position: center;
+  border-radius: 50px;
+  height: 70px;
+  width: 70px;
+}
 /* end confirmPhoto */
 .slash{
   height: 100%;
@@ -345,7 +356,7 @@ img {
   /* display: n; */
   flex-direction: column;
   align-items: center;
-  gap: 100px;
+  gap: 30px;
 
 }
 .poop{ 
@@ -407,13 +418,13 @@ gap: 20px;
   top: 0;
   left: 0;
   margin-right: auto;
-  background-color: green;
+  /* background-color: green; */
 }
 .crl_pos-1 {
   margin-top: auto;
   left: 0;
   bottom: 0;
-  background-color: red;
+  /* background-color: red; */
 }
 
 .crl_pos-2 {
@@ -421,7 +432,7 @@ gap: 20px;
   left: auto;  
   right: 0;  
   top: auto;  
-  background-color: blue;
+  /* background-color: blue; */
 }
  
 .control-center > ._state_machine:first-child{

@@ -1,12 +1,15 @@
-import { CameraCommand } from "../../@types/Service";
+import type { Socket } from "socket.io-client";
 
 export default class PhotoView {
   public cameraScreen: HTMLElement;
+  private socket: Socket;
   private timerSelected: number = 3;
   private counterElement: HTMLElement;
-  private socket: WebSocket;
+  private static readonly CHANGE_SCREEN_EVENT = new CustomEvent('changeScreen', {
+    detail: { set: '', params:'', emit: '',scope: '' }, bubbles: true, cancelable: true
+  });
   
-  constructor(cameraScreen: HTMLElement,socket: WebSocket) {
+  constructor(cameraScreen: HTMLElement,socket: Socket) {
     this.cameraScreen = cameraScreen;
     this.socket = socket;
     this.counterElement = this.cameraScreen.querySelector('#counter') as HTMLElement;
@@ -16,7 +19,7 @@ export default class PhotoView {
   private setupTimer() {
     const timerList = this.cameraScreen.querySelector('.data-list') as HTMLElement;
     const selectedValue = this.cameraScreen.querySelector('#selected') as HTMLElement;
-
+    
     selectedValue.textContent = `${this.timerSelected} s`;
 
     timerList.addEventListener('click', (e: Event) => {
@@ -37,33 +40,29 @@ export default class PhotoView {
       const btnTimerSelection = this.cameraScreen.querySelector('.data-selected') as HTMLElement;
       const btn = cameraTriggerBtn as HTMLButtonElement;
       const btnPrevious = this.cameraScreen.querySelector('.previous') as HTMLElement;
-
+      
       btnPrevious.classList.add('disabled');
       btn.classList.add('disabled');
       btnTimerSelection.classList.add('disabled')
       this.counterElement.classList.add('v-visible');
       this.counterElement.style.background = "#ffffff79";
-      let count = this.timerSelected;
+      let count: number = this.timerSelected;
+
+     
+  
       const updateCounter = () => {
         this.counterElement.style.opacity = '0';
         setTimeout(() => {
+     
           if (count === 0) {
-            const cameraCommand: CameraCommand = {
-              context: "shooting"
-            }
-            const commandData: string = JSON.stringify(cameraCommand);
-            this.socket.send(commandData);
-             this.socket.addEventListener('message',(e) => {
-              console.log(e)
-             })
+  
+            this.socket.emit('shooting',{data: "shooting"});
+           
             clearInterval(intervalId);
             this.counterElement.textContent = "";
             this.counterElement.style.opacity = '1';
             this.counterElement.style.background = "#ffff";
-            setTimeout(() => {
-              this.handleNextScreen()
-            }, 3000);
-            return;
+            return
           } else {
             this.counterElement.textContent = count.toString();
             this.counterElement.style.opacity = '1';
@@ -76,21 +75,22 @@ export default class PhotoView {
     });
   }
 
-  private setupSocket() {
-    const canvas = this.cameraScreen.querySelector('canvas') as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d');
+  public resetScreen(){
+    const cameraTriggerBtn = this.cameraScreen.querySelector('#btn-camera');
+    const btnTimerSelection = this.cameraScreen.querySelector('.data-selected') as HTMLElement;
+    const btn = cameraTriggerBtn as HTMLButtonElement;
+    const btnPrevious = this.cameraScreen.querySelector('.previous') as HTMLElement;
+    btnPrevious.classList.remove('disabled');
+    btn.classList.remove('disabled');
+    btnTimerSelection.classList.remove('disabled');
+    this.counterElement.style.background = "#ffffff79";
+    this.counterElement.style.opacity = '0';
 
-    this.socket.addEventListener('message', (event) => {
-      const img = new Image();
-      img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx?.drawImage(img, 0, 0);
-      };
-      img.src = event.data;
-    });
+    this.socket.emit('stream',{ data: "stream"});
   }
 
+  
+  
   public setup() {
     const timer = this.cameraScreen.querySelector(".data-selected") as HTMLElement;
     this.counterElement = this.cameraScreen.querySelector('#counter') as HTMLElement;
@@ -103,23 +103,54 @@ export default class PhotoView {
 
     this.setupTimer();
     this.setupCameraTrigger();
-    this.setupSocket();
+    this.setupSocketListeners();
   }
 
-  private handleNextScreen(): void {
-    const changeScreen = new CustomEvent('changeScreen',{
-      detail: { set: 'previewPhoto'},
-      bubbles: true,
-      cancelable: true
-    });
-    document.dispatchEvent(changeScreen)
+
+  private setupSocketListeners(): void {
+    this.socket.on('stream', this.handleStreamEvent);
+    this.socket.on('shooting', this.handleShootingEvent.bind(this));
+    this.socket.on('get-last-photo',this.handleGetLastPhotoEvent.bind(this))
   }
 
-  public getView() {
+  private handleStreamEvent: (event: any) => void = (event) => {
+    const canvas = this.cameraScreen.querySelector('canvas') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+    let img = new Image();
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+
+    };
+    img.src = event.data;
+  
+
+  };
+
+
+  private handleShootingEvent(event: any): void {
+    if(event.data === "OK"){
+      this.socket.emit('get-last-photo',{ data: "get-last-photo" });
+    }else {
+      this.socket.emit('get-last-photo',{data: "get-last-photo"}); // delete this
+    }
+  }
+
+  private handleGetLastPhotoEvent(event: any): void {
+    PhotoView.CHANGE_SCREEN_EVENT.detail.set = 'previewPhoto';
+    PhotoView.CHANGE_SCREEN_EVENT.detail.params = event.data;
+    PhotoView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL";
+    PhotoView.CHANGE_SCREEN_EVENT.detail.emit = PhotoView.name;
+    document.dispatchEvent(PhotoView.CHANGE_SCREEN_EVENT);
+  }
+
+
+  public getView(): this {
     return this
   }
 
-  public getScreen() {
+  public getScreen(): HTMLElement {
     return this.cameraScreen;
   }
 }

@@ -16,5 +16,9 @@ export default class EventService {
       return connectionDetail;
   }
 
+  public getTemplateMetaData () {
+    // make me a fonction  to open a json file
+  }
+
 }
 

@@ -1,5 +1,15 @@
 export default class ModeSelectionView {
   private formatSelectionScreen: HTMLElement;
+  private static readonly CHANGE_SCREEN_EVENT = new CustomEvent('changeScreen', {
+    detail: {
+      set: '',
+      params:'',
+      emit: '',
+      scope: ''
+    },
+    bubbles: true,
+    cancelable: true
+  });
 
   constructor(formatSelectionScreen: HTMLElement) {
     this.formatSelectionScreen = formatSelectionScreen;
@@ -42,28 +52,29 @@ export default class ModeSelectionView {
           if (transitionEvent.propertyName === "transform") {
             const element = event.currentTarget as HTMLElement;
             setTimeout(() => {
-              const changeScreen = new CustomEvent('changeScreen', {
-                detail: {
-                  set: ''
-                },
-                bubbles: true,
-                cancelable: true
-              });
 
               element.classList.add('fadeOut');
               if (element.id === "app-02") {
-                changeScreen.detail.set = 'optionBoomrangView';
-                document.dispatchEvent(changeScreen)
+                ModeSelectionView.CHANGE_SCREEN_EVENT.detail.set = 'optionBoomrangView';
+                ModeSelectionView.CHANGE_SCREEN_EVENT.detail.emit= ModeSelectionView.name;
+                ModeSelectionView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL";
+                document.dispatchEvent(ModeSelectionView.CHANGE_SCREEN_EVENT)
               }
-              if (element.id === "app-01") {
-                changeScreen.detail.set = 'optionPhotoView';
-                document.dispatchEvent(changeScreen)
+              if (element.id === "app-01") {        
+                ModeSelectionView.CHANGE_SCREEN_EVENT.detail.set = 'optionPhotoView';
+                ModeSelectionView.CHANGE_SCREEN_EVENT.detail.emit= ModeSelectionView.name;
+                ModeSelectionView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL";
+                document.dispatchEvent(ModeSelectionView.CHANGE_SCREEN_EVENT)
               }
-            }, 600);
+            }, 800);
           }
         });
       });
     }
+  }
+
+  private openStream() {
+
   }
 
   public renderView() {

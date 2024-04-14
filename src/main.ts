@@ -10,8 +10,7 @@ class Main {
   public  Main(): void {
     try {
       window.addEventListener('error', this.handleError);
-    
-      const applicationInitializer = new ApplicationInitializer();
+      const applicationInitializer = new ApplicationInitializer("ws://192.168.1.138:3000");
       applicationInitializer.initialize();
 
     } catch (e: any) {
@@ -25,7 +24,7 @@ class Main {
     if(e instanceof ErrorEvent){
         error = e.error
     }else{
-        error = e
+        error = e;
     }
     const errorStringify: string = String(error);
     const errTitleSplit = errorStringify.split('</>');
@@ -41,7 +40,7 @@ class Main {
     document.getElementById('root')!.innerHTML = 
     `<div id="_err" class="err-container">
         <div class="error-indicator">
-        <img id="_err_ico_loader" src=${'public/error-2.png'}>
+        <img id="_err_ico_loader" src=${'/error-2.png'}>
         </div>
         <div id="_err_body" class="_err">
         ${`<h3> > ${TitleError[0] ?? errorStringify}</h3>

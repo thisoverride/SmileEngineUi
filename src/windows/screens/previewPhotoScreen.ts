@@ -1,3 +1,4 @@
+import { buttonCameraComponent } from "../component/buttonCameraComponent";
 import { buttonPrimaryComponent } from "../component/buttonPrimaryComponent";
 export const previewPhotoScreen =  `
 <div class="_home-wrp">
@@ -8,8 +9,9 @@ export const previewPhotoScreen =  `
     <div class="col align-items-center gap-30">
       <div id="indicator-selection" class="poop"> Validez pour passer à la photo suivante :</div>
       <div class="row w-100 justify-center">
-        <img src ="" class="preview"></div>
+        <canvas class="canvas-test"></canvas>
         </div>
+        <div class="btn-trash"></div>
         <div class="btn-next"> 
         ${buttonPrimaryComponent({
           id:"1",

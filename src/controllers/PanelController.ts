@@ -21,7 +21,7 @@ export default class PanelController {
     }
   }
 
-  @InjectEvent()
+@InjectEvent()
 public renderPanelAcessControl(){
      const statusBar = this.panelService.mountPanelAccess();
      this.render(statusBar);

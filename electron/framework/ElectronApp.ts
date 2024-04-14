@@ -6,8 +6,6 @@ import QRCode from 'qrcode';
 export default class ElectronApp {
   private win: BrowserWindow | null;
   private viteDevServerUrl: string | undefined;
-  private currentContext: 'splashScreen' | 'mainWindow' = 'splashScreen';
-  private dataPreload: any = {};
   private _eventService: EventService;
 
   constructor(eventService: EventService) {
@@ -47,14 +45,17 @@ export default class ElectronApp {
       this.win?.webContents.openDevTools();
 
 
-      // const imagePath = 'public/a.jpg';
-      // const imageUrl = 'http://192.168.1.39:8001/smile-storage/store/d085731d-9d5d-4b95-9546-953a2223bcc9';
 
-      // QRCode.toDataURL(imageUrl, { errorCorrectionLevel: 'H' }, (err, url) =>{
-      //   if (err) throw err;
-      //   this.win?.webContents.send('main-process-message',url)
-      // })
-  
+      // const wifiConfig = `WIFI:T:${securityType};S:${ssid};P:${password};;`;
+
+      // QRCode.toDataURL(wifiConfig, { errorCorrectionLevel: 'H' }, (err, url) => {
+      //     if (err) {
+      //         console.error('Erreur lors de la génération du QR code :', err);
+      //     } else {
+      //         // Envoyer l'URL du QR code généré au processus principal
+      //         this.win?.webContents.send('main-process-message', url);
+      //     }
+      // });
     
   
       // Démarrez le premier scan réseau
@@ -79,30 +80,10 @@ export default class ElectronApp {
     }
   }
 
-  private loadMainWindowContent() {
-    if (this.viteDevServerUrl) {
-      this.win?.loadURL(this.viteDevServerUrl).then(() => {
-        this.win?.show();
-        this.win?.webContents.send('inject-page', {
-          data: this.dataPreload,
-          context: this.currentContext,
-        });
-      });
-    }
-  }
 
   public start() {
 
   
-  ipcMain.on('processingFinished', (_event, message) => {
-      this.dataPreload = message;
-    });
-
-    ipcMain.on('window-normalize', () => {
-      this.currentContext = 'mainWindow';
-      this.loadMainWindowContent();
-    });
-
     ipcMain.on('power-machine', () => {
       this._eventService.restartApp(app)
       console.log('power-marchine invoked')

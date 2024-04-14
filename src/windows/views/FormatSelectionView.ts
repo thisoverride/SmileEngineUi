@@ -1,8 +1,10 @@
+import type { Socket } from "socket.io-client";
+
 export default class FormatSelectionView {
   private formatSelectionScreen: HTMLElement;
-  private socket: WebSocket;
+  private socket: Socket;
 
-  constructor(formatSelectionScreen: HTMLElement, socket: WebSocket) {
+  constructor(formatSelectionScreen: HTMLElement, socket: Socket) {
     this.formatSelectionScreen = formatSelectionScreen;
     this.socket = socket;
     this.init()
@@ -10,11 +12,9 @@ export default class FormatSelectionView {
 
 
   private async init() {
-    const cameraCommand = {
-      context: "Stream"
-    }
-    const commandData: string = JSON.stringify(cameraCommand);
-    this.socket.send(commandData);
+    const cameraCommand = { data: "stream"}
+
+    this.socket.emit('stream',cameraCommand);
   }
 
   public renderView() {

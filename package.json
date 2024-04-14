@@ -30,6 +30,7 @@
     "boxicons": "^2.1.4",
     "face-api.js": "^0.22.2",
     "node-wifi": "^2.0.16",
-    "qrcode": "^1.5.3"
+    "qrcode": "^1.5.3",
+    "socket.io-client": "^4.7.5"
   }
 }

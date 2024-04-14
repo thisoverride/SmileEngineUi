@@ -8,7 +8,8 @@ import { receptionStepsScreen } from "../windows/screens/receptionStepsScreen";
 import FormatSelectionView from "../windows/views/FormatSelectionView";
 import PhotoView from "../windows/views/PhotoView";
 import ModeSelectionView from "../windows/views/ModeSelectionView";
-import PreviewPhotoView from "../windows/views/previewPhotoView";
+import PreviewPhotoView from "../windows/views/PreviewPhotoView";
+import type { Socket } from "socket.io-client";
 
 
 export default class UserService {
@@ -17,9 +18,9 @@ export default class UserService {
   private _formatSelectionView: FormatSelectionView | null= null;
   private _modeSelectionView: ModeSelectionView | null = null;
   private _previewPhotoView: PreviewPhotoView | null = null;
-  private socket: WebSocket;
+  private socket: Socket;
 
-  constructor(domService: DOMService, socket: WebSocket) {
+  constructor(domService: DOMService, socket: Socket) {
     this._domService = domService;
     this.socket = socket;
   }
@@ -32,7 +33,10 @@ export default class UserService {
     return this._formatSelectionView.getScreen();
   }
 
-  public renderPhotoView(): HTMLElement {
+  public renderPhotoView(event: any): HTMLElement {
+  if(event.detail.params === "retray") {
+    this._photoView?.resetScreen()
+  }
     if (!this._photoView) {
       const screen: HTMLElement = this._domService.stringToHTMLElement(cameraScreen);
       this._photoView = new PhotoView(screen,this.socket);
@@ -43,9 +47,11 @@ export default class UserService {
 
   public renderModeSelectionView(): HTMLElement {
     if(!this._modeSelectionView){
+      this._modeSelectionView = null;
       const modeSelectionScreen : HTMLElement = this._domService.stringToHTMLElement(modeSelection);
       this._modeSelectionView = new ModeSelectionView(modeSelectionScreen);
     }
+
     this._modeSelectionView = null;
     const modeSelectionScreen : HTMLElement = this._domService.stringToHTMLElement(modeSelection);
       this._modeSelectionView = new ModeSelectionView(modeSelectionScreen);
@@ -62,15 +68,12 @@ export default class UserService {
     return screen;
   } 
 
-  public previewPhotoView(): HTMLElement {
+  public previewPhotoView(event: any): HTMLElement {
 
     if(!this._previewPhotoView){
       const screen : HTMLElement = this._domService.stringToHTMLElement(previewPhotoScreen);
-      this._previewPhotoView = new PreviewPhotoView(screen,this.socket)
+      this._previewPhotoView = new PreviewPhotoView(screen,this.socket,event)
     }
-    this._previewPhotoView = null;
-    const screen : HTMLElement = this._domService.stringToHTMLElement(previewPhotoScreen);
-      this._previewPhotoView = new PreviewPhotoView(screen,this.socket)
     return this._previewPhotoView.getScreen();
 
   }
