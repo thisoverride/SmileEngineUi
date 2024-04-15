@@ -1,5 +1,8 @@
 /* ROOT */
-
+@font-face {
+  font-family: 'bankgothic-regular';
+  src: url('/font/NexaBold/nexa_bold.otf') format('opentype');
+}
 .sme-icon {
   height: 40px;
 }
@@ -26,10 +29,7 @@
   height: 70px;
   width: 70px;
 }
-@font-face {
-  font-family: 'bankgothic-regular';
-  src: url('/font/NexaBold/nexa_bold.otf') format('opentype');
-}
+
 
 /* headerLogo */
 
@@ -908,7 +908,8 @@ color: #040B15;
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 50%;
+  width: 500px;
+  height: 580px;
   transform: translate(-50%, -50%);
   /* max-width: 500px; */
   /* width: 500px; */
@@ -922,17 +923,78 @@ color: #040B15;
 }
 
 
+/* ============================================================= */
 
-/* syscontreol  */
+.modal-container{
+  top: 50%;
+  left: 50%;
+  width: 580px;
+  height: 580px;
+  display: flex;
+  flex-direction: column;
+  transform: translate(-50%, -50%);
+  background-color: #040B15;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  position: absolute;
+}
+
+.modal-head{
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 15px;
+margin-bottom: 10px;
+border-bottom: 1px solid #6f6f6f;
+}
+
+.modal-body{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+height: 100%;
+}
+.qrcode{
+  display: flex; 
+  /* display: none; */
+  justify-content: space-evenly;
+ flex-direction: column;
+ height: 100%;
+ width: 100%;
+}
+.qrcode-container{
+  justify-content: space-evenly;
+  width: 100%;
+
+}
+.qrcode-img > img {
+  height: 150px;
+  width: 150px;
+  padding-bottom: 10px;
+}
+.print{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  display: none;
+}
+/* ============================================================= */
+
+
+/* =====================syscontrol============== */
 
 .mle-system-wrp{
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* max-width: 500px; */
   width: 500px;
-  /* gap: 230px; */
   padding-bottom: 10px;
   background-color: #040B15;
   border: 1px solid #fff;
@@ -949,7 +1011,6 @@ padding: 15px;
 margin-bottom: 10px;
 border-bottom: 1px solid #6f6f6f;
 }
-
 .btn-mle{
   border: none;
   background-color: transparent;
@@ -978,3 +1039,4 @@ border-bottom: 1px solid #6f6f6f;
   width: 40px;
   background-color: rgb(0, 64, 255);
 }
+/* ============================================================= */

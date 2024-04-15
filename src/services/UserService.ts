@@ -59,7 +59,7 @@ export default class UserService {
   }
 
   public renderHomeView(): HTMLElement {
-    const screen : HTMLElement = this._domService.stringToHTMLElement(homeScreen);  
+    const screen : HTMLElement = this._domService.stringToHTMLElement(receptionStepsScreen);  
     return screen;
   }
 
@@ -69,13 +69,10 @@ export default class UserService {
   } 
 
   public previewPhotoView(event: any): HTMLElement {
-
-    if(!this._previewPhotoView){
-      const screen : HTMLElement = this._domService.stringToHTMLElement(previewPhotoScreen);
-      this._previewPhotoView = new PreviewPhotoView(screen,this.socket,event)
-    }
+    const screen : HTMLElement = this._domService.stringToHTMLElement(previewPhotoScreen);
+    this._previewPhotoView = new PreviewPhotoView(screen,this.socket,event)
+    
     return this._previewPhotoView.getScreen();
-
   }
 
   public renderReceptionStepsScreen(): HTMLElement {

@@ -1,4 +1,5 @@
 import { buttonPrimaryComponent } from "../component/buttonPrimaryComponent";
+import { modalComponent } from "../component/modalComponent";
 export const receptionStepsScreen =  `
 <div class="_home-wrp">
   <div class="_mode_selection_wrp">
@@ -16,16 +17,9 @@ export const receptionStepsScreen =  `
           <div class="row">aaaa</div>
         </div>
         </div>
-        <div class="btn-next"> 
-        ${buttonPrimaryComponent({
-          id:"1",
-          className:"btn-primary",
-          dataScreen:"homeView",
-          textContent :"Terminé",
-        })}
-        </div>
     </div>
   </div>
+  ${modalComponent({title:"aaz"})}
 </div>
   `;
 
