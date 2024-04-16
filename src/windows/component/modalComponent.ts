@@ -1,10 +1,9 @@
-import { buttonPrimaryComponent } from "./buttonPrimaryComponent";
 export const modalComponent = (props: any) => `
 
 <div class="modal-container v-hidden">
 	<div class="modal-head">
 		<div id="modal-title">${props.title}</div>
-		<div id="modal-action">annuler</div>
+		<button class="btn-mle" id="modal-action">annuler</button>
 	</div>
 	<div class="modal-body">
 		<div class="qrcode">

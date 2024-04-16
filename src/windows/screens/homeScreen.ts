@@ -1,4 +1,3 @@
-import { modalComponent } from "../component/modalComponent";
 export const homeScreen =  `
 <div id="home-wrp" class="_home-wrp" data-screen="selectionView">
   <div class="hello-speak">

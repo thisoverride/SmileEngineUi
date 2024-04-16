@@ -203,7 +203,6 @@ background-color: #ffffffd5;
 }
 .data-list > div {
   padding-top: 3px;
-  /* background-color: rebeccapurple; */
 }
 .data-list div:hover {
   color: #040B15;
@@ -272,7 +271,26 @@ cursor: pointer;
   border: 2px solid #fff;
   /* background-color: red; */
 }
-/* end */
+
+.btn-printer , .btn-qrcode, .btn-home{
+  background-repeat: no-repeat;
+  background-size: 45px;
+  background-color: #040B15;
+  background-position: center;
+  border: none;
+  height: 70px;
+  width: 70px;
+}
+.btn-printer{
+  background-image: url('../../../public/icon/printer.png');
+}
+.btn-qrcode {
+  background-image: url('../../../public/icon/qrcode.png');
+}
+.btn-home {
+  background-image: url('../../../public/icon/home.png');
+}
+/* receptionSetpsScreen end */
 /* error */
 ._fatal-error-wrp{
   display: flex;
@@ -957,8 +975,7 @@ justify-content: center;
 height: 100%;
 }
 .qrcode{
-  display: flex; 
-  /* display: none; */
+  display: none; 
   justify-content: space-evenly;
  flex-direction: column;
  height: 100%;
@@ -975,14 +992,14 @@ height: 100%;
   padding-bottom: 10px;
 }
 .print{
-  display: flex;
+  display: none; 
   text-align: center;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   height: 100%;
   width: 100%;
-  display: none;
+  /* display: none; */
 }
 /* ============================================================= */
 

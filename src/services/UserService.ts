@@ -10,6 +10,7 @@ import PhotoView from "../windows/views/PhotoView";
 import ModeSelectionView from "../windows/views/ModeSelectionView";
 import PreviewPhotoView from "../windows/views/PreviewPhotoView";
 import type { Socket } from "socket.io-client";
+import ReceptionSteps from "../windows/views/ReceptionSteps";
 
 
 export default class UserService {
@@ -59,7 +60,7 @@ export default class UserService {
   }
 
   public renderHomeView(): HTMLElement {
-    const screen : HTMLElement = this._domService.stringToHTMLElement(receptionStepsScreen);  
+    const screen : HTMLElement = this._domService.stringToHTMLElement(homeScreen); 
     return screen;
   }
 
@@ -77,7 +78,8 @@ export default class UserService {
 
   public renderReceptionStepsScreen(): HTMLElement {
     const screen : HTMLElement = this._domService.stringToHTMLElement(receptionStepsScreen);
-    return screen;
+    const receptionStepsView = new ReceptionSteps(screen);
+    return receptionStepsView.getScreen();
   }
 
 }
