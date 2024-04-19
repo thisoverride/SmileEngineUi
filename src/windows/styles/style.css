@@ -1036,8 +1036,8 @@ color: #040B15;
 .modal-container{
   top: 50%;
   left: 50%;
-  height: 900px;
-  width: 780px;
+  height: 600px;
+  width: 686px;
   display: flex;
   flex-direction: column;
   transform: translate(-50%, -50%);
@@ -1098,11 +1098,17 @@ height: 100%;
 .print{
   display: none; 
   text-align: center;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
   height: 100%;
   width: 100%;
+}
+
+.print button {
+  font-size: 0.7em;
+  height: 40px;
+  width: 200px;
 }
 
 .border-container {

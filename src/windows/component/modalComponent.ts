@@ -1,3 +1,5 @@
+import { buttonPrimaryComponent } from "./buttonPrimaryComponent";
+
 export const modalComponent = (props: any) => `
 
 <div class="modal-container v-hidden">
@@ -22,7 +24,7 @@ export const modalComponent = (props: any) => `
 				</div>
 			</div>
 		</div>
-    <div class="print gap-30">
+    <div class="print">
       <h3>
         Choisissez le nombre de copie et<br />
         lancez vos impressions :
@@ -34,6 +36,11 @@ export const modalComponent = (props: any) => `
         </div>
         <div>+</div>
       </div>
+			${buttonPrimaryComponent({ 
+				id:"home",
+				dataScreen: "homeView",
+				textContent: "Retour à l'acceuil"
+			 })}
     </div>
 	</div>
 </div>

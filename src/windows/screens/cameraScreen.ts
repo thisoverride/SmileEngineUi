@@ -7,7 +7,7 @@ export const cameraScreen =  `
 <div class="v-hidden" id="counter"></div>
 </div>
   <div class="row align-items-center camera-control">
-  ${buttonCameraComponent({id: "btn-return",className: "previous",textContent:"",iconName: "previous.png", dataScreen:"selectionView"})}
+  ${buttonCameraComponent({id: "btn-return",className: "previous",textContent:"",iconName: "previous.png", dataScreen:"optionPhotoView"})}
   ${buttonCameraComponent({id:"btn-camera",className: "btn-camera",textContent:"",iconName: "camera.png"})}
 
     <div class="timer-wrp">

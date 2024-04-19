@@ -10,7 +10,8 @@ export default class PhotoView {
     detail: { set: '', params:'', emit: '',scope: '' }, bubbles: true, cancelable: true
   });
   
-  constructor(cameraScreen: HTMLElement,socket: Socket) {
+  constructor(cameraScreen: HTMLElement,socket: Socket, photoCollageTemplate: any) {
+    console.log(photoCollageTemplate)
     this.cameraScreen = cameraScreen;
     this.socket = socket;
     this.counterElement = this.cameraScreen.querySelector('#counter') as HTMLElement;
