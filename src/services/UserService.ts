@@ -41,7 +41,7 @@ export default class UserService {
   }
     if (!this._photoView) {
       const screen: HTMLElement = this._domService.stringToHTMLElement(cameraScreen);
-      this._photoView = new PhotoView(screen,this.socket);
+      this._photoView = new PhotoView(screen,this.socket, event);
     }
     return this._photoView.getScreen();
   }
@@ -63,8 +63,6 @@ export default class UserService {
   public renderHomeView(): HTMLElement {
     const screen : HTMLElement = this._domService.stringToHTMLElement(homeScreen); 
     const homeViewBuiness = new HomeView(screen,this.socket);
-    // const receptionStepsView = new ReceptionSteps(screen);
-    // return receptionStepsView.getScreen();
 
     return homeViewBuiness.getScreen();
   }

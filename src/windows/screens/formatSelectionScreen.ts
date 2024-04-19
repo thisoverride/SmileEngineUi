@@ -14,6 +14,7 @@ export const formatSelectionScreen =  `
         dataScreen: "selectionView"
       })}
       ${buttonPrimaryComponent({
+        id:"btn-next-action",
         className: "btn-primary btn-collage-action",
         textContent: "Suivant",
         dataScreen: "photoView"
