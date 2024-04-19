@@ -1,13 +1,12 @@
 import { buttonCameraComponent } from "../component/buttonCameraComponent";
 
 export const cameraScreen =  `
-<div class="_home-wrp">
 <div class="camera-wrp">
 <div class="live-camera">
 <canvas class="canvas-test"></canvas>
 <div class="v-hidden" id="counter"></div>
 </div>
-  <div class="row camera-control">
+  <div class="row align-items-center camera-control">
   ${buttonCameraComponent({id: "btn-return",className: "previous",textContent:"",iconName: "previous.png", dataScreen:"selectionView"})}
   ${buttonCameraComponent({id:"btn-camera",className: "btn-camera",textContent:"",iconName: "camera.png"})}
 
@@ -28,8 +27,6 @@ export const cameraScreen =  `
   </div>
   </div>
 </div>
-</div>
-
   `;
   
 

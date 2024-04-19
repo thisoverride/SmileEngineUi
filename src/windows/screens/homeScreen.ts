@@ -1,10 +1,11 @@
+import { modalComponent } from "../component/modalComponent";
 export const homeScreen =  `
 <div id="home-wrp" class="_home-wrp" data-screen="selectionView">
   <div class="hello-speak">
 
 <div class="applogo" style="background-image: url('icon/smile-engine.png');"></div>
     <h1>
-      Captuerez des<br />
+      Capturez des<br />
       souvenirs<br />
       inoubliables !
     </h1>
@@ -13,6 +14,7 @@ export const homeScreen =  `
       commencer
     </div>
   </div>
+  ${modalComponent({title: "Warning"})}
 </div>
   `;
 

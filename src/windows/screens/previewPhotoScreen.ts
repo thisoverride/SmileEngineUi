@@ -1,12 +1,11 @@
 import { buttonPrimaryComponent } from "../component/buttonPrimaryComponent";
 export const previewPhotoScreen =  `
-<div class="_home-wrp">
-  <div class="_mode_selection_wrp">
-    <div class="logo">
-    <div class="applogo" style="background-image: url('icon/smile-engine.png');"></div>
-    </div>
-    <div class="col align-items-center gap-30">
-      <div id="indicator-selection" class="poop"> Validez pour passer à la photo suivante :</div>
+  <div class="_photo_preview_wrp">
+  <div class="smile-engine-logo">
+  <div class="smile-engine-logo-applogo" style="background-image: url('icon/smile-engine.png');"></div>
+  </div>
+    <div class="col align-items-center gap-15">
+      <div class="text-indicator-selection"> Validez pour passer à la photo suivante :</div>
       <div class="row w-100 justify-center">
         <canvas class="canvas-test"></canvas>
         </div>
@@ -20,6 +19,5 @@ export const previewPhotoScreen =  `
         </div>
     </div>
   </div>
-</div>
   `;
 

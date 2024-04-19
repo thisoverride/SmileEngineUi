@@ -27,7 +27,9 @@
 .text-center {
   text-align: center;
 }
-
+.wrap{
+  flex-wrap: wrap;
+}
 .w-100{
   width: 100%;
 }

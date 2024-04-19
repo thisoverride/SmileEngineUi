@@ -125,10 +125,10 @@ export default class PhotoView {
 
   private handleStreamEvent: (event: any) => void = (event) => {
     const canvas = this.cameraScreen.querySelector('canvas') as HTMLCanvasElement;
-    const errorIndicator = this.cameraScreen.querySelector('.camera-wrp') as HTMLElement;
+    const errorIndicator = document.querySelector('.camera-wrp') as HTMLElement;
 
     if(event.data === "OBJECT_NOTREADY" && this.objectReady) {
-        errorIndicator.style.border = "5px solid red";
+        errorIndicator.style.border = "5px solid #DF4138";
         this.objectReady = false; // Marque que l'objet n'est pas prêt
     } else if (event.data !== "OBJECT_NOTREADY" && !this.objectReady) {
         errorIndicator.style.border = "5px solid transparent";

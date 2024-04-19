@@ -10,8 +10,8 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  height: 100px;
-  width: 100px;
+  height: 335px;
+  width: 348px;
 }
 .app-ico{
   display: flex;
@@ -31,13 +31,7 @@
 }
 
 
-/* headerLogo */
 
-.logo{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 *{
   padding: 0;
@@ -47,21 +41,33 @@
 html, body{
   height: 100%;
   user-select: none;
+  background-color: #040B15;
+  color: #fff;
+  font-family: 'bankgothic-regular';
 }
 #root,#app {
   height: 100%;
 }
 #system-control{
-  font-family: 'bankgothic-regular';
   background-color: red;
   width: 100%;
+}
+
+
+/* headerLogo */
+
+.logo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 /* ============COMPONENTS=============== */
 /* Primary BUTTON */
 .btn-primary , .btn-secondary{
-  height: 40px;
+  font-size: 2em;
+  height: 74px;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 46px;
 
 }
 
@@ -72,22 +78,60 @@ html, body{
 }
 
 .btn-primary{
+  color: #040B15;
   background-color: #fff;
   border: none;
 }
 
-/* =======end======= */
-/* ============================== */
+/* =======End COMPONENTS======= */
 
-/* .cameraScreen { */
+/* ====================formatSelectionScreen ====================*/
+
+.format-selection-wrp{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 117px;
+}
+
+.collage {
+  display: flex;
+  background-color: rgb(198, 197, 197);
+  height: 40vh;
+  width: 100%;
+}
+
+.btn-collage-action{
+  width: 30%;
+}
+
+
+/* ==================== END formatSelectionScreen ====================*/
+
+/* ====================  cameraScreen ====================  { */
+
+  .btn-camera{
+    height: 180px;
+    width: 180px;
+    border-radius: 100px;
+    border: 2px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-size: 100px;
+    background-position: center;
+    background-color: #040B15;  
+  }
 
 .previous{
   margin-top: 10px;
-  height: 60px;
-  width: 110px;
+  height: 80px;
+  width: 150px;
   background-color: #040B15;
   background-repeat: no-repeat;
-  background-size: 45px;
+  background-size: 50px;
   background-position: center;
   border-radius: 50px;
   border: 2px solid #fff;
@@ -120,34 +164,19 @@ html, body{
 }
 
 .camera-wrp {
-  /* align-self: flex-start; */
-  /* margin-top: 30px; */
   border: 5px solid transparent;
   padding: 20px;
-  /* flex: 2; */
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  /* background-color: #3891a6; */
-
 }
 
-video {
-  background-color: red;
-  border-radius: 15px;
-  height: 1040px;
-  width: 100%;
-}
 canvas {
-
-  /* background-color: #6d6b6b; */
   border-radius: 15px;
-  height: 1040px;
+  height: 1120px;
   width: 100%;
-  
 }
 
 
@@ -158,22 +187,9 @@ canvas {
 .camera-control {
   margin-top: 30px;
   gap: 30px;
-  /* font-size: 1.2em; */
 }
 
-.btn-camera{
-  height: 80px;
-  width: 80px;
-  border-radius: 50px;
-  border: 2px solid #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-repeat: no-repeat;
-  background-size: 45px;
-  background-position: center;
-  background-color: #040B15;  
-}
+
 
 .btn-camera:active, .data-selected:active, .btn-primary:active, .btn-secondary:active{
 background-color: #ffffffd5;  
@@ -193,17 +209,17 @@ background-color: #ffffffd5;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  position: absolute; /* Position absolue par rapport au parent */
-  left: 55%; /* Positionnement horizontal au milieu */
-  top: 50%; /* Positionnement vertical au milieu */
-  transform: translate(-50%, -50%); /* Recentrage */
+  position: absolute; 
+  left: 75%;
+  top: 80%;
+  transform: translate(-50%, -50%);
   height: 150px;
   border-top: 2px solid #fff;
   border-left: 2px solid #fff;
   border-right: 2px solid #fff;
   text-align: center;
   background-color: #040B15;  
-  width: 109px;
+  width: 130px;
   font-size: 1.2em;
 }
 
@@ -217,11 +233,12 @@ background-color: #ffffffd5;
 }
 .data-list div:hover {
   color: #040B15;
-background-color: #ffff;
-cursor: pointer; 
+  background-color: #ffff;
+  cursor: pointer; 
 }
 .data-selected {
   position: absolute; 
+  top: 200px;
   bottom: 0;
   left: 0; 
   display: flex;
@@ -229,14 +246,21 @@ cursor: pointer;
   justify-content: space-evenly;
   align-items: center;
   background-color: #040B15;  
-  /* gap: 10px; */
-  height: 60px;
-  width: 110px;
+  height: 80px;
+  width: 150px;
   border-radius: 50px;
+  font-size: 1.5em;
 }
-/* end screenCamera */
+/* ======================end screenCamera======================= */
 
-/* Screen confirmPhoto */
+/* =================== PreviewPhotoScreen=================== */
+
+._photo_preview_wrp{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
 .preview{
   height: 500px;
   width: 800px;
@@ -257,7 +281,7 @@ cursor: pointer;
   height: 70px;
   width: 70px;
 }
-/* end confirmPhoto */
+/*  =================== end PreviewPhotoScreen=================== */
 .slash{
   height: 100%;
   width: 100%;
@@ -265,7 +289,6 @@ cursor: pointer;
   gap: 30px;
   color: #fff;
   background-color: #000;
-  font-family: 'bankgothic-regular';
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -284,7 +307,7 @@ cursor: pointer;
   height: 40px;
   width: 0;
   max-width: 355px;
-  animation: progress 3s linear infinite, text-color 3s linear infinite; /* Ajoutez l'animation de couleur de texte */
+  animation: progress 3s linear infinite, text-color 3s linear infinite;
 }
 
 @keyframes progress {
@@ -295,15 +318,15 @@ cursor: pointer;
 
 @keyframes text-color {
   0% {
-    color: white; /* Le texte débute en blanc */
+    color: white; 
   }
   50% {
-    color: white; /* Le texte reste blanc à mi-chemin */
+    color: white; 
   }
   100% {
     .btn-secondary{
 
-      color: black; /* Le texte devient noir une fois l'élément rempli */
+      color: black;
     }
   }
 }
@@ -345,7 +368,6 @@ cursor: pointer;
   gap: 5%;
   height: 100%;
   text-align: center;
-  font-family: 'bankgothic-regular';
   color: #fff;
 }
 
@@ -386,16 +408,10 @@ img {
 /* Introduction */
 
 ._home-wrp {
-  /* transition: 5s; */
   height: 100%;
   display: flex;  
   justify-content: center;
-  /* align-items: center; */
-  font-family: 'bankgothic-regular';
   color: #fff;
-  background-color: #040B15;  
-  /* background-size: 400% 400%; */
-  /* animation: gradient 15s ease infinite; */
 }
  
 ._home-wrp > .hello-speak {
@@ -403,32 +419,41 @@ img {
 /* display: none; */
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  gap: 50px;
+  justify-content: center;
+  gap: 140px;
   text-align: center;
 }
 .indicator{
   font-size: 2em;
-  padding: 18px;
-  border-radius: 30px;
+  padding: 32px 80px;
+  border-radius: 100px;
   border: 1px solid #fff;
-  /* width: 250px; */
 }
 ._home-wrp > .hello-speak >h1 {
   font-size: 5em;
-  /* font-size: 550%; */
 }
 
+/* ==============mode selction screen ===================== */
 ._mode_selection_wrp{
   display: flex;
-  /* display: n; */
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 300px;
 
 }
-.poop{ 
-  font-size: 2em;
+.smile-engine-logo-applogo {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  height: 300px;
+  width: 300px;
+}
+.smile-engine-logo{
+  margin-top: 200px;
+}
+.text-indicator-selection{ 
+  font-size: 3em;
+  text-align: center;
 }
 
 .mode-app {
@@ -437,6 +462,7 @@ flex-direction: column;
 text-align: center;
 gap: 20px;
 }
+
 .mode-icon{
   display: flex;
   justify-content: center;
@@ -447,6 +473,36 @@ gap: 20px;
   border-radius: 30px;
 }
 
+.icon-mode-selection{
+  position: absolute;
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  width: 100px;
+  height: 130px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.4s ease;
+}
+
+.title-app{
+  font-size: 1.8em;
+  margin-top: 20px;
+
+}
+
+.app-wrp{
+  text-align: center;
+  background-color: red;
+  border: 2px solid #fff;
+  height: 200px;
+  width: 200px;
+  border-radius: 60px;
+  background-color: #040B15;
+  position: relative;
+}
+/* ============================= */
 ._state_machine{
   position: absolute;
   top: 0;
@@ -554,7 +610,6 @@ gap: 20px;
 
 
 .md-modal {
-  font-family: 'bankgothic-regular';
   position: fixed;
   top: 50%;
   left: 50%;
@@ -928,22 +983,7 @@ visibility: hidden;
 
 
 
-.title-app{
-  margin-top: 20px;
 
-}
-
-.app-wrp{
-  border: 2px solid #fff;
-  height: 100px;
-  width: 100px;
-  border-radius: 30px;
-  background-color: #040B15;
-  /* height: 100vh;
-  width: 100%; */
-  position: relative;
-  /* transition: all 0.5s ease; */
-}
 
 /* step */
 
