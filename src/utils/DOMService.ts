@@ -8,6 +8,13 @@ export default class DOMService {
     return wrapper;
   }
 
+
+  public stringToHTMLElement(htmlString: string){
+    const template = document.createElement('template');
+    template.innerHTML = htmlString.trim(); 
+    return template.content.firstChild as HTMLElement;
+  }
+
   public createDocumentFragmentFromHTML(htmlString: string): DocumentFragment {
     const range = document.createRange();
     const fragment = range.createContextualFragment(htmlString.trim());

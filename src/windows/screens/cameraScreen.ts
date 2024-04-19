@@ -1,17 +1,15 @@
-import { buttonCameraComponent } from "../windows/component/buttonCameraComponent";
+import { buttonCameraComponent } from "../component/buttonCameraComponent";
 
 export const cameraScreen =  `
-<div class="_home-wrp">
 <div class="camera-wrp">
 <div class="live-camera">
 <canvas class="canvas-test"></canvas>
-<div id="counter">10</div>
+<div class="v-hidden" id="counter"></div>
 </div>
-  <div class="row camera-control">
+  <div class="row align-items-center camera-control">
+  ${buttonCameraComponent({id: "btn-return",className: "previous",textContent:"",iconName: "previous.png", dataScreen:"selectionView"})}
   ${buttonCameraComponent({id:"btn-camera",className: "btn-camera",textContent:"",iconName: "camera.png"})}
 
-
-    
     <div class="timer-wrp">
     <div class="data-select">
       <div class="data-list">
@@ -21,7 +19,7 @@ export const cameraScreen =  `
       </div>
       <div class="data-selected">
         <div>
-           <img class="sme-icon" src="/icon/timer.png">
+        <img class="sme-icon" src="icon/timer.png">
         </div>
         <div id="selected"></div>
       </div>
@@ -29,8 +27,6 @@ export const cameraScreen =  `
   </div>
   </div>
 </div>
-</div>
-
   `;
   
 

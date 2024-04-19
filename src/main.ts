@@ -1,21 +1,15 @@
-import WindowService from "./services/WindowService";
-import DOMService from "./services/DOMService";
 import "./windows/styles/normalize.css";
 import "./windows/styles/helpers.css";
 import "./windows/styles/style.css";
-import "boxicons";
-import NavigationController from "./controllers/NavigationController";
+import 'animate.css';
 import ApplicationInitializer from "./core/ApplicationInitializer";
 
 class Main {
 
   public  Main(): void {
-    window.addEventListener('error', this.handleError)
     try {
-      const domService = new DOMService();
-      const windowService = new WindowService(domService);
-      const navigationController = new NavigationController(windowService);
-      const applicationInitializer = new ApplicationInitializer(navigationController);
+      window.addEventListener('error', this.handleError);
+      const applicationInitializer = new ApplicationInitializer("ws://192.168.1.138:3000");
       applicationInitializer.initialize();
 
     } catch (e: any) {
@@ -29,7 +23,7 @@ class Main {
     if(e instanceof ErrorEvent){
         error = e.error
     }else{
-        error = e
+        error = e;
     }
     const errorStringify: string = String(error);
     const errTitleSplit = errorStringify.split('</>');
@@ -42,10 +36,10 @@ class Main {
     }
     
     document.body.style.backgroundColor = "#060606d0";
-    document.getElementById('root')!.innerHTML = 
+    document.body.innerHTML = 
     `<div id="_err" class="err-container">
         <div class="error-indicator">
-        <img id="_err_ico_loader" src=${'public/error-2.png'}>
+        <img id="_err_ico_loader" src=${'icon/err/err_d.png'}>
         </div>
         <div id="_err_body" class="_err">
         ${`<h3> > ${TitleError[0] ?? errorStringify}</h3>
@@ -56,3 +50,17 @@ class Main {
   }
 }
 new Main().Main()
+
+// window.ipcRenderer.on('main-process-message',(_e,message) => {}
+
+// document.body.style.backgroundColor = "#000";
+// document.body.innerHTML = 
+// ` <div class="_fatal-error-wrp">
+// <div class="_fatal-error">
+//     <div>!</div>
+// </div>
+// <div class="error-code">
+// <p class="pb-15">smileengine.com/support</p>
+// <span><code>EFOP-3</code></span>
+// </div>
+// </div>` 

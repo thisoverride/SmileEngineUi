@@ -1,5 +1,6 @@
 export const splashScreen = `
 <div id="splash" class="slash">
+    <div class="smile-engine-logo-applogo" style="background-image: url('icon/smile-engine.png');"></div>
     <h1>Smile Engine</h1>
     <div class="progress-container">
         <div id="progress" class="progress-bar"></div>

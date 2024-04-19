@@ -67,7 +67,7 @@ function useLoading() {
   width: 100vw;
   height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: center; 
   justify-content: center;
   background: #282c34;
   z-index: 9;
@@ -117,4 +117,4 @@ window.onmessage = ev => {
   }
 }
 
-// setTimeout(removeLoading, 4)
+setTimeout(removeLoading, 2000)
