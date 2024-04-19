@@ -29,7 +29,7 @@ export default class UserController {
         this.renderBoomrangView();
         break;
       case 'receptionSteps':
-        this.renderReceptionStepsScreen();
+        this.renderReceptionStepsScreen(event);
         break;
       case 'previewPhoto':
         this.renderPreviewPhoto(event)
@@ -83,8 +83,8 @@ export default class UserController {
   }
 
   @InjectEvent()
-  private renderReceptionStepsScreen(){
-    const screen = this.windowsService.renderReceptionStepsScreen()
+  private renderReceptionStepsScreen(event: any){
+    const screen = this.windowsService.renderReceptionStepsScreen(event)
     this.render(screen, true)
   
   }

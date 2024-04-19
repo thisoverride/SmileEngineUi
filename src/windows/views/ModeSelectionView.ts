@@ -66,16 +66,13 @@ export default class ModeSelectionView {
                 ModeSelectionView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL";
                 document.dispatchEvent(ModeSelectionView.CHANGE_SCREEN_EVENT)
               }
-            }, 800);
+            }, 300);
           }
         });
       });
     }
   }
 
-  private openStream() {
-
-  }
 
   public renderView() {
     return this;

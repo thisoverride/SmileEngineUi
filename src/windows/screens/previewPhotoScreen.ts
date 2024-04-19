@@ -1,10 +1,9 @@
-import { buttonCameraComponent } from "../component/buttonCameraComponent";
 import { buttonPrimaryComponent } from "../component/buttonPrimaryComponent";
 export const previewPhotoScreen =  `
 <div class="_home-wrp">
   <div class="_mode_selection_wrp">
     <div class="logo">
-    <div class="applogo" style="background-image: url('/smile-engine.png');"></div>
+    <div class="applogo" style="background-image: url('icon/smile-engine.png');"></div>
     </div>
     <div class="col align-items-center gap-30">
       <div id="indicator-selection" class="poop"> Validez pour passer à la photo suivante :</div>
@@ -14,10 +13,9 @@ export const previewPhotoScreen =  `
         <div class="btn-trash"></div>
         <div class="btn-next"> 
         ${buttonPrimaryComponent({
-          id:"1",
+          id:"validate",
           className:"btn-secondary",
-          textContent :"Étape suivante",
-          dataScreen :"receptionSteps"
+          textContent :"Étape suivante"
         })}
         </div>
     </div>

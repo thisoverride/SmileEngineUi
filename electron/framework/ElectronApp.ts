@@ -1,7 +1,7 @@
 import path from 'path';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import EventService from './service/EventService';
-import QRCode from 'qrcode';
+
 
 export default class ElectronApp {
   private win: BrowserWindow | null;
@@ -44,18 +44,6 @@ export default class ElectronApp {
       this.win?.webContents.send('main-process-message', 'communication avec le front ici');
       this.win?.webContents.openDevTools();
 
-
-
-      // const wifiConfig = `WIFI:T:${securityType};S:${ssid};P:${password};;`;
-
-      // QRCode.toDataURL(wifiConfig, { errorCorrectionLevel: 'H' }, (err, url) => {
-      //     if (err) {
-      //         console.error('Erreur lors de la génération du QR code :', err);
-      //     } else {
-      //         // Envoyer l'URL du QR code généré au processus principal
-      //         this.win?.webContents.send('main-process-message', url);
-      //     }
-      // });
     
   
       // Démarrez le premier scan réseau

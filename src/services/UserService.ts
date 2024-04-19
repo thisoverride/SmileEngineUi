@@ -11,6 +11,7 @@ import ModeSelectionView from "../windows/views/ModeSelectionView";
 import PreviewPhotoView from "../windows/views/PreviewPhotoView";
 import type { Socket } from "socket.io-client";
 import ReceptionSteps from "../windows/views/ReceptionSteps";
+import HomeView from "../windows/views/HomeView";
 
 
 export default class UserService {
@@ -61,7 +62,11 @@ export default class UserService {
 
   public renderHomeView(): HTMLElement {
     const screen : HTMLElement = this._domService.stringToHTMLElement(homeScreen); 
-    return screen;
+    const homeViewBuiness = new HomeView(screen,this.socket);
+    // const receptionStepsView = new ReceptionSteps(screen);
+    // return receptionStepsView.getScreen();
+
+    return homeViewBuiness.getScreen();
   }
 
   public renderBoomrangView(): HTMLElement {
@@ -76,9 +81,9 @@ export default class UserService {
     return this._previewPhotoView.getScreen();
   }
 
-  public renderReceptionStepsScreen(): HTMLElement {
+  public renderReceptionStepsScreen(event: any): HTMLElement {
     const screen : HTMLElement = this._domService.stringToHTMLElement(receptionStepsScreen);
-    const receptionStepsView = new ReceptionSteps(screen);
+    const receptionStepsView = new ReceptionSteps(screen,event);
     return receptionStepsView.getScreen();
   }
 

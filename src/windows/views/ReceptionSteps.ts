@@ -1,24 +1,30 @@
 export default class ReceptionSteps {
   public receptionSteps: HTMLElement;
+  private wrapper: HTMLElement | null = null;
   private static readonly CHANGE_SCREEN_EVENT = new CustomEvent('changeScreen', {
     detail: { set: '', params:'', emit: '',scope: '' }, bubbles: true, cancelable: true
   });
   
-  constructor(receptionSteps: HTMLElement,) {
+  constructor(receptionSteps: HTMLElement,event :any) {
     this.receptionSteps = receptionSteps;
-    this.setup();
+    this.setup(event);
   }
 
-  private setup(): void {
+  private setup(event: any): void {
     const buttons: NodeListOf<HTMLButtonElement> = this.receptionSteps.querySelectorAll('button');
+    const printer = this.receptionSteps.querySelector('#printer') as HTMLElement;
+    const qrcode = this.receptionSteps.querySelector('#qrcode') as HTMLElement;
+    this.wrapper = this.receptionSteps.querySelector('#selection-wrp') as HTMLElement;
+    const connect = this.receptionSteps.querySelector("#connect") as HTMLImageElement;
+     connect.src =  event.detail.params.data.wifiQRCode;
+    const storage = this.receptionSteps.querySelector("#storage") as HTMLImageElement;
+    storage.src = event.detail.params.data.linkQRCode;
+ 
+    printer.addEventListener('click', this.openModal.bind(this));
+    qrcode.addEventListener('click', this.openModal.bind(this));
+
 
     buttons.forEach((button: HTMLButtonElement)=> {
-      if(button.id === "printer"){
-        button.addEventListener('click', this.openModal.bind(this));
-      }
-      if(button.id === "qrcode"){
-        button.addEventListener('click', this.openModal.bind(this));
-      }
       if(button.id === "home"){
         button.addEventListener('click', this.onClick.bind(this)); 
       }
@@ -34,6 +40,7 @@ private openModal(e: Event): void {
     if (target === "printer" && modal) {
         const content = modal.querySelector('.qrcode') as HTMLElement | null;
         const contentToShow = modal.querySelector('.print') as HTMLElement | null;
+        this.wrapper?.classList.add('v-hidden');
         if (content && contentToShow) {
             content.style.display = 'none';
             contentToShow.style.display ='flex'
@@ -44,9 +51,10 @@ private openModal(e: Event): void {
     if(target === "qrcode" && modal){
         const content = modal.querySelector('.print') as HTMLElement | null;
         const contentToShow = modal.querySelector('.qrcode') as HTMLElement | null;
+        this.wrapper?.classList.add('v-hidden');
         if (content && contentToShow) {
             content.style.display = 'none'; 
-            contentToShow.style.display = 'flex'
+            contentToShow.style.display = 'flex';
         }
         modal.classList.remove('v-hidden');
     }
@@ -54,7 +62,8 @@ private openModal(e: Event): void {
 
 private closeModal(): void { 
     const modal = document.querySelector('.modal-container');
-    if(modal){
+    if(modal && this.wrapper){
+      this.wrapper.classList.remove('v-hidden');
         modal.classList.add('v-hidden');
     }
 }

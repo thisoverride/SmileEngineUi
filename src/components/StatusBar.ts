@@ -24,7 +24,7 @@ export default class StatusBar {
       checkPoint.addEventListener("click",this._checkPointClick.bind(this, checkPoint, digits));
 
       if (stateMachine) {
-        const power = stateMachine.querySelector('[name="power-off"]');
+        // const power = stateMachine.querySelector('[name="power-off"]');
         // power!.addEventListener('click', this.handleClickPower.bind(this))
 
         window.ipcRenderer.on("scan-network", (_event, networkDetail) => {
@@ -89,7 +89,7 @@ export default class StatusBar {
                     alert('Panier déverrouillé');
                 } else {
                   setTimeout(() => {
-                    indicator.forEach(item => item.style.backgroundColor = "transparent");
+                    indicator.forEach(item => (item as HTMLElement).style.backgroundColor = "transparent");
                     indicator[0].parentElement!.classList.add('animate__animated', 'animate__shakeX');
                     this.tentative += 1
                     this.passwordCounter = 0;

@@ -13,11 +13,11 @@ export const modalComponent = (props: any) => `
 			</div>
 			<div class="qrcode-container text-center row">
 				<div class="qrcode-img">
-					<img src="public/error-2.png" />
+					<img id="connect" src="icon/err/err_d.png" />
 					<div>Connexion à la borne</div>
 				</div>
 				<div class="qrcode-img">
-					<img src="public/error-2.png" />
+					<img id="storage" src="icon/err/err_d.png" />
 					<div>Accédez à Slurp</div>
 				</div>
 			</div>

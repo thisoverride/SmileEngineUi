@@ -120,8 +120,9 @@ html, body{
 }
 
 .camera-wrp {
-  align-self: flex-start;
+  /* align-self: flex-start; */
   /* margin-top: 30px; */
+  border: 5px solid transparent;
   padding: 20px;
   /* flex: 2; */
   height: 100%;
@@ -129,13 +130,23 @@ html, body{
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   /* background-color: #3891a6; */
 
 }
-canvas {
-  background-color: #6d6b6b;
+
+video {
+  background-color: red;
   border-radius: 15px;
-  height: 600px;
+  height: 1040px;
+  width: 100%;
+}
+canvas {
+
+  /* background-color: #6d6b6b; */
+  border-radius: 15px;
+  height: 1040px;
+  width: 100%;
   
 }
 
@@ -264,12 +275,46 @@ cursor: pointer;
 
 /* receptionSetpsScreen */
 
-.choice-recuperation-photo{
-  height: 400px;
-  width: 400px;
+
+#timer:before {
+  background-color: #fff;
+  position: absolute;
+  content: "";
   border-radius: 20px;
-  border: 2px solid #fff;
-  /* background-color: red; */
+  height: 40px;
+  width: 0;
+  max-width: 355px;
+  animation: progress 3s linear infinite, text-color 3s linear infinite; /* Ajoutez l'animation de couleur de texte */
+}
+
+@keyframes progress {
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes text-color {
+  0% {
+    color: white; /* Le texte débute en blanc */
+  }
+  50% {
+    color: white; /* Le texte reste blanc à mi-chemin */
+  }
+  100% {
+    .btn-secondary{
+
+      color: black; /* Le texte devient noir une fois l'élément rempli */
+    }
+  }
+}
+
+
+
+.overlay-click {
+  position: absolute;
+  width: 345px;
+  height: 70px;
+  border-radius: 10px;
 }
 
 .btn-printer , .btn-qrcode, .btn-home{
@@ -300,6 +345,8 @@ cursor: pointer;
   gap: 5%;
   height: 100%;
   text-align: center;
+  font-family: 'bankgothic-regular';
+  color: #fff;
 }
 
 ._fatal-error{
@@ -315,6 +362,7 @@ cursor: pointer;
 }
 ._fatal-error > div {
   padding-top: 10px;
+
 }
 
 
@@ -340,10 +388,9 @@ img {
 ._home-wrp {
   /* transition: 5s; */
   height: 100%;
-  display: flex;
-  align-items: center;
-  
+  display: flex;  
   justify-content: center;
+  /* align-items: center; */
   font-family: 'bankgothic-regular';
   color: #fff;
   background-color: #040B15;  
@@ -356,17 +403,20 @@ img {
 /* display: none; */
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
   gap: 50px;
   text-align: center;
 }
 .indicator{
-  padding: 8px;
+  font-size: 2em;
+  padding: 18px;
   border-radius: 30px;
   border: 1px solid #fff;
-  width: 250px;
+  /* width: 250px; */
 }
 ._home-wrp > .hello-speak >h1 {
-  font-size: 3em;
+  font-size: 5em;
+  /* font-size: 550%; */
 }
 
 ._mode_selection_wrp{
@@ -946,8 +996,8 @@ color: #040B15;
 .modal-container{
   top: 50%;
   left: 50%;
-  width: 580px;
-  height: 580px;
+  height: 900px;
+  width: 780px;
   display: flex;
   flex-direction: column;
   transform: translate(-50%, -50%);
@@ -968,6 +1018,7 @@ border-bottom: 1px solid #6f6f6f;
 }
 
 .modal-body{
+  font-size: 2em;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -986,10 +1037,23 @@ height: 100%;
   width: 100%;
 
 }
+.qrcode-img {
+  height: 300px;
+  width: 200px;
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .qrcode-img > img {
   height: 150px;
   width: 150px;
-  padding-bottom: 10px;
+  border-radius: 15px;
+}
+.qrcode-img > img:hover {
+  transform: scale(4);
 }
 .print{
   display: none; 
@@ -999,7 +1063,16 @@ height: 100%;
   flex-direction: column;
   height: 100%;
   width: 100%;
-  /* display: none; */
+}
+
+.border-container {
+  overflow: hidden;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  width: 350px;
+}
+.border-text{
+  width: 60%;
 }
 /* ============================================================= */
 

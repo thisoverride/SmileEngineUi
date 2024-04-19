@@ -4,6 +4,7 @@ export default class PhotoView {
   public cameraScreen: HTMLElement;
   private socket: Socket;
   private timerSelected: number = 3;
+  private objectReady: boolean = true;
   private counterElement: HTMLElement;
   private static readonly CHANGE_SCREEN_EVENT = new CustomEvent('changeScreen', {
     detail: { set: '', params:'', emit: '',scope: '' }, bubbles: true, cancelable: true
@@ -92,14 +93,22 @@ export default class PhotoView {
   
   
   public setup() {
+    const btnReturn =  this.cameraScreen.querySelector('#btn-return') as HTMLElement;
     const timer = this.cameraScreen.querySelector(".data-selected") as HTMLElement;
     this.counterElement = this.cameraScreen.querySelector('#counter') as HTMLElement;
     this.counterElement.textContent = this.timerSelected.toString();
+    const canvas = this.cameraScreen.querySelector('canvas') as HTMLCanvasElement;
+
+    canvas.addEventListener('click',(e) => {
+      this.socket.emit('shooting',{data: "shooting"});
+    })
 
     timer.addEventListener('click', () => {
       const timerList = this.cameraScreen.querySelector('.data-list') as HTMLElement;
       timerList.style.visibility = timerList.style.visibility === 'visible' ? 'hidden' : 'visible';
     });
+
+    btnReturn.addEventListener('click',(_e) => this.socket.emit('close-stream',{ data: "close-stream" }))
 
     this.setupTimer();
     this.setupCameraTrigger();
@@ -113,20 +122,31 @@ export default class PhotoView {
     this.socket.on('get-last-photo',this.handleGetLastPhotoEvent.bind(this))
   }
 
+
   private handleStreamEvent: (event: any) => void = (event) => {
     const canvas = this.cameraScreen.querySelector('canvas') as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-    let img = new Image();
-    img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
+    const errorIndicator = this.cameraScreen.querySelector('.camera-wrp') as HTMLElement;
 
-    };
-    img.src = event.data;
-  
+    if(event.data === "OBJECT_NOTREADY" && this.objectReady) {
+        errorIndicator.style.border = "5px solid red";
+        this.objectReady = false; // Marque que l'objet n'est pas prêt
+    } else if (event.data !== "OBJECT_NOTREADY" && !this.objectReady) {
+        errorIndicator.style.border = "5px solid transparent";
+        this.objectReady = true; // Marque que l'objet est prêt
+    }
 
-  };
+    if (event.data !== "OBJECT_NOTREADY") {
+        const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+        let img = new Image();
+        img.onload = () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            canvas.captureStream();
+        };
+        img.src = event.data;
+    }
+};
 
 
   private handleShootingEvent(event: any): void {
@@ -139,7 +159,7 @@ export default class PhotoView {
 
   private handleGetLastPhotoEvent(event: any): void {
     PhotoView.CHANGE_SCREEN_EVENT.detail.set = 'previewPhoto';
-    PhotoView.CHANGE_SCREEN_EVENT.detail.params = event.data;
+    PhotoView.CHANGE_SCREEN_EVENT.detail.params = event;
     PhotoView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL";
     PhotoView.CHANGE_SCREEN_EVENT.detail.emit = PhotoView.name;
     document.dispatchEvent(PhotoView.CHANGE_SCREEN_EVENT);

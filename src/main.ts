@@ -2,7 +2,6 @@ import "./windows/styles/normalize.css";
 import "./windows/styles/helpers.css";
 import "./windows/styles/style.css";
 import 'animate.css';
-import "boxicons";
 import ApplicationInitializer from "./core/ApplicationInitializer";
 
 class Main {
@@ -37,10 +36,10 @@ class Main {
     }
     
     document.body.style.backgroundColor = "#060606d0";
-    document.getElementById('root')!.innerHTML = 
+    document.body.innerHTML = 
     `<div id="_err" class="err-container">
         <div class="error-indicator">
-        <img id="_err_ico_loader" src=${'/error-2.png'}>
+        <img id="_err_ico_loader" src=${'icon/err/err_d.png'}>
         </div>
         <div id="_err_body" class="_err">
         ${`<h3> > ${TitleError[0] ?? errorStringify}</h3>
@@ -52,20 +51,16 @@ class Main {
 }
 new Main().Main()
 
-// window.ipcRenderer.on('main-process-message',(_e,message) => {
+// window.ipcRenderer.on('main-process-message',(_e,message) => {}
 
-//   // Créez un nouvel élément img
-// const qrCodeImg = document.createElement('img');
-
-// // Stockez l'URL du QR code dans l'attribut src de l'élément img
-// qrCodeImg.src = message; // Assurez-vous que "url" contient l'URL du QR code
-
-// // Ajoutez des attributs supplémentaires si nécessaire
-// qrCodeImg.alt = 'QR Code';
-
-
-// const qrCodeContainer = document.getElementById('root') as HTMLElement
-// qrCodeContainer.appendChild(qrCodeImg);
-
-//   console.log(message)
-// })
+// document.body.style.backgroundColor = "#000";
+// document.body.innerHTML = 
+// ` <div class="_fatal-error-wrp">
+// <div class="_fatal-error">
+//     <div>!</div>
+// </div>
+// <div class="error-code">
+// <p class="pb-15">smileengine.com/support</p>
+// <span><code>EFOP-3</code></span>
+// </div>
+// </div>` 
