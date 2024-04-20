@@ -5,6 +5,7 @@ export default class PhotoView {
   private socket: Socket;
   private timerSelected: number = 3;
   private objectReady: boolean = true;
+  private isClosed: boolean = false;
   private counterElement: HTMLElement;
   private static readonly CHANGE_SCREEN_EVENT = new CustomEvent('changeScreen', {
     detail: { set: '', params:'', emit: '',scope: '' }, bubbles: true, cancelable: true
@@ -19,6 +20,7 @@ export default class PhotoView {
   }
 
   private setupTimer() {
+
     const timerList = this.cameraScreen.querySelector('.data-list') as HTMLElement;
     const selectedValue = this.cameraScreen.querySelector('#selected') as HTMLElement;
     
@@ -109,7 +111,11 @@ export default class PhotoView {
       timerList.style.visibility = timerList.style.visibility === 'visible' ? 'hidden' : 'visible';
     });
 
-    btnReturn.addEventListener('click',(_e) => this.socket.emit('close-stream',{ data: "close-stream" }))
+    btnReturn.addEventListener('click',(_e) => {
+     this.isClosed = true;
+
+      this.socket.emit('close-stream',{ data: "close-stream" })
+    })
 
     this.setupTimer();
     this.setupCameraTrigger();
@@ -128,22 +134,44 @@ export default class PhotoView {
     const canvas = this.cameraScreen.querySelector('canvas') as HTMLCanvasElement;
     const errorIndicator = document.querySelector('.camera-wrp') as HTMLElement;
 
-    if(event.data === "OBJECT_NOTREADY" && this.objectReady) {
+    if (event.data === "OBJECT_NOTREADY" && this.objectReady && !this.isClosed) {
         errorIndicator.style.border = "5px solid #DF4138";
-        this.objectReady = false; // Marque que l'objet n'est pas prêt
-    } else if (event.data !== "OBJECT_NOTREADY" && !this.objectReady) {
+        this.objectReady = false; 
+    } else if (event.data !== "OBJECT_NOTREADY" && !this.objectReady && !this.isClosed) {
         errorIndicator.style.border = "5px solid transparent";
-        this.objectReady = true; // Marque que l'objet est prêt
+        this.objectReady = true; 
     }
 
+
     if (event.data !== "OBJECT_NOTREADY") {
-        const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
         let img = new Image();
         img.onload = () => {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-            canvas.captureStream();
+            // Vérifie si l'image a changé avant de redessiner
+            if (canvas.getAttribute('data-last-image') !== event.data) {
+                const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+
+                // Efface le contenu précédent du canevas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+
+                // Copie le contenu du canevas hors écran sur le canevas visible
+                // Pour éviter le clignotement
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = canvas.width;
+                tempCanvas.height = canvas.height;
+                const tempCtx = tempCanvas.getContext('2d') as CanvasRenderingContext2D;
+                tempCtx.drawImage(canvas, 0, 0);
+
+                canvas.width = tempCanvas.width;
+                canvas.height = tempCanvas.height;
+                ctx.drawImage(tempCanvas, 0, 0);
+
+                // Stocke l'URL de l'image actuelle pour la comparaison ultérieure
+                canvas.setAttribute('data-last-image', event.data);
+            }
         };
         img.src = event.data;
     }
