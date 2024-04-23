@@ -1,11 +1,10 @@
 import DOMService from "../utils/DOMService";
-import StatusBar from "../components/StatusBar";
-import { statusBar } from "../windows/component/statusBar";
+import { adminLayout } from "../windows/screens/layout/admin.layout";
+import { settingsScreen } from "../windows/screens/settingsScreen";
 
 
 export default class PanelService {
   private readonly _domService: DOMService;
-  private  statusBar: StatusBar | null = null;
   
 
   constructor(domService: DOMService) {
@@ -13,10 +12,10 @@ export default class PanelService {
   }
 
 
-  public mountPanelAccess(): DocumentFragment {
-    const accessPanel = this._domService.createDocumentFragmentFromHTML(statusBar)
-    this.statusBar = new StatusBar(accessPanel);
-    return this.statusBar.getStatusBarElement()
+  public mountPanelAccess(event: any) {
+    const screens = this._domService.stringToHTMLElement(adminLayout(settingsScreen))
+    return screens
+
   }
 
 }

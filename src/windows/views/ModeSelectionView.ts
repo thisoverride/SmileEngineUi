@@ -1,3 +1,5 @@
+import type { Socket } from "socket.io-client";
+
 export default class ModeSelectionView {
   private formatSelectionScreen: HTMLElement;
   private static readonly CHANGE_SCREEN_EVENT = new CustomEvent('changeScreen', {
@@ -11,8 +13,11 @@ export default class ModeSelectionView {
     cancelable: true
   });
 
-  constructor(formatSelectionScreen: HTMLElement) {
+  private socket: Socket;
+
+  constructor(formatSelectionScreen: HTMLElement,socket: Socket) {
     this.formatSelectionScreen = formatSelectionScreen;
+    this.socket =socket;
     this.init()
   }
 
@@ -53,6 +58,7 @@ export default class ModeSelectionView {
             const element = event.currentTarget as HTMLElement;
             setTimeout(() => {
 
+              // this.socket.emit('stream',{data:'stream'})
               element.classList.add('fadeOut');
               if (element.id === "app-02") {
                 ModeSelectionView.CHANGE_SCREEN_EVENT.detail.set = 'optionBoomrangView';
@@ -72,7 +78,6 @@ export default class ModeSelectionView {
       });
     }
   }
-
 
   public renderView() {
     return this;

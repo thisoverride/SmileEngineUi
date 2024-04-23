@@ -4,6 +4,7 @@ import "./windows/styles/style.css";
 import 'animate.css';
 import ApplicationInitializer from "./core/ApplicationInitializer";
 
+
 class Main {
 
   public  Main(): void {

@@ -22,7 +22,12 @@
 .justify-space-b{
   justify-content: space-between;
 }
-
+.justify-evenly{
+  justify-content: space-evenly;
+}
+.justify-around{
+  justify-content: space-around;
+}
 /* Alignement */
 .text-center {
   text-align: center;

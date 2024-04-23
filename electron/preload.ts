@@ -101,6 +101,7 @@ function useLoading() {
 
 // ----------------------------------------------------------------------
 
+ipcRenderer.send('play-sound-effect', 'startup')
 const { appendLoading, removeLoading } = useLoading()
 domReady().then(appendLoading)
 
@@ -117,4 +118,4 @@ window.onmessage = ev => {
   }
 }
 
-setTimeout(removeLoading, 2000)
+setTimeout(removeLoading, 4)

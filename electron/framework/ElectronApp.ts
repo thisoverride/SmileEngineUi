@@ -12,7 +12,6 @@ export default class ElectronApp {
     this._eventService = eventService;
     this.win = null;
     this.viteDevServerUrl = process.env.VITE_DEV_SERVER_URL;
-
     this.setupEnvironment();
   }
 
@@ -41,14 +40,14 @@ export default class ElectronApp {
 
     this.win.webContents.on('did-finish-load', async () => {
       // Envoyez un message au processus de rendu (front-end)
-      this.win?.webContents.send('main-process-message', 'communication avec le front ici');
-      this.win?.webContents.openDevTools();
+      // this.win?.webContents.send('main-process-message', 'communication avec le front ici');
+      // this.win?.webContents.openDevTools();
 
     
   
       // Démarrez le premier scan réseau
-      const connectionDetail = await this._eventService.scanNetWork();
-      this.win?.webContents.send('scan-network', connectionDetail);
+      // const connectionDetail = await this._eventService.scanNetWork();
+      // this.win?.webContents.send('scan-network', connectionDetail);
   
       // Définissez l'intervalle pour les scans réseau périodiques
       // setInterval(async () => {
@@ -73,9 +72,13 @@ export default class ElectronApp {
 
   
     ipcMain.on('power-machine', () => {
-      this._eventService.restartApp(app)
+      // this._eventService.restartApp(app)
+ 
       console.log('power-marchine invoked')
     });
+    ipcMain.on('play-sound-effect',(_event,message) => {
+      this._eventService.paySondEffect(message)
+    })
 
     app.on('window-all-closed', () => {
       if (process.platform !== 'darwin') {

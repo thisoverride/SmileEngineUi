@@ -12,11 +12,13 @@ import PreviewPhotoView from "../windows/views/PreviewPhotoView";
 import type { Socket } from "socket.io-client";
 import ReceptionSteps from "../windows/views/ReceptionSteps";
 import HomeView from "../windows/views/HomeView";
+import BoomerangView from "../windows/views/BoomerangView";
 
 
 export default class UserService {
   private _domService: DOMService;
   private _photoView: PhotoView | null = null;
+  private _boomrangView: BoomerangView | null = null;
   private _formatSelectionView: FormatSelectionView | null= null;
   private _modeSelectionView: ModeSelectionView | null = null;
   private _previewPhotoView: PreviewPhotoView | null = null;
@@ -37,26 +39,39 @@ export default class UserService {
 
   public renderPhotoView(event: any): HTMLElement {
   if(event.detail.params === "retray") {
-    this._photoView?.resetScreen()
+    this._photoView?.resetScreen();
   }
-    if (!this._photoView) {
-      const screen: HTMLElement = this._domService.stringToHTMLElement(cameraScreen);
+    if (this._photoView === null) {
+      const screen: HTMLElement = this._domService.stringToHTMLElement(cameraScreen(true));
       this._photoView = new PhotoView(screen,this.socket, event);
     }
     return this._photoView.getScreen();
   }
+  
+  public renderBoomrangView(event: any): HTMLElement {
+    if(event.detail.params === "retake") {
+      this._boomrangView!.resetScreen();
+    }
+
+    if(this._boomrangView === null){
+      const screen : HTMLElement = this._domService.stringToHTMLElement(cameraScreen(false));
+      this._boomrangView = new BoomerangView(screen,this.socket);
+
+    }
+    return this._boomrangView.getScreen();
+  } 
 
 
   public renderModeSelectionView(): HTMLElement {
     if(!this._modeSelectionView){
       this._modeSelectionView = null;
       const modeSelectionScreen : HTMLElement = this._domService.stringToHTMLElement(modeSelection);
-      this._modeSelectionView = new ModeSelectionView(modeSelectionScreen);
+      this._modeSelectionView = new ModeSelectionView(modeSelectionScreen,this.socket);
     }
 
     this._modeSelectionView = null;
     const modeSelectionScreen : HTMLElement = this._domService.stringToHTMLElement(modeSelection);
-      this._modeSelectionView = new ModeSelectionView(modeSelectionScreen);
+      this._modeSelectionView = new ModeSelectionView(modeSelectionScreen,this.socket);
     return this._modeSelectionView.getScreen();
   }
 
@@ -64,13 +79,14 @@ export default class UserService {
     const screen : HTMLElement = this._domService.stringToHTMLElement(homeScreen); 
     const homeViewBuiness = new HomeView(screen,this.socket);
 
+    if(this._photoView){
+      this._photoView.destroy()
+      this._photoView = null;
+      this._previewPhotoView = null;
+    }
+
     return homeViewBuiness.getScreen();
   }
-
-  public renderBoomrangView(): HTMLElement {
-    const screen : HTMLElement = this._domService.stringToHTMLElement(cameraScreen);
-    return screen;
-  } 
 
   public previewPhotoView(event: any): HTMLElement {
     const screen : HTMLElement = this._domService.stringToHTMLElement(previewPhotoScreen);
@@ -83,6 +99,12 @@ export default class UserService {
     const screen : HTMLElement = this._domService.stringToHTMLElement(receptionStepsScreen);
     const receptionStepsView = new ReceptionSteps(screen,event);
     return receptionStepsView.getScreen();
+  }
+
+  public destroyView(view :any): void {
+    console.log('view  => ',view)
+    view.detail.params.destroy();
+    view.detail.params = null;
   }
 
 }

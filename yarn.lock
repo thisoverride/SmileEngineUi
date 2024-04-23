@@ -364,6 +364,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/hammerjs@^2.0.45":
+  version "2.0.45"
+  resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.45.tgz#ffa764bb68a66c08db6efb9c816eb7be850577b1"
+  integrity sha512-qkcUlZmX6c4J8q45taBKTL3p+LbITgyx7qhlPYOdOHZB7B31K0mXbP5YA7i7SgDeEGuI9MnumiKPEMrxg8j3KQ==
+
 "@types/http-cache-semantics@*":
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/@types/http-cache-semantics/-/http-cache-semantics-4.0.4.tgz#b979ebad3919799c979b17c72621c0bc0a31c6c4"
@@ -422,6 +427,13 @@
   version "2019.7.3"
   resolved "https://registry.yarnpkg.com/@types/offscreencanvas/-/offscreencanvas-2019.7.3.tgz#90267db13f64d6e9ccb5ae3eac92786a7c77a516"
   integrity sha512-ieXiYmgSRXUDeOntE1InxjWyvEelZGP63M+cGuquuRLuIKKT1osnkXjxev9B7d1nXSug5vpunx+gNlbVxMlC9A==
+
+"@types/play-sound@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@types/play-sound/-/play-sound-1.1.2.tgz#ecee1ecbc634ddfe5763f53e83847861825fa159"
+  integrity sha512-alq2D5sBtVcq5bzL/yLr5SSQ7B4VTIkX728V3nYfo6TaCtnwFLdHsFgy+N9oCjh67OOZQnj7kkJauWNW0L8bWw==
+  dependencies:
+    "@types/node" "*"
 
 "@types/plist@^3.0.1":
   version "3.0.5"
@@ -1296,6 +1308,13 @@ filelist@^1.0.4:
   dependencies:
     minimatch "^5.0.1"
 
+find-exec@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/find-exec/-/find-exec-1.0.3.tgz#c4b18f795968f1730060776fc52f829b977ad29e"
+  integrity sha512-gnG38zW90mS8hm5smNcrBnakPEt+cGJoiMkJwCU0IYnEb0H2NQk0NIljhNW+48oniCriFek/PH6QXbwsJo/qug==
+  dependencies:
+    shell-quote "^1.8.1"
+
 find-replace@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/find-replace/-/find-replace-3.0.0.tgz#3e7e23d3b05167a76f770c9fbd5258b0def68c38"
@@ -1476,6 +1495,11 @@ graceful-fs@^4.1.6, graceful-fs@^4.2.0:
   version "4.2.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.11.tgz#4183e4e8bf08bb6e05bbb2f7d2e0c8f712ca40e3"
   integrity sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==
+
+hammerjs@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
+  integrity sha512-tSQXBXS/MWQOn/RKckawJ61vvsDpCom87JgxiYdGwHdOa0ht0vzUWDlfioofFCRU0L+6NGDt6XzbgoJvZkMeRQ==
 
 has-flag@^3.0.0:
   version "3.0.0"
@@ -1879,6 +1903,11 @@ node-fetch@~2.6.1:
   dependencies:
     whatwg-url "^5.0.0"
 
+node-wav-player@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/node-wav-player/-/node-wav-player-0.2.0.tgz#d851e1eb529495905c4c00f9721dcb07d27d58c2"
+  integrity sha512-prtXKnjex7XciravRUC39Z+h1dBDxOwCc3TLvjqk+9Yi8dbH0T6c0Cb6u7lNAEe/8J3lX7JWFXXeBgO2krMX1Q==
+
 node-wifi@^2.0.16:
   version "2.0.16"
   resolved "https://registry.yarnpkg.com/node-wifi/-/node-wifi-2.0.16.tgz#1078a41ad2ab3937e7f0534a9ab7a7d554e675b3"
@@ -1972,6 +2001,13 @@ picocolors@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.0.tgz#cb5bdc74ff3f51892236eaf79d68bc44564ab81c"
   integrity sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==
+
+play-sound@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/play-sound/-/play-sound-1.1.6.tgz#e62ed9daf8506aba959e8fd267c49d9b979d89fa"
+  integrity sha512-09eO4QiXNFXJffJaOW5P6x6F5RLihpLUkXttvUZeWml0fU6x6Zp7AjG9zaeMpgH2ZNvq4GR1ytB22ddYcqJIZA==
+  dependencies:
+    find-exec "1.0.3"
 
 plist@^3.0.4, plist@^3.0.5:
   version "3.1.0"
@@ -2274,6 +2310,11 @@ shebang-regex@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
+
+shell-quote@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.8.1.tgz#6dbf4db75515ad5bac63b4f1894c3a154c766680"
+  integrity sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==
 
 signal-exit@^4.0.1:
   version "4.1.0"

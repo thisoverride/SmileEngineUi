@@ -1,22 +1,6 @@
 export const InjectEvent = () => {
   return function(_target: any, _propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
-// debugger
-//     const className: string = _target.constructor.name;
-//     const classNameSplit: string[] = className.split(/(?=[A-Z])/);
-  
-
-
-//     if(!classNameSplit[classNameSplit.length -1].includes('Controller')){
-//       throw new Error('The target is not valide controller');
-//     }
-
-//     const index: number = classNameSplit.indexOf('Controller');
-//     classNameSplit.splice(index, 1);
-    
-//     const scopeId: string = classNameSplit
-//     .map(word => `${word.substring(0, 2)}${word.slice(-1)}_`)
-//     .join('').toUpperCase() + 'CRL';
 
 
     descriptor.value = function (...args: any[]) {
