@@ -6,9 +6,7 @@ export const previewPhotoScreen =  `
   </div>
     <div class="col align-items-center gap-15">
       <div class="text-indicator-selection"> Validez pour passer à la photo suivante :</div>
-      <div class="row w-100 justify-center">
-        <canvas class="canvas-test"></canvas>
-        </div>
+      <div id="display" class="row w-100 justify-center"></div>
         <div class="btn-trash"></div>
         <div class="btn-next"> 
         ${buttonPrimaryComponent({

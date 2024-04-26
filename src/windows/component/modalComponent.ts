@@ -20,7 +20,7 @@ export const modalComponent = (props: any) => `
 				</div>
 				<div class="qrcode-img">
 					<img id="storage" src="icon/err/err_d.png" />
-					<div>Accédez à Slurp</div>
+					<div>Accédez à Smile Storage</div>
 				</div>
 			</div>
 		</div>

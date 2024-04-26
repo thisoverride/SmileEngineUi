@@ -1,47 +1,34 @@
+import { accessControl } from "../windows/component/accessControl";
 export default class StatusBar {
-  private readonly statusBar: DocumentFragment;
+  private readonly modalControl: HTMLElement;
+  private static readonly CHANGE_SCREEN_EVENT = new CustomEvent('changeScreen', {
+    detail: { set: '', params: {}, emit: '',scope: '' }, bubbles: true, cancelable: true
+  });
   private pointControl: number = 0;
   private passwordCounter: number = 0;
   private inputPassword: string = '';
   private tentative: number = 1
  
-  constructor(statusBar: DocumentFragment) {
-    this.statusBar = statusBar;
+  constructor() {
+    const template = document.createElement('template');
+    template.innerHTML = accessControl.trim(); 
+    this.modalControl = template.content.firstChild as HTMLElement;
     this.init();
   }
 
   public init(): void {
-    const stateMachine = this.statusBar.getElementById("_state_machine");
-    const checkPoint = this.statusBar.querySelector("#pt_control") as HTMLElement;
-    const modalButton = this.statusBar.querySelector(".btn-mle") as HTMLElement;
-    const overlay = this.statusBar.querySelector(".md-overlay") as HTMLElement;
-    const digits = this.statusBar.getElementById("digit") as HTMLElement;
+    const checkPoint = document.querySelector("#pt_control") as HTMLElement;
+    console.log(checkPoint)
+
+    const modalButton = this.modalControl.querySelector(".btn-mle") as HTMLElement;
+    const overlay = document.querySelector(".md-overlay") as HTMLElement;
+    const digits = this.modalControl.querySelector("#digit") as HTMLElement;
 
     modalButton.addEventListener("click", () =>this.modalControlVisibility(false));
     overlay.addEventListener("click", () => this.modalControlVisibility(false));
 
-    if (checkPoint && stateMachine) {
+    if (checkPoint) {
       checkPoint.addEventListener("click",this._checkPointClick.bind(this, checkPoint, digits));
-
-      if (stateMachine) {
-        // const power = stateMachine.querySelector('[name="power-off"]');
-        // power!.addEventListener('click', this.handleClickPower.bind(this))
-
-        window.ipcRenderer.on("scan-network", (_event, networkDetail) => {
-          const wifiIconBars: Element | null =
-            stateMachine.querySelector("#wave");
-
-          if (wifiIconBars) {
-            let numberOfBars: number = Math.min(3,
-              Math.ceil((networkDetail.signal_level + 100) / 40));
-            isNaN(numberOfBars)
-              ? (numberOfBars = 1)
-              : (numberOfBars = numberOfBars);
-            wifiIconBars.className = "";
-            wifiIconBars.classList.add(`waveStrength-${numberOfBars}`);
-          }
-        });
-      }
     }
   }
 
@@ -86,7 +73,13 @@ export default class StatusBar {
             
             if (this.passwordCounter === indicator.length) {
                 if (this.inputPassword === '123456') {
-                    alert('Panier déverrouillé');
+                  this.modalControlVisibility(false);
+                  this.tentative = 1;
+                  StatusBar.CHANGE_SCREEN_EVENT.detail.set = 'settingsView';
+                  StatusBar.CHANGE_SCREEN_EVENT.detail.params = "";
+                  StatusBar.CHANGE_SCREEN_EVENT.detail.scope = "PAL_CRL";
+                  StatusBar.CHANGE_SCREEN_EVENT.detail.emit = StatusBar.name;
+                  document.dispatchEvent(StatusBar.CHANGE_SCREEN_EVENT);
                 } else {
                   setTimeout(() => {
                     indicator.forEach(item => (item as HTMLElement).style.backgroundColor = "transparent");
@@ -126,8 +119,8 @@ export default class StatusBar {
     }
   }
 
-  public getStatusBarElement(): DocumentFragment {
-    return this.statusBar;
+  public getStatusBarElement(): HTMLElement {
+    return this.modalControl;
   }
 
   private lockAccess(){

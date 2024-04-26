@@ -1,4 +1,4 @@
-import { InjectEvent } from "../decorator/injector";
+// import { InjectEvent } from "../decorator/injector";
 import PanelService from "../services/PanelService";
 
 export default class PanelController {
@@ -8,23 +8,11 @@ export default class PanelController {
     this.panelService = panelService;
   }
 
-  public navigationStack(event: Event){
-    const navigationEvent = event as CustomEvent;
-    const targetScreen: string = navigationEvent.detail.set;
 
-    switch (targetScreen) {
-      case 'settingsView':
-        this.renderPanelAcessControl();
-        break;
-      default:
-        // throw new Error(`Failed to access ${targetScreen} is not found`);
-    }
-  }
-
-@InjectEvent()
-public renderPanelAcessControl(){
-     const statusBar = this.panelService.mountPanelAccess();
-     this.render(statusBar);
+public renderPanelAcessControl(event: any){
+   const settingsView = this.panelService.mountPanelAccess(event);
+   document.getElementById('app')!.remove()
+   document.getElementById('root')!.appendChild(settingsView)
   }
 
   private render(childElement: DocumentFragment | HTMLElement, cleanParent?: Boolean){

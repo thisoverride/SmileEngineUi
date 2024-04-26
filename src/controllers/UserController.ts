@@ -8,45 +8,15 @@ export default class UserController {
     this.windowsService = windowsService;
   }
 
-  public navigationStack(event: Event){
-    const navigationEvent = event as CustomEvent;
-    const targetScreen: string = navigationEvent.detail.set;
-
-    switch (targetScreen) {
-      case 'homeView':
-        this.renderDefautlView();
-        break;
-      case 'selectionView':
-        this.renderModeSelectionView();
-        break;
-      case 'photoView':
-        this.renderPhotoView(event)
-        break;
-      case 'optionPhotoView':
-        this.renderOptionPhotoView();
-        break;
-      case 'optionBoomrangView':
-        this.renderBoomrangView();
-        break;
-      case 'receptionSteps':
-        this.renderReceptionStepsScreen(event);
-        break;
-      case 'previewPhoto':
-        this.renderPreviewPhoto(event)
-        break;
-      default:
-        throw new Error(`Failed to access ${targetScreen} is not found`);
-    }
-  }
-
+ 
   @InjectEvent()
   public renderDefautlView(){
     const homeView: HTMLElement = this.windowsService.renderHomeView();
     this.render(homeView,true);
   }
 
-  @InjectEvent()
-  private renderModeSelectionView(){
+
+  public renderModeSelectionView(){
     try{
       const screen = this.windowsService.renderModeSelectionView()
       this.render(screen,true)
@@ -57,39 +27,42 @@ export default class UserController {
   }
   
   @InjectEvent()
-  private renderOptionPhotoView(){
+  public renderOptionPhotoView(){
     const screen :HTMLElement = this.windowsService.renderOptionPhotoView();
     this.render(screen,true);
 
   }
 
   @InjectEvent()
-  private renderBoomrangView(){
-    const screen = this.windowsService.renderBoomrangView()
+  public renderBoomrangView(event : any){
+    const screen = this.windowsService.renderBoomrangView(event)
     this.render(screen, true)
   
   }
-  @InjectEvent()
-  private renderPreviewPhoto(event : any){
+
+  public renderPreviewPhoto(event : any){
     const screen: HTMLElement = this.windowsService.previewPhotoView(event);
     this.render(screen, true)
   
   }
   @InjectEvent()
-  private renderPhotoView(event: any){
+  public renderPhotoView(event: any){
     const screen = this.windowsService.renderPhotoView(event)
     this.render(screen, true)
   
   }
 
-  @InjectEvent()
-  private renderReceptionStepsScreen(event: any){
+  public renderReceptionStepsScreen(event: any){
     const screen = this.windowsService.renderReceptionStepsScreen(event)
     this.render(screen, true)
   
   }
 
-  private render(childElement: DocumentFragment | HTMLElement, cleanParent?: Boolean){
+  public destroyView(event: any): void {
+    this.windowsService.destroyView(event);
+  }
+
+  public render(childElement: DocumentFragment | HTMLElement, cleanParent?: Boolean){
     const app = document.getElementById('app');
     if(app){
       if(cleanParent){

@@ -8,6 +8,10 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/hammerjs": "^2.0.45",
+    "@types/node-wifi": "^2.0.2",
+    "@types/qrcode": "^1.5.5",
+    "@types/play-sound": "^1.1.2",
     "electron": "^26.1.0",
     "electron-builder": "^24.6.4",
     "typescript": "^5.2.2",
@@ -22,14 +26,13 @@
     "@tensorflow/tfjs-backend-webgl": "^4.10.0",
     "@tensorflow/tfjs-converter": "^4.10.0",
     "@tensorflow/tfjs-core": "^4.10.0",
-    "@types/fluent-ffmpeg": "^2.1.24",
-    "@types/node-wifi": "^2.0.2",
-    "@types/qrcode": "^1.5.5",
     "animate.css": "^4.1.1",
     "axios": "^1.6.8",
-    "boxicons": "^2.1.4",
     "face-api.js": "^0.22.2",
+    "hammerjs": "^2.0.8",
+    "node-wav-player": "^0.2.0",
     "node-wifi": "^2.0.16",
+    "play-sound": "^1.1.6",
     "qrcode": "^1.5.3",
     "socket.io-client": "^4.7.5"
   }

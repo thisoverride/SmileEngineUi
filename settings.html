@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <style>
+    html,
+    body {
+      height: 100%;
+      user-select: none;
+      background-color: #040B15;
+      color: #fff;
+      font-family: 'bankgothic-regular';
+      overflow: hidden;
+    }
+
+    #system-control {
+      background-color: #f7f7f7;
+      height: 100%;
+    }
+
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .syscard {
+      width: 100%;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 0 20px;
+    }
+
+    .sys-wrp {
+      height: 100%;
+      display: flex;
+      padding: 0 20px;
+      align-items: center;
+      flex-direction: column;
+      color: #040B15;
+      gap: 50px;
+    }
+
+    .sys-wrp>.title-screen {
+      align-self: flex-start;
+      font-size: 3em;
+      margin-top: 30px;
+    }
+
+    .item-line {
+      height: 50px;
+      border-bottom: 1px solid #f7f7f7;
+    }
+
+    .item-line>.line-title {
+      font-size: 2em;
+    }
+
+    .item-line>.icon {
+      height: 35px;
+      width: 35px;
+      border-radius: 10px;
+      background-color: #c8c4c4;
+    }
+
+    .sys-state-bar {
+      position: fixed;
+      height: 30px;
+      width: 100%;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+    }
+
+    .syscard-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      overflow-y: auto;
+      height: 100vh;
+      width: 100%;
+
+    }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 15px;
+    }
+  </style>
+  <div id="system-control">
+    <div class="sys-wrp">
+      <div class="sys-state-bar">
+        <time>12:17</time>
+        <div class="metrics">
+          network
+        </div>
+      </div>
+
+
+      <div class="title-screen">Settings</div>
+
+      <div class="syscard-wrap">
+        <div class="syscard">
+          <div class="item-line row">
+            <div class="icon"></div>
+            <div class="line-title">Réseau</div>
+          </div>
+          <div class="item-line row">
+            <div class="icon"></div>
+            <div class="line-title">Notification</div>
+          </div>
+          <div class="item-line row">
+            <div class="icon"></div>
+            <div class="line-title">Sons</div>
+          </div>
+          <div class="item-line row">
+            <div class="icon"></div>
+            <div class="line-title">Général</div>
+          </div>
+          <div class="item-line row">
+            <div class="icon"></div>
+            <div class="line-title">Template</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

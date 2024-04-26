@@ -33,7 +33,6 @@ export const receptionStepsScreen =  `
             <a id="timer" href="#">
             ${buttonPrimaryComponent({ 
 							id:"home",
-							dataScreen: "homeView",
 							textContent: "Retour à l'acceuil"
 						 })}
             </a>
