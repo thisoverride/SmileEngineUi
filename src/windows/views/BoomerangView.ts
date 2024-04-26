@@ -8,11 +8,10 @@ export default class BoomerangView {
   private isClosed: boolean = false;
   private counterElement: HTMLElement;
   private static readonly CHANGE_SCREEN_EVENT = new CustomEvent('changeScreen', {
-    detail: { set: '', params:'', emit: '',scope: '' }, bubbles: true, cancelable: true
+    detail: { set: '', params:{}, emit: '',scope: '' }, bubbles: true, cancelable: true
   });
   
   constructor(cameraScreen: HTMLElement,socket: Socket) {
-
     this.cameraScreen = cameraScreen;
     this.socket = socket;
     this.counterElement = this.cameraScreen.querySelector('#counter') as HTMLElement;
@@ -49,11 +48,29 @@ export default class BoomerangView {
     timer.addEventListener('click', this.timerClickHandler.bind(this));
     btnReturn.addEventListener('click', this.handleReturnButtonClick.bind(this));
 
-
+    this.setupTimer();
     this.setupCameraTrigger();
     this.setupSocketListeners();
   }
 
+  private setupTimer() {
+
+    const timerList = this.cameraScreen.querySelector('.data-list') as HTMLElement;
+    const selectedValue = this.cameraScreen.querySelector('#selected') as HTMLElement;
+    
+    selectedValue.textContent = `${this.timerSelected} s`;
+
+    timerList.addEventListener('click', (e: Event) => {
+      const timerValue = e.target as HTMLElement;
+      const timerId = timerValue.id;
+      if (['3', '5', '10'].includes(timerId)) {
+        selectedValue.textContent = timerValue.textContent;
+        this.timerSelected = parseInt(timerValue.textContent || '0');
+        this.counterElement.textContent = this.timerSelected.toString();
+        timerList.style.visibility = 'hidden';
+      }
+    });
+  }
 
   private setupSocketListeners(): void {
     this.socket.on('stream', this.handleStreamEvent);
@@ -83,7 +100,7 @@ export default class BoomerangView {
         if (count === 0) {
           clearInterval(intervalId);
           this.counterElement.textContent = "";
-          this.counterElement.style.opacity = '1';
+          this.counterElement.style.opacity = '0';
           this.socket.emit('capture');         
           // this.counterElement.style.background = "#ffff";
           return
@@ -121,6 +138,30 @@ export default class BoomerangView {
                 canvas.width = img.width;
                 canvas.height = img.height;
                 ctx.drawImage(img, 0, 0);
+                // const canvasWidth = canvas.width; // Largeur du canvas
+                // const columnWidth = 550; // Largeur de chaque colonne
+                // const dashLength = 10; // Longueur des tirets
+                // const gapLength = 5; // Longueur des vides entre les tirets
+            
+                // const margin = (canvasWidth - columnWidth) / 2; // Marge de chaque côté
+            
+                // // Dessiner la première colonne en pointillés à gauche
+                // ctx.setLineDash([dashLength, gapLength]); // Définir le motif de la ligne pointillée
+                // ctx.lineWidth = 2; // Définir la largeur de la ligne
+                // ctx.strokeStyle = 'red'; // Définir la couleur de la ligne
+                // ctx.beginPath(); // Commencer le chemin
+                // ctx.moveTo(margin, 0); // Déplacer le point de départ de la ligne
+                // ctx.lineTo(margin, canvas.height); // Dessiner la ligne jusqu'au bas du canvas
+                // ctx.stroke(); // Tracer la ligne
+            
+                // // Dessiner la deuxième colonne en pointillés à droite
+                // ctx.setLineDash([dashLength, gapLength]); // Définir le motif de la ligne pointillée
+                // ctx.lineWidth = 2; // Définir la largeur de la ligne
+                // ctx.strokeStyle = 'red'; // Définir la couleur de la ligne
+                // ctx.beginPath(); // Commencer le chemin
+                // ctx.moveTo(canvasWidth - margin, 0); // Déplacer le point de départ de la ligne
+                // ctx.lineTo(canvasWidth - margin, canvas.height); // Dessiner la ligne jusqu'au bas du canvas
+                // ctx.stroke(); 
 
                 const tempCanvas: HTMLCanvasElement = document.createElement('canvas');
                 tempCanvas.width = canvas.width;
@@ -140,7 +181,7 @@ export default class BoomerangView {
 
 
   private handleCaptureEvent(event: any): void {
-    if(event.data === "OK"){
+    if(event.status === "OK"){
       console.log(event)
       this.socket.emit('get-boomerang-video',{ data: "get-boomerang-video" });
     }else {
@@ -151,9 +192,21 @@ export default class BoomerangView {
   private handleReturnButtonClick = (_e: Event) => {
     this.isClosed = true;
     this.socket.emit('close-stream',{ data: "close-stream" });
+
+    BoomerangView.CHANGE_SCREEN_EVENT.detail.set = 'selectionView';
+    BoomerangView.CHANGE_SCREEN_EVENT.detail.params = "";
+    BoomerangView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL";
+    BoomerangView.CHANGE_SCREEN_EVENT.detail.emit = BoomerangView.name;
+    document.dispatchEvent(BoomerangView.CHANGE_SCREEN_EVENT);
+
+    BoomerangView.CHANGE_SCREEN_EVENT.detail.set = '';
+    BoomerangView.CHANGE_SCREEN_EVENT.detail.params = this.getView();
+    BoomerangView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL_DESTRY";
+    BoomerangView.CHANGE_SCREEN_EVENT.detail.emit = BoomerangView.name;
+    document.dispatchEvent(BoomerangView.CHANGE_SCREEN_EVENT);
   };
 
-  private timerClickHandler = (e: Event) => {
+  private timerClickHandler = (_e: Event) => {
     const timerList = this.cameraScreen.querySelector('.data-list') as HTMLElement;
     timerList.style.visibility = timerList.style.visibility === 'visible' ? 'hidden' : 'visible';
 };

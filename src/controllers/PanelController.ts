@@ -1,4 +1,4 @@
-import { InjectEvent } from "../decorator/injector";
+// import { InjectEvent } from "../decorator/injector";
 import PanelService from "../services/PanelService";
 
 export default class PanelController {

@@ -1,5 +1,6 @@
 import { Socket } from "socket.io-client";
 
+
 export default class PreviewPhotoView {
   private previewPhotoView: HTMLElement;
   private static readonly CHANGE_SCREEN_EVENT = new CustomEvent('changeScreen', {
@@ -17,20 +18,41 @@ export default class PreviewPhotoView {
   }
 
 
-  private async init(e: any) {
+  private async init(event: any) {
     const trash = this.previewPhotoView.querySelector('.btn-trash') as HTMLElement;
     const btnValidate = this.previewPhotoView.querySelector("#validate") as HTMLElement;
     trash.addEventListener('click', this.handleDeleteEvent.bind(this));
     btnValidate.addEventListener('click',this.handleValidateEvent.bind(this));
-      const canvas = this.previewPhotoView.querySelector('canvas') as HTMLCanvasElement;
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
-      img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx?.drawImage(img, 0, 0);
-      };
-      img.src = e.detail.params.data
+    
+    if(event.detail.params.type === 'image'){
+      const display = this.previewPhotoView.querySelector('#display') as HTMLElement;
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        img.onload = () => {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx?.drawImage(img, 0, 0);
+        };
+        img.src = event.detail.params.data
+        display.appendChild(canvas);
+        
+      }else if(event.detail.params.type === 'video'){
+        const titleScreen = this.previewPhotoView.querySelector('.text-indicator-selection') as HTMLElement;
+        titleScreen.innerHTML = 'Valider votre Boomerang';
+        const display = this.previewPhotoView.querySelector('#display') as HTMLElement;
+        const video = document.createElement('video');
+        const buffer = event.detail.params.data; 
+
+        const blob = new Blob([buffer]);
+
+        video.src = URL.createObjectURL(blob);
+        video.controls = false;
+        video.autoplay = true;
+        video.loop = true;
+
+        display.appendChild(video); 
+      }
   }
 
 
