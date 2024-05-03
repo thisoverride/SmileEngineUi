@@ -3,8 +3,9 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import EventService from './service/EventService';
 
 
+
 export default class ElectronApp {
-  private win: BrowserWindow | null;
+  public win: BrowserWindow | null;
   private viteDevServerUrl: string | undefined;
   private _eventService: EventService;
 
@@ -13,7 +14,9 @@ export default class ElectronApp {
     this.win = null;
     this.viteDevServerUrl = process.env.VITE_DEV_SERVER_URL;
     this.setupEnvironment();
+    // this._eventService.pingWithRetry()
   }
+
 
   private setupEnvironment() {
     process.env.DIST = path.join(__dirname, '../dist');
@@ -26,6 +29,7 @@ export default class ElectronApp {
     this.win = new BrowserWindow({
       width: 900, 
       height: 700,
+      
       // focusable:true,
       // kiosk: true,
       // frame: false,
@@ -39,6 +43,9 @@ export default class ElectronApp {
     
 
     this.win.webContents.on('did-finish-load', async () => {
+
+
+      
       // Envoyez un message au processus de rendu (front-end)
       // this.win?.webContents.send('main-process-message', 'communication avec le front ici');
       // this.win?.webContents.openDevTools();
@@ -72,7 +79,7 @@ export default class ElectronApp {
 
   
     ipcMain.on('power-machine', () => {
-      // this._eventService.restartApp(app)
+      this._eventService.restartApp(app) 
  
       console.log('power-marchine invoked')
     });

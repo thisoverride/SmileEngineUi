@@ -58,19 +58,29 @@ export default class ModeSelectionView {
             const element = event.currentTarget as HTMLElement;
             setTimeout(() => {
 
-              // this.socket.emit('stream',{data:'stream'})
               element.classList.add('fadeOut');
-              if (element.id === "app-02") {
-                ModeSelectionView.CHANGE_SCREEN_EVENT.detail.set = 'optionBoomrangView';
-                ModeSelectionView.CHANGE_SCREEN_EVENT.detail.emit= ModeSelectionView.name;
-                ModeSelectionView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL";
-                document.dispatchEvent(ModeSelectionView.CHANGE_SCREEN_EVENT)
-              }
-              if (element.id === "app-01") {        
-                ModeSelectionView.CHANGE_SCREEN_EVENT.detail.set = 'optionPhotoView';
-                ModeSelectionView.CHANGE_SCREEN_EVENT.detail.emit= ModeSelectionView.name;
-                ModeSelectionView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL";
-                document.dispatchEvent(ModeSelectionView.CHANGE_SCREEN_EVENT)
+              switch (element.id ) {
+                case "app-01":
+                  ModeSelectionView.CHANGE_SCREEN_EVENT.detail.set = 'optionPhotoView';
+                  ModeSelectionView.CHANGE_SCREEN_EVENT.detail.emit= ModeSelectionView.name;
+                  ModeSelectionView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL";
+                  document.dispatchEvent(ModeSelectionView.CHANGE_SCREEN_EVENT)
+                  break;
+                case "app-02":
+                  ModeSelectionView.CHANGE_SCREEN_EVENT.detail.set = 'boomrangView';
+                  ModeSelectionView.CHANGE_SCREEN_EVENT.detail.emit= ModeSelectionView.name;
+                  ModeSelectionView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL";
+                  document.dispatchEvent(ModeSelectionView.CHANGE_SCREEN_EVENT)
+                  break;
+                case "app-03":
+                  ModeSelectionView.CHANGE_SCREEN_EVENT.detail.set = 'mySelfView';
+                  ModeSelectionView.CHANGE_SCREEN_EVENT.detail.emit= ModeSelectionView.name;
+                  ModeSelectionView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL";
+                  document.dispatchEvent(ModeSelectionView.CHANGE_SCREEN_EVENT)
+                  break;
+              
+                default:
+                  break;
               }
             }, 300);
           }

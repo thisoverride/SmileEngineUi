@@ -9,24 +9,24 @@ export const receptionStepsScreen =  `
 
 			<div class="row w-100 justify-center">
 				<div class="col align-items-center justify-center text-center gap-30">
-				<div class="text-indicator-selection"> Imprimez, <br />
+				<div class="text-indicator-steps"> Imprimez, <br />
 				Scannez,
 				<br />
 				&<br />
 				Recommencer !</div>
 					<div class="col justify-center gap-20">
-          <div class="border-container row align-items-center">
+          <div class="setp-btn border-container row align-items-center">
           <div id="printer" class="overlay-click"></div>
             <button class="btn-printer"></button>
 							<div class="border-text">
-								<p>Imprimer une ou plusieurs copies de la photo</p>
+								<p>Imprimer une ou plusieurs<br/> copies de la photo</p>
 							</div>
 						</div>
-						<div  class="border-container row align-items-center">
+						<div class="setp-btn border-container row align-items-center">
             <div id="qrcode" class="overlay-click"></div>
 							<button class="btn-qrcode"></button>
 							<div class="border-text">
-								<p>Imprimer une ou plusieurs copies de la photo</p>
+								<p>Lier mon téléphone à la<br/> borne et je téléchargez vos<br/> photos</p>
 							</div>
 						</div>
 						<div>

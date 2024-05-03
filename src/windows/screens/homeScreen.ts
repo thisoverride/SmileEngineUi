@@ -7,7 +7,7 @@ export const homeScreen =  `
     <h1>
       Capturez des<br />
       souvenirs<br />
-      inoubliables !
+      inoubliables.
     </h1>
     <div class="indicator">
       Touchez l'écran pour<br />

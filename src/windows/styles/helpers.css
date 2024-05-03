@@ -245,3 +245,34 @@ visibility: hidden;
   margin-bottom: 20px;
   border-radius: 30px;
 }
+
+.ico-camera {
+  background-image: url('../../../public/icon/camera.png');
+  background-repeat: no-repeat;
+  background-size: 160px;
+  background-color: #040B15;
+  background-position: center;
+  height: 170px;
+  width: 170px;
+  /* background-color: red; */
+}
+.ico-face {
+  background-image: url('../../../public/icon/myself.png');
+  background-repeat: no-repeat;
+  background-size: 160px;
+  background-color: #040B15;
+  background-position: center;
+  height: 170px;
+  width: 170px;
+  /* background-color: red; */
+}
+.ico-qr{
+  background-image: url('../../../public/icon/qrcode.png');
+  background-repeat: no-repeat;
+  background-size: 160px;
+  background-color: #040B15;
+  background-position: center;
+  height: 170px;
+  width: 170px;
+  /* background-color: red; */
+}

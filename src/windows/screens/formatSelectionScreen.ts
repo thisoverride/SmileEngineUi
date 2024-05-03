@@ -24,7 +24,7 @@ export const formatSelectionScreen =  `
       })}
       ${buttonPrimaryComponent({
         id:"btn-action-next",
-        className: "btn-primary btn-collage-action v-hidden",
+        className: "btn-primary btn-collage-action hidden",
         textContent: "Suivant",
       })}
       </div>

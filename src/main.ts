@@ -7,18 +7,19 @@ import ApplicationInitializer from "./core/ApplicationInitializer";
 
 class Main {
 
-  public  Main(): void {
+  public static main(arg: string[]): void {
     try {
       window.addEventListener('error', this.handleError);
       const applicationInitializer = new ApplicationInitializer("ws://192.168.1.138:3000");
       applicationInitializer.initialize();
+      
 
     } catch (e: any) {
         this.handleError(e);
     }
   }
 
-  private handleError(e: unknown) {
+  private static handleError(e: unknown) {
     let error: any = null
    
     if(e instanceof ErrorEvent){
@@ -50,9 +51,11 @@ class Main {
     </div> ` 
   }
 }
-new Main().Main()
+Main.main([]);
+window.ipcRenderer.on('startapp',(_event,message)=> {
+})
 
-// window.ipcRenderer.on('main-process-message',(_e,message) => {}
+
 
 // document.body.style.backgroundColor = "#000";
 // document.body.innerHTML = 

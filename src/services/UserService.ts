@@ -13,6 +13,8 @@ import type { Socket } from "socket.io-client";
 import ReceptionSteps from "../windows/views/ReceptionSteps";
 import HomeView from "../windows/views/HomeView";
 import BoomerangView from "../windows/views/BoomerangView";
+import { mySelfScreen } from "../windows/screens/mySelfScreen";
+import MySelfView from "../windows/views/MySelfView";
 
 
 export default class UserService {
@@ -20,15 +22,13 @@ export default class UserService {
   private _photoView: PhotoView | null = null;
   private _boomrangView: BoomerangView | null = null;
   private _formatSelectionView: FormatSelectionView | null= null;
-  private _modeSelectionView: ModeSelectionView | null = null;
-  private _previewPhotoView: PreviewPhotoView | null = null;
   private socket: Socket;
-
+  
   constructor(domService: DOMService, socket: Socket) {
     this._domService = domService;
     this.socket = socket;
   }
-
+  
   public renderOptionPhotoView(): HTMLElement {
     if (!this._formatSelectionView) {
       const screen: HTMLElement = this._domService.stringToHTMLElement(formatSelectionScreen);
@@ -36,7 +36,13 @@ export default class UserService {
     }
     return this._formatSelectionView.getScreen();
   }
-
+  
+  public renderMySelfView() {
+    const screen: HTMLElement = this._domService.stringToHTMLElement(mySelfScreen);
+    const mySelfView = new MySelfView(screen,this.socket);
+    return mySelfView.getScreen();
+  }
+  
   public renderPhotoView(event: any): HTMLElement {
   if(event.detail.params === "retray") {
     this._photoView?.resetScreen();
@@ -61,18 +67,10 @@ export default class UserService {
     return this._boomrangView.getScreen();
   } 
 
-
   public renderModeSelectionView(): HTMLElement {
-    if(!this._modeSelectionView){
-      this._modeSelectionView = null;
-      const modeSelectionScreen : HTMLElement = this._domService.stringToHTMLElement(modeSelection);
-      this._modeSelectionView = new ModeSelectionView(modeSelectionScreen,this.socket);
-    }
-
-    this._modeSelectionView = null;
     const modeSelectionScreen : HTMLElement = this._domService.stringToHTMLElement(modeSelection);
-      this._modeSelectionView = new ModeSelectionView(modeSelectionScreen,this.socket);
-    return this._modeSelectionView.getScreen();
+    const modeSelectionView = new ModeSelectionView(modeSelectionScreen,this.socket);
+    return modeSelectionView.getScreen();
   }
 
   public renderHomeView(): HTMLElement {
@@ -82,7 +80,6 @@ export default class UserService {
     if(this._photoView){
       this._photoView.destroy()
       this._photoView = null;
-      this._previewPhotoView = null;
     }
 
     return homeViewBuiness.getScreen();
@@ -90,9 +87,9 @@ export default class UserService {
 
   public previewPhotoView(event: any): HTMLElement {
     const screen : HTMLElement = this._domService.stringToHTMLElement(previewPhotoScreen);
-    this._previewPhotoView = new PreviewPhotoView(screen,this.socket,event)
+    const previewPhotoView = new PreviewPhotoView(screen,this.socket,event)
     
-    return this._previewPhotoView.getScreen();
+    return previewPhotoView.getScreen();
   }
 
   public renderReceptionStepsScreen(event: any): HTMLElement {
@@ -101,10 +98,28 @@ export default class UserService {
     return receptionStepsView.getScreen();
   }
 
-  public destroyView(view :any): void {
-    console.log('view  => ',view)
-    view.detail.params.destroy();
-    view.detail.params = null;
-  }
+  public destroyView(view: any): void {
+    switch (view.detail.params) {
+        case 'photoView':
+            this.destroyAndNullify(this._photoView);
+            break;
+        case 'boomrangView':
+            this.destroyAndNullify(this._boomrangView);
+            break;
+        case '*':
+            this.destroyAndNullify(this._photoView);
+            this.destroyAndNullify(this._boomrangView);
+            break;
+        default:
+            break;
+    }
+}
+
+private destroyAndNullify(view: PhotoView | BoomerangView | null): void {
+    if (view !== null) {
+        view.destroy();
+        view = null;
+    }
+}
 
 }

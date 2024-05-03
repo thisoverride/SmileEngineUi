@@ -30,8 +30,8 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  height: 70px;
-  width: 70px;
+  height: 300px;
+  width: 300px;
 }
 
 
@@ -47,6 +47,8 @@ html, body{
   background-color: #040B15;
   color: #fff;
   font-family: 'bankgothic-regular';
+  /* font-family: 'bankgothic-regular';
+   */
 }
 #root,#app {
   height: 100%;
@@ -101,7 +103,7 @@ html, body{
 }
 
 .collage {
-  display: none;
+  /* display: none; */
   background-color: rgb(198, 197, 197);
   height: 45vh;
   width: 100%;
@@ -243,6 +245,7 @@ canvas ,video{
   border-radius: 15px;
   height: 1120px;
   width: 100%;
+  background-color: rgb(230, 229, 229);
 }
 
 
@@ -320,6 +323,47 @@ background-color: #ffffffd5;
 }
 /* ======================end screenCamera======================= */
 
+
+
+/* =======================myselfScreen  =============================*/
+.myself-wrp{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 117px;
+}
+.introducion-slide {
+  justify-content: space-around;
+  font-size: 1.5em;
+  gap: 50px;
+  width: 100%;
+}
+
+.ask-container{
+  justify-content: space-around;
+}
+.ask-container > .col:nth-child(1){
+  align-items: center;
+}
+.ask-container > .col:nth-child(2){
+  align-items: center;
+
+}
+
+.ask-container > .col {
+  text-align: center;
+  height: 300px;
+  width:  300px;
+  justify-content: space-around;
+}
+
+
+.ask{
+  font-size: 2em;
+}
+/* =======================end myselfScreen  =============================*/
+
 /* =================== PreviewPhotoScreen=================== */
 
 ._photo_preview_wrp{
@@ -365,6 +409,14 @@ background-color: #ffffffd5;
 
 /* ============= receptionSetpsScreen =============*/
 
+.text-indicator-steps{
+  font-size: 5em;
+}
+.setp-btn{
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-evenly;
+}
 
 #timer:before {
   background-color: #fff;
@@ -503,6 +555,7 @@ img {
 
 /* ==============mode selction screen ===================== */
 ._mode_selection_wrp{
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -523,6 +576,7 @@ img {
   font-size: 3em;
   text-align: center;
 }
+
 
 .mode-app {
 display: flex;
@@ -994,7 +1048,7 @@ visibility: hidden;
 
 
 
-/* step */
+/* ===============step======================== */
 
 .num-copy{
 height: 30px;
@@ -1123,11 +1177,12 @@ height: 100%;
 .border-container {
   overflow: hidden;
   border: 2px solid #fff;
-  border-radius: 10px;
-  width: 350px;
+  border-radius: 15px;
+  height: 120px;
+  width: 450px;
 }
 .border-text{
-  width: 60%;
+  font-size: 1.5em;
 }
 /* ============================================================= */
 

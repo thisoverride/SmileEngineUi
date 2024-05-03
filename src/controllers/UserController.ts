@@ -26,7 +26,7 @@ export default class UserController {
     }
   }
   
-  @InjectEvent()
+
   public renderOptionPhotoView(){
     const screen :HTMLElement = this.windowsService.renderOptionPhotoView();
     this.render(screen,true);
@@ -39,13 +39,19 @@ export default class UserController {
     this.render(screen, true)
   
   }
+  @InjectEvent()
+  public renderMySelfView(){
+    const screen = this.windowsService.renderMySelfView()
+    this.render(screen, true)
+  
+  }
 
   public renderPreviewPhoto(event : any){
     const screen: HTMLElement = this.windowsService.previewPhotoView(event);
     this.render(screen, true)
   
   }
-  @InjectEvent()
+
   public renderPhotoView(event: any){
     const screen = this.windowsService.renderPhotoView(event)
     this.render(screen, true)

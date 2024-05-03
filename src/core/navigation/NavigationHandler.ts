@@ -51,7 +51,7 @@ export default class NavigationHandler {
       case 'optionPhotoView':
         this.userController.renderOptionPhotoView();
         break;
-      case 'optionBoomrangView':
+      case 'boomrangView':
         this.userController.renderBoomrangView(event);
         break;
       case 'receptionSteps':
@@ -59,6 +59,9 @@ export default class NavigationHandler {
         break;
       case 'previewPhoto':
         this.userController.renderPreviewPhoto(event);
+        break;
+      case 'mySelfView':
+        this.userController.renderMySelfView();
         break;
       default:
         throw new Error(`Failed to access ${targetScreen} is not found`);

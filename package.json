@@ -10,7 +10,7 @@
   "devDependencies": {
     "@types/hammerjs": "^2.0.45",
     "@types/node-wifi": "^2.0.2",
-    "@types/qrcode": "^1.5.5",
+    "@types/ping": "^0.4.4",
     "@types/play-sound": "^1.1.2",
     "electron": "^26.1.0",
     "electron-builder": "^24.6.4",
@@ -21,19 +21,13 @@
   },
   "main": "dist-electron/main.js",
   "dependencies": {
-    "@tensorflow-models/handpose": "^0.1.0",
-    "@tensorflow/tfjs": "^4.17.0",
-    "@tensorflow/tfjs-backend-webgl": "^4.10.0",
-    "@tensorflow/tfjs-converter": "^4.10.0",
-    "@tensorflow/tfjs-core": "^4.10.0",
     "animate.css": "^4.1.1",
     "axios": "^1.6.8",
-    "face-api.js": "^0.22.2",
     "hammerjs": "^2.0.8",
     "node-wav-player": "^0.2.0",
     "node-wifi": "^2.0.16",
+    "ping": "^0.4.4",
     "play-sound": "^1.1.6",
-    "qrcode": "^1.5.3",
     "socket.io-client": "^4.7.5"
   }
 }

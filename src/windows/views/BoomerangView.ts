@@ -200,7 +200,7 @@ export default class BoomerangView {
     document.dispatchEvent(BoomerangView.CHANGE_SCREEN_EVENT);
 
     BoomerangView.CHANGE_SCREEN_EVENT.detail.set = '';
-    BoomerangView.CHANGE_SCREEN_EVENT.detail.params = this.getView();
+    BoomerangView.CHANGE_SCREEN_EVENT.detail.params = 'boomrangView';
     BoomerangView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL_DESTRY";
     BoomerangView.CHANGE_SCREEN_EVENT.detail.emit = BoomerangView.name;
     document.dispatchEvent(BoomerangView.CHANGE_SCREEN_EVENT);

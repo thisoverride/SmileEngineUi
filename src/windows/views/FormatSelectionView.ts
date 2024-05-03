@@ -78,9 +78,9 @@ export default class FormatSelectionView {
 
   private showTemplate(orientationID: string): void {
     if (orientationID === 'landscape') {
-    this.btnNextAction.classList.remove('v-hidden');
+    this.btnNextAction.classList.remove('hidden');
     } else {
-      this.btnNextAction.classList.remove('v-hidden');
+      this.btnNextAction.classList.remove('hidden');
     }
   }
 
@@ -93,8 +93,8 @@ export default class FormatSelectionView {
     const orientation = this.formatSelectionScreen.querySelector('#orientation') as HTMLElement;
     const collage = this.formatSelectionScreen.querySelector('.collage') as HTMLElement;
 
-    if (orientation.classList.contains("hidden") && !this.btnNextAction.classList.contains('v-hidden')) {
-      this.btnNextAction.classList.add('v-hidden')
+    if (orientation.classList.contains("hidden") && !this.btnNextAction.classList.contains('hidden')) {
+      this.btnNextAction.classList.add('hidden')
       collage.style.display = "none";
       orientation.classList.remove('hidden')
     } else {
