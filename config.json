@@ -1,0 +1,39 @@
+{
+  "version": 0.5,
+  "appMode": "protected",
+  "application": {
+    "receptionHub": [
+      {
+        "label": "slurp",
+        "mounted": false
+      },
+      {
+        "label": "print",
+        "mounted": false
+      }
+    ],
+    "captureMode":  [
+        {
+          "app": {
+            "id": "app-01",
+            "title": "Photographie",
+            "ico": "icon/camera.png"
+          }
+        },
+        {
+          "app": {
+            "id": "app-02",
+            "title": "Boomerang",
+            "ico": "icon/loop.png"
+          }
+        },
+        {
+          "app": {
+            "id": "app-03",
+            "title": "MySelf",
+            "ico": "icon/myself.png"
+          }
+        }
+      ]
+    }
+  }
