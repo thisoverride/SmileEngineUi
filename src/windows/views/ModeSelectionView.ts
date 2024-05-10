@@ -1,5 +1,3 @@
-import type { Socket } from "socket.io-client";
-
 export default class ModeSelectionView {
   private formatSelectionScreen: HTMLElement;
   private static readonly CHANGE_SCREEN_EVENT = new CustomEvent('changeScreen', {
@@ -13,11 +11,9 @@ export default class ModeSelectionView {
     cancelable: true
   });
 
-  private socket: Socket;
 
-  constructor(formatSelectionScreen: HTMLElement,socket: Socket) {
+  constructor(formatSelectionScreen: HTMLElement) {
     this.formatSelectionScreen = formatSelectionScreen;
-    this.socket =socket;
     this.init()
   }
 

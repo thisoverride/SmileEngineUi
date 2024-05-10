@@ -1,6 +1,6 @@
 import type { Socket } from "socket.io-client";
 
-export default class PhotoView {
+export default class MySelfView {
   public mySelfScreen: HTMLElement;
   private socket: Socket;
 
@@ -24,7 +24,6 @@ export default class PhotoView {
     btnNext.addEventListener('click', this.handleNextButtonClick.bind(this));
     btnReturn.addEventListener('click', this.handleReturnButtonClick.bind(this));
     this.setupSocketListeners();
-    this.socket.emit('myself-stream', { data: 'photo-video' });
   }
 
 
@@ -33,9 +32,25 @@ export default class PhotoView {
   }
 
 
-
   private handleStreamEvent: (event: any) => void = async (event) => {
+    console.log(event)
     const canvas = this.mySelfScreen.querySelector('canvas') as HTMLCanvasElement;
+    const titleScreen = this.mySelfScreen.querySelector('.text-indicator-selection') as HTMLElement;
+
+    let currentAngle = '';
+    if(currentAngle === ''){
+      currentAngle = event.currentAngle
+      titleScreen.innerHTML= "Capture de " + currentAngle
+    }
+
+    if(event.currentAngle === "completed"){
+      canvas.style.display = 'none'
+    }
+
+    if(event.isFinish){
+      currentAngle = event.currentAngle
+      titleScreen.innerHTML= "Capture de " + currentAngle
+    }
 
         let img = new Image();
         img.onload = async () => {
@@ -47,18 +62,44 @@ export default class PhotoView {
 
             if(event.box){
               const box = event.box._box;
+              const x = box._x;
+              const y = box._y;
+              const width = box._width;
+              const height = box._height;
+              
               ctx.beginPath();
-              ctx.strokeStyle = 'green'; // Couleur du carré
-              ctx.lineWidth = 2; // Largeur de la ligne du carré
-              ctx.rect(box._x, box._y, box._width, box._height);
+              ctx.strokeStyle = '#fff'; 
+              ctx.lineWidth = 4; 
+              // Dessiner le coin supérieur gauche
+              ctx.moveTo(x, y);
+              ctx.lineTo(x + 10, y);
+              ctx.moveTo(x, y);
+              ctx.lineTo(x, y + 10);
+              // Dessiner le coin supérieur droit
+              ctx.moveTo(x + width, y);
+              ctx.lineTo(x + width - 10, y);
+              ctx.moveTo(x + width, y);
+              ctx.lineTo(x + width, y + 10);
+              // Dessiner le coin inférieur gauche
+              ctx.moveTo(x, y + height);
+              ctx.lineTo(x + 10, y + height);
+              ctx.moveTo(x, y + height);
+              ctx.lineTo(x, y + height - 10);
+              // Dessiner le coin inférieur droit
+              ctx.moveTo(x + width, y + height);
+              ctx.lineTo(x + width - 10, y + height);
+              ctx.moveTo(x + width, y + height);
+              ctx.lineTo(x + width, y + height - 10);
               ctx.stroke();
-
-            }
+          }
+          
         };
         
         img.src = event.data;
         
 };
+
+
 
 
 
@@ -72,19 +113,19 @@ export default class PhotoView {
 
   private handleReturnButtonClick = (_e: Event) => {
 
-    this.socket.emit('close-stream',{ data: "close-stream" });
+    this.socket.emit('close-myself-stream',{ data: "close-myself-stream" });
 
-    PhotoView.CHANGE_SCREEN_EVENT.detail.set = 'selectionView';
-    PhotoView.CHANGE_SCREEN_EVENT.detail.params = "";
-    PhotoView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL";
-    PhotoView.CHANGE_SCREEN_EVENT.detail.emit = PhotoView.name;
-    document.dispatchEvent(PhotoView.CHANGE_SCREEN_EVENT);
+    MySelfView.CHANGE_SCREEN_EVENT.detail.set = 'selectionView';
+    MySelfView.CHANGE_SCREEN_EVENT.detail.params = "";
+    MySelfView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL";
+    MySelfView.CHANGE_SCREEN_EVENT.detail.emit = MySelfView.name;
+    document.dispatchEvent(MySelfView.CHANGE_SCREEN_EVENT);
 
-    PhotoView.CHANGE_SCREEN_EVENT.detail.set = '';
-    PhotoView.CHANGE_SCREEN_EVENT.detail.params = this.getView();
-    PhotoView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL_DESTRY";
-    PhotoView.CHANGE_SCREEN_EVENT.detail.emit = PhotoView.name;
-    document.dispatchEvent(PhotoView.CHANGE_SCREEN_EVENT);
+    MySelfView.CHANGE_SCREEN_EVENT.detail.set = '';
+    MySelfView.CHANGE_SCREEN_EVENT.detail.params = this.getView();
+    MySelfView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL_DESTRY";
+    MySelfView.CHANGE_SCREEN_EVENT.detail.emit = MySelfView.name;
+    document.dispatchEvent(MySelfView.CHANGE_SCREEN_EVENT);
   };
 
 

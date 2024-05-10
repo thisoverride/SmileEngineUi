@@ -7,7 +7,7 @@ import ApplicationInitializer from "./core/ApplicationInitializer";
 
 class Main {
 
-  public static main(arg: string[]): void {
+  public static main(): void {
     try {
       window.addEventListener('error', this.handleError);
       const applicationInitializer = new ApplicationInitializer("ws://192.168.1.138:3000");
@@ -51,9 +51,8 @@ class Main {
     </div> ` 
   }
 }
-Main.main([]);
-window.ipcRenderer.on('startapp',(_event,message)=> {
-})
+Main.main();
+// window.ipcRenderer.on('startapp',(_event,message)=> {})
 
 
 

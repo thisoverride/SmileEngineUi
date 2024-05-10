@@ -18,22 +18,13 @@ export default class ApplicationInitializer {
  
       const root: HTMLElement | null = document.getElementById('root');
       const applicationContainer: HTMLDivElement = document.createElement('div');
-      applicationContainer.id= 'app';
-
-      // const systemControl : HTMLElement = document.createElement('div');
-      // systemControl.id = 'system-control';
-
       const accessPoint: HTMLElement = document.createElement('div');
-      accessPoint.id = "pt_control"
-      accessPoint.className="control-center crl_pos-0"
-   
-
       const overlay : HTMLElement = document.createElement('div');
+      
+      applicationContainer.id= 'app';
+      accessPoint.id = "pt_control";
+      accessPoint.className="control-center crl_pos-0";
       overlay.className = 'md-overlay hidden';
-      
-      
-      
-      
       
       if(root){
         

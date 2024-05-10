@@ -123,7 +123,6 @@ export default class PhotoView {
 
 
   private handleStreamEvent: (event: any) => void = (event) => {
-
     const canvas = this.cameraScreen.querySelector('canvas') as HTMLCanvasElement;
     const errorIndicator = document.querySelector('.camera-wrp') as HTMLElement;
 
@@ -146,16 +145,6 @@ export default class PhotoView {
                 canvas.width = img.width;
                 canvas.height = img.height;
                 ctx.drawImage(img, 0, 0);
-
-                // if(event.box){
-                //   const box = event.box._box;
-                //   ctx.beginPath();
-                //   ctx.strokeStyle = 'green'; // Couleur du carré
-                //   ctx.lineWidth = 2; // Largeur de la ligne du carré
-                //   ctx.rect(box._x, box._y, box._width, box._height);
-                //   ctx.stroke();
-
-                // }
 
                 const tempCanvas = document.createElement('canvas');
                 tempCanvas.width = canvas.width;
@@ -195,13 +184,13 @@ export default class PhotoView {
     document.dispatchEvent(PhotoView.CHANGE_SCREEN_EVENT);
 
     PhotoView.CHANGE_SCREEN_EVENT.detail.set = '';
-    PhotoView.CHANGE_SCREEN_EVENT.detail.params = 'photoView';
+    PhotoView.CHANGE_SCREEN_EVENT.detail.params = this.getView();
     PhotoView.CHANGE_SCREEN_EVENT.detail.scope = "USR_CRL_DESTRY";
     PhotoView.CHANGE_SCREEN_EVENT.detail.emit = PhotoView.name;
     document.dispatchEvent(PhotoView.CHANGE_SCREEN_EVENT);
   };
 
-  private timerClickHandler = (e: Event) => {
+  private timerClickHandler = () => {
     const timerList = this.cameraScreen.querySelector('.data-list') as HTMLElement;
     timerList.style.visibility = timerList.style.visibility === 'visible' ? 'hidden' : 'visible';
 };
@@ -229,7 +218,6 @@ export default class PhotoView {
     this.socket.off('stream');
     this.socket.off('shooting');
     this.socket.off('get-last-photo');
-
 
 }
 

@@ -69,7 +69,7 @@ export default class UserService {
 
   public renderModeSelectionView(): HTMLElement {
     const modeSelectionScreen : HTMLElement = this._domService.stringToHTMLElement(modeSelection);
-    const modeSelectionView = new ModeSelectionView(modeSelectionScreen,this.socket);
+    const modeSelectionView = new ModeSelectionView(modeSelectionScreen);
     return modeSelectionView.getScreen();
   }
 

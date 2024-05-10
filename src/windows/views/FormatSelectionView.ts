@@ -1,5 +1,5 @@
 import type { Socket } from "socket.io-client";
-import Hammer from "hammerjs";
+// import Hammer from "hammerjs";
 export default class FormatSelectionView {
   private static readonly CHANGE_SCREEN_EVENT = new CustomEvent('changeScreen', {
     detail: { set: '', params:'', emit: '',scope: '' }, bubbles: true, cancelable: true
@@ -38,33 +38,33 @@ export default class FormatSelectionView {
     btnReturnAction.addEventListener('click', this.onClickReturn.bind(this));
   }
 
-  private setupSwipeDetection(): void {
-    const swipeElement = document.querySelector('#app > format-selection-wrp') as HTMLElement;
-    console.log(swipeElement)
-    if (swipeElement) {
-      const hammer = new Hammer(swipeElement);
+  // private setupSwipeDetection(): void {
+  //   const swipeElement = document.querySelector('#app > format-selection-wrp') as HTMLElement;
+  //   console.log(swipeElement)
+  //   if (swipeElement) {
+  //     const hammer = new Hammer(swipeElement);
       
-      // Calculer la largeur de la zone de détection du swipe (50% de la largeur de l'écran)
-      const screenWidth = window.innerWidth;
-      const swipeZoneWidth = screenWidth * 0.5;
+  //     // Calculer la largeur de la zone de détection du swipe (50% de la largeur de l'écran)
+  //     const screenWidth = window.innerWidth;
+  //     const swipeZoneWidth = screenWidth * 0.5;
 
-      // Définir le seuil de détection du swipe pour commencer depuis le bord gauche de l'écran
-      const threshold = swipeZoneWidth;
+  //     // Définir le seuil de détection du swipe pour commencer depuis le bord gauche de l'écran
+  //     const threshold = swipeZoneWidth;
       
-      // Définir la zone de détection du swipe
-      hammer.get('swipe').set({
-        direction: Hammer.DIRECTION_HORIZONTAL,
-        threshold: threshold
-      });
+  //     // Définir la zone de détection du swipe
+  //     hammer.get('swipe').set({
+  //       direction: Hammer.DIRECTION_HORIZONTAL,
+  //       threshold: threshold
+  //     });
       
-      hammer.on('swipe', (event) => {
-        if (event.direction === Hammer.DIRECTION_RIGHT) {
-          console.log('Swipe de gauche à droite détecté !');
-          // Effectuez votre action ici
-        }
-      });
-    }
-  }
+  //     hammer.on('swipe', (event) => {
+  //       if (event.direction === Hammer.DIRECTION_RIGHT) {
+  //         console.log('Swipe de gauche à droite détecté !');
+  //         // Effectuez votre action ici
+  //       }
+  //     });
+  //   }
+  // }
 
   private onClickOrientation(e: Event): void {
     const collage = this.formatSelectionScreen.querySelector('.collage') as HTMLElement;
@@ -99,7 +99,7 @@ export default class FormatSelectionView {
       orientation.classList.remove('hidden')
     } else {
       this.dispatchEventWithChangeScreenEvent('selectionView');
-      this.socket.emit('stream', { data: 'stream' });
+      this.socket.emit('stream', { data: 'stream' }); // <-- change this
     }
   }
 
