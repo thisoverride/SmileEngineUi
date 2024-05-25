@@ -1,5 +1,4 @@
 import type { Socket } from "socket.io-client";
-import Hammer from "hammerjs";
 export default class FormatSelectionView {
   private static readonly CHANGE_SCREEN_EVENT = new CustomEvent('changeScreen', {
     detail: { set: '', params:'', emit: '',scope: '' }, bubbles: true, cancelable: true
@@ -36,34 +35,6 @@ export default class FormatSelectionView {
     const btnReturnAction = this.formatSelectionScreen.querySelector('#btn-action-return') as HTMLElement;
     this.btnNextAction.addEventListener('click', this.onClick.bind(this));    
     btnReturnAction.addEventListener('click', this.onClickReturn.bind(this));
-  }
-
-  private setupSwipeDetection(): void {
-    const swipeElement = document.querySelector('#app > format-selection-wrp') as HTMLElement;
-    console.log(swipeElement)
-    if (swipeElement) {
-      const hammer = new Hammer(swipeElement);
-      
-      // Calculer la largeur de la zone de détection du swipe (50% de la largeur de l'écran)
-      const screenWidth = window.innerWidth;
-      const swipeZoneWidth = screenWidth * 0.5;
-
-      // Définir le seuil de détection du swipe pour commencer depuis le bord gauche de l'écran
-      const threshold = swipeZoneWidth;
-      
-      // Définir la zone de détection du swipe
-      hammer.get('swipe').set({
-        direction: Hammer.DIRECTION_HORIZONTAL,
-        threshold: threshold
-      });
-      
-      hammer.on('swipe', (event) => {
-        if (event.direction === Hammer.DIRECTION_RIGHT) {
-          console.log('Swipe de gauche à droite détecté !');
-          // Effectuez votre action ici
-        }
-      });
-    }
   }
 
   private onClickOrientation(e: Event): void {
