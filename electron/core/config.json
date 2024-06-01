@@ -1,0 +1,36 @@
+{
+  "version": 0.5,
+  "meta": {
+    "appMode": "protected"
+  },
+  "application": {
+    "prefereces": {
+      "theme": 1
+    },
+    "themes": [
+      {
+        "id": 1,
+        "name": "Dark",
+        "colors": {
+          "backgroundColor": "#040B15",
+          "fontColor": "#ffffff"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Light",
+        "colors": {
+          "backgroundColor": "#ffffff",
+          "fontColor": "#040B15"
+        }
+      }
+    ],
+    "templates": [
+      {
+        "id": "3e4567-e89b-12d3-a456-426614174000",
+        "name": "Festival",
+        "content": ""
+      }
+    ]
+  }
+}

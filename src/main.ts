@@ -1,23 +1,30 @@
-import "./windows/styles/normalize.css";
-import "./windows/styles/helpers.css";
-import "./windows/styles/style.css";
+import '../new-interf/normalize.css'
+import '../new-interf/style.css'
 import 'animate.css';
-import ApplicationInitializer from "./core/ApplicationInitializer";
+import layoutManager from "./manager/LayoutManager";
+import NavigationView from './core/navigation/Navigation';
+import { HomeView } from './views/main/views';
 
 
-class Main {
+export default class Main {
+  constructor(containerID: HTMLElement, config: string | null) {
+    this.main(containerID ,JSON.parse(config ?? ''))
+  }
 
-  public  Main(): void {
+  public main(containerID: HTMLElement, config: any ): void {
     try {
       window.addEventListener('error', this.handleError);
-      const applicationInitializer = new ApplicationInitializer("ws://192.168.1.138:3000");
-      applicationInitializer.initialize();
-
+      window.navigation = new NavigationView();
+      window.app = new layoutManager(containerID , config);
+      window.app.render();
+      window.app.setMain(new HomeView({
+        title:'Capturez des souvenirs inoubliables !',
+        buttonText:'Touchez l’écran pour commencer'}).render())
+  
     } catch (e: any) {
         this.handleError(e);
     }
   }
-
   private handleError(e: unknown) {
     let error: any = null
    
@@ -50,7 +57,7 @@ class Main {
     </div> ` 
   }
 }
-new Main().Main()
+
 
 // window.ipcRenderer.on('main-process-message',(_e,message) => {}
 
