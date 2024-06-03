@@ -3,6 +3,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import EventService from './service/EventService';
 
 
+
 export default class ElectronApp {
   private win: BrowserWindow | null;
   private viteDevServerUrl: string | undefined;
@@ -38,24 +39,7 @@ export default class ElectronApp {
    
     
 
-    this.win.webContents.on('did-finish-load', async () => {
-      // Envoyez un message au processus de rendu (front-end)
-      // this.win?.webContents.send('main-process-message', 'communication avec le front ici');
-      // this.win?.webContents.openDevTools();
-
-    
-  
-      // Démarrez le premier scan réseau
-      // const connectionDetail = await this._eventService.scanNetWork();
-      // this.win?.webContents.send('scan-network', connectionDetail);
-  
-      // Définissez l'intervalle pour les scans réseau périodiques
-      // setInterval(async () => {
-      //     const connectionDetail = await this._eventService.scanNetWork();
-      //     this.win?.webContents.send('scan-network', connectionDetail);
-      // }, 100000);
-  });
- 
+    this.win.webContents.on('did-finish-load', async () => {});
     this.loadWindowContent();
   }
 
@@ -70,7 +54,6 @@ export default class ElectronApp {
 
   public start() {
 
-  
     ipcMain.on('power-machine', () => {
       // this._eventService.restartApp(app)
  
