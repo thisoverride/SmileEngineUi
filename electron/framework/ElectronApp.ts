@@ -1,7 +1,7 @@
 import path from 'path';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import EventService from './service/EventService';
-import SmileStorage from '../core/expose/storage/framework/express/ExpressApp';
+
 
 
 export default class ElectronApp {
@@ -40,11 +40,6 @@ export default class ElectronApp {
     
 
     this.win.webContents.on('did-finish-load', async () => {});
-
-    const expr = new SmileStorage()
-    expr.run()
-
-
     this.loadWindowContent();
   }
 
