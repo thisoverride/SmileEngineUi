@@ -1,6 +1,7 @@
-import { contextBridge, ipcRenderer } from 'electron'
-import { splashScreen } from './views/splashScreen'
-
+import { contextBridge, ipcRenderer } from 'electron';
+import { splashScreen } from './views/splashScreen';
+import Main from '../src/main';
+import EventService from './framework/service/EventService';
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', withPrototype(ipcRenderer))
 
@@ -92,9 +93,13 @@ function useLoading() {
       safeDOM.append(document.head, oStyle)
       safeDOM.append(document.body, oDiv)
     },
-    removeLoading() {
+    async removeLoading() {
       safeDOM.remove(document.head, oStyle)
       safeDOM.remove(document.body, oDiv)
+
+      const config = await EventService.loadConfig()
+      new Main(document.getElementById('root')!, config)
+
     },
   }
 }
@@ -106,9 +111,11 @@ const { appendLoading, removeLoading } = useLoading()
 domReady().then(appendLoading)
 
 
+
 window.onmessage = ev => {
   setTimeout(() => {
     ev.data.payload === 'removeLoading' && removeLoading()
+    
   }, 2500);
   
   const progressBar: HTMLElement | null = document.querySelector('#progress');
@@ -117,5 +124,4 @@ window.onmessage = ev => {
     setTimeout(() => progressBar.style.width = `${ev.data.progressUpdate}%`, 1000);
   }
 }
-
 setTimeout(removeLoading, 4)

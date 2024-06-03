@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="root">
+    <div id="pt_control" class="control-center crl_pos-0"></div>
+    <!-- <div id="app"> -->
+      <header class="layout-header">
+        <div class="booth-icon"></div>
+      </header>
+      <main class="layout-main">
+        <div class="layout-main-title row">
+          <!-- <h2 id="main-title">Sélectionnez le format de la photo</h2> -->
+        </div>
+
+        <div class="home-view col">
+          <h2>Capturez des<br/> souvenirs<br /> inoubliables !</h2>
+          <div class="home-view-photo-btn row">
+            <div class="home-view-photo-btn-text">Touchez l’écran pour<br/> commencer</div>
+          </div>
+          </div>
+        </div>
+        
+        <div class="render-photo-view col">
+          <div class="render-photo-btn row">
+            <div class="printer"></div>
+            <div class="printer-btn-text">J’imprime une ou plusieurs copies de la photo</div>
+          </div>
+          <div class="render-photo-btn row">
+            <div class="printer"></div>
+            <div class="printer-btn-text">Je lie mon téléphone à la borne et je télécharge les photos</div>
+          </div>
+        </div>
+  
+
+        
+       <!-- <div class="camera-view col">
+          <div class="camera-timer">10</div>
+          <canvas class="render-camera"></canvas>
+        </div> -->
+        <!-- OK -->
+        <!-- <div class="photo-orientation-frameview col">
+          <div class="row">
+          <div class="photo-collage"></div>
+            <div id="oriantation-group" class="oriantation-landsacape">
+              Paysage
+            </div>
+            <div id="oriantation-group" class="oriantation-portrait">
+              Portrait
+            </div>
+          </div>
+        </div> -->
+
+        <!-- OK -->
+        <!-- <div class="capture-Mode-SelectionView">
+          <div class="col">
+            <div class="row">
+              <div class="booth-os-app-container col">
+                <div class="booth-app"></div>
+                <div class="booth-app-title">Photo</div>
+              </div>
+              <div class="booth-os-app-container col">
+                <div class="booth-app"></div>
+                <div class="booth-app-title">Boomerang</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="booth-os-app-container col">
+                <div class="booth-app"></div>
+                <div class="booth-app-title">Myself</div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+      </main>
+      <footer class="layout-footer">
+        <input type="button" value="fezf">
+        
+
+        <div class="camera-view-footer row">
+          <div class="camera-view-button-container">
+            <div class="btn-secondary-return"></div>
+          </div>
+          <button class="btn-secondary"></button>
+  
+          <div class="camera-view-button-container">
+            <div class="btn-secondary-return"></div>
+          </div>
+        </div>
+
+        <!-- <div class="photo-orientation-frameview-footer">
+            <div class="row">
+              <button class="btn-secondary">Précédent</button>
+              <button class="btn-primary">Suivant</button>
+          </div>
+          </div> -->
+      </footer>
+    <!-- </div> -->
+  </div>
+</body>
+<script>
+  // Sélectionne l'élément input
+  const qu = document.body.querySelector('input');
+
+  // Définition de la fonction setTheme en dehors de l'événement click
+  const setTheme = (theme) => {
+    console.log('sss', theme);
+    document.documentElement.className = theme;
+  }
+
+  // Ajoute un gestionnaire d'événement click à l'élément input
+  qu.addEventListener('click', () => {
+    // Suppose que l'input contient une valeur définissant le thème (par exemple 'light' ou 'dark')
+    const theme = qu.value; // Récupère la valeur de l'input
+    setTheme('booth-os-dark'); // Appelle la fonction setTheme avec la valeur de l'input
+  });
+
+
+</script>
+
+</html>
+
+
+
