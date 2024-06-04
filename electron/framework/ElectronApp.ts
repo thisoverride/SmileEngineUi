@@ -1,8 +1,7 @@
 import path from 'path';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import EventService from './service/EventService';
-
-
+import RemoteCtrl from '../core/systems/services/RemoteCtrl';
 
 export default class ElectronApp {
   private win: BrowserWindow | null;
@@ -21,12 +20,14 @@ export default class ElectronApp {
     process.env.VITE_PUBLIC = app.isPackaged
       ? path.join(process.env.DIST, 'public')
       : path.join(process.env.DIST, '../public');
+
   }
 
   private createWindow() {
     this.win = new BrowserWindow({
       width: 900, 
       height: 700,
+      
       // focusable:true,
       // kiosk: true,
       // frame: false,
