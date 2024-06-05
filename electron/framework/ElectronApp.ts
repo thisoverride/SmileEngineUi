@@ -1,18 +1,20 @@
 import path from 'path';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import EventService from './service/EventService';
-import RemoteCtrl from '../core/systems/services/RemoteCtrl';
+import SystemController from '../core/systems/services/SystemController';
 
 export default class ElectronApp {
   private win: BrowserWindow | null;
   private viteDevServerUrl: string | undefined;
   private _eventService: EventService;
+  private _systemCtrl: SystemController;
 
   constructor(eventService: EventService) {
     this._eventService = eventService;
     this.win = null;
     this.viteDevServerUrl = process.env.VITE_DEV_SERVER_URL;
     this.setupEnvironment();
+    this._systemCtrl = new SystemController();
   }
 
   private setupEnvironment() {
@@ -54,12 +56,9 @@ export default class ElectronApp {
 
 
   public start() {
+    ipcMain.on('power-machine-off', async () => await this._systemCtrl.shutdown());
+    ipcMain.on('power-machine-reboot', async () => await this._systemCtrl.reboot());
 
-    ipcMain.on('power-machine', () => {
-      // this._eventService.restartApp(app)
- 
-      console.log('power-marchine invoked')
-    });
     ipcMain.on('play-sound-effect',(_event,message) => {
       this._eventService.paySondEffect(message)
     })
