@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { splashScreen } from './views/splashScreen';
+import { splashScreen } from '../src/views/main/screenView/splashScreen';
 import Main from '../src/main';
 import EventService from './framework/service/EventService';
 // --------- Expose some API to the Renderer process ---------
@@ -52,12 +52,6 @@ const safeDOM = {
   },
 }
 
-/**
- * https://tobiasahlin.com/spinkit
- * https://connoratherton.com/loaders
- * https://projects.lukehaas.me/css-loaders
- * https://matejkustec.github.io/SpinThatShit
- */
 function useLoading() {
  
   const styleContent = `
@@ -65,13 +59,33 @@ function useLoading() {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center; 
   justify-content: center;
-  background: #282c34;
+  background: #000;
   z-index: 9;
+}
+#ico-smile-engine{
+  height: 350px;
+  width: 100%;
+}
+.splash {
+  gap: 30px;
+  flex-direction : column;
+  display: flex;
+}
+.progress-container {
+  height: 4px;
+  border-radius: 3px;
+  background-color: #2c2c2c;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background-color: #bfbfbf;
+  transition: width 0.5s ease;
 }
     `
   const oStyle = document.createElement('style')
@@ -84,7 +98,7 @@ function useLoading() {
   const progressBar: HTMLElement | null = oDiv.querySelector('#progress');
 
   if (progressBar) {
-    progressBar.parentElement!.style.display = 'none';
+    progressBar.parentElement!.style.visibility = 'hidden';
     progressBar.style.width = '0%';
   }
 
@@ -124,4 +138,4 @@ window.onmessage = ev => {
     setTimeout(() => progressBar.style.width = `${ev.data.progressUpdate}%`, 1000);
   }
 }
-setTimeout(removeLoading, 4)
+setTimeout(removeLoading, 4000)

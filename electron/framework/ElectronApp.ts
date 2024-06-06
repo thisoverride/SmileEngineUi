@@ -29,7 +29,7 @@ export default class ElectronApp {
     this.win = new BrowserWindow({
       width: 900, 
       height: 700,
-      
+      backgroundColor: '#000',
       // focusable:true,
       // kiosk: true,
       // frame: false,
