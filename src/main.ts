@@ -58,8 +58,9 @@ export default class Main {
   }
 }
 
-
-// window.ipcRenderer.on('main-process-message',(_e,message) => {}
+window.ipcRenderer.on('main-process-message', (_event, message) => {
+  // new Main()
+})
 
 // document.body.style.backgroundColor = "#000";
 // document.body.innerHTML = 

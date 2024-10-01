@@ -21,9 +21,16 @@ declare namespace NodeJS {
   }
 }
 
+interface BoothSys {
+  capture: (ctx: string) => any;
+  reboot: () => void;
+  powerOff: () => void;
+}
+
 // Used in Renderer process, expose in `preload.ts`
 interface Window {
   ipcRenderer: import('electron').IpcRenderer
   navigation : any;
   app: any;
+  boothSys: BoothSys;
 }
